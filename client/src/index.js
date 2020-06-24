@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import PusherTest from './PusherTest';
+import WaitingRoom from './WaitingRoom';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <WaitingRoom />
   </React.StrictMode>,
   document.getElementById('root')
 );

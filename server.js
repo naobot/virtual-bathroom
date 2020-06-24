@@ -49,19 +49,18 @@ const server = app.listen(app.get('port'), () => {
   console.log(`Express running → PORT ${server.address().port}`);
 });
 
-// app.post('/pusher/auth', (req, res) => {
-//   var socketId = req.body.socket_id;
-//   var channel = req.body.channel_name;
-//   var presenceData = {
-//     user_id: 'unique_user_id',
-//     user_info: {
-//       name: 'Mr Channels',
-//       twitter_id: '@pusher'
-//     }
-//   };
-//   var auth = pusher.authenticate(socketId, channel, presenceData);
-//   res.send(auth);
-// });
+app.post('/pusher/auth', (req, res) => {
+  var socketId = req.body.socket_id;
+  var channel = req.body.channel_name;
+  var presenceData = {
+    user_id: Math.floor(Math.random() * 1000000000), // random enough
+    user_info: {
+      entry_time: Date.now(),
+    }
+  };
+  var auth = pusher.authenticate(socketId, channel, presenceData);
+  res.send(auth);
+});
 
 app.post('/vote', (req, res) => {
   const { id, vote } = req.body;

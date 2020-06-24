@@ -60,12 +60,37 @@ class App extends Component {
 
     const channel = pusher.subscribe('comments');
     channel.bind('new-comment', data => {
+      console.log('bind called');
       this.setState(prevState => {
         const { comments } = prevState;
-        comments.push(data.comment);
+        
+        console.log("comments: ");
+        console.log(comments)
+        console.log("data.comment: ");
+        console.log(data.comment);
+
+        /* a-t solution */
+        const commentsCopy = Array.from(comments);
+      
+        console.log("commentsCopy before: ");
+        console.log(commentsCopy)
+        
+        commentsCopy.push(data.comment);
+
+        console.log("commentsCopy after: ");
+        console.log(commentsCopy)
+        /* END a-t solution */
+
+        /* original code */
+        // comments.push(data.comment);
+
+        // console.log("comments after: ");
+        // console.log(comments);
+        /* END original code */
 
         return {
-          comments,
+          comments: commentsCopy, // a-t
+          // comments, // original
         };
       });
     });
