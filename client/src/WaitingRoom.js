@@ -18,14 +18,6 @@ class WaitingRoom extends Component {
 
   handleEnterStallClick(e) {
     this.props.onEnterStall(e);
-    // this.stallChannel = this.pusher.subscribe('presence-stall-1');
-    // this.stallChannel.bind('pusher:subscription_succeeded', () => {
-    //   console.log(this.stallChannel.members.me.id + ' joined stall 1');
-    //   this.setState({
-    //     stalls: {'1': this.stallChannel.members},
-    //   },
-    //   console.log(this.stallChannel.members));
-    // });
   }
 
   componentDidMount() {

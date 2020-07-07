@@ -27,7 +27,7 @@ class App extends Component {
       var currentStall = {...this.state.stalls[i]};
       let stallId = i;
       if (currentStall.occupants < this.max_occupancy) {
-        // this.updateOccupants(i, currentStall.occupants+1);
+        this.updateOccupants(i, currentStall.occupants+1);
         this.setState(currentState => {
           return {
             currentView: <Stall id={stallId} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateOccupants} />,

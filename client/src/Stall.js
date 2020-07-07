@@ -33,7 +33,7 @@ class Stall extends Component {
     console.log(`Stall.js updateOccupants: stall id ${this.id}, numOccupants ${members.count}`);
     this.setState({
       occupants: members,
-    }, this.props.onOccupancyChange(this.id, members.count));
+    }, () => this.props.onOccupancyChange(this.id, members.count));
   }
 
   render() {
