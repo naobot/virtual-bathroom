@@ -5,17 +5,17 @@ class Stall extends Component {
   constructor(props) {
     super(props);
     this.pusher = props.pusher;
+    this.id = props.id;
     this.presenceChannel = null;
     this.state = {
       occupants: {count: 0},
-      vacant: this.props.vacant,
     };
     this.max_occupancy = props.max;
     this.handleOccupancyChange = this.updateOccupants.bind(this);
   }
 
   componentDidMount() {
-    this.presenceChannel = this.pusher.subscribe('presence-stall');
+    this.presenceChannel = this.pusher.subscribe(`presence-stall-${this.id}`);
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
       this.updateOccupants(this.presenceChannel.members);
       console.log(this.presenceChannel.members.me.id + ' joined Stall');
@@ -30,15 +30,13 @@ class Stall extends Component {
   }
 
   updateOccupants(members) {
-    var isVacant = members.count < this.max_occupancy;
+    console.log(`Stall.js updateOccupants: stall id ${this.id}, numOccupants ${members.count}`);
     this.setState({
       occupants: members,
-      vacant: isVacant,
-    })
+    }, this.props.onOccupancyChange(this.id, members.count));
   }
 
   render() {
-    const vacant = this.state.vacant;
     return (
       <div id="stall">
         Stall: {this.state.occupants.count} / {this.max_occupancy}

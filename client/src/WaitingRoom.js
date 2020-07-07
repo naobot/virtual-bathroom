@@ -28,10 +28,6 @@ class WaitingRoom extends Component {
     // });
   }
 
-  componentWillMount() {
-    
-  }
-
   componentDidMount() {
     this.presenceChannel = this.pusher.subscribe('presence-bathroom');
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
@@ -72,7 +68,7 @@ class WaitingRoom extends Component {
     let visitorsList = null;
     if (this.state.visitors !== []) {
       visitorsList = this.state.visitorList.map((visitor) => 
-        <li>{visitor}</li>
+        <li key={visitor.toString()}>{visitor}</li>
       );
     }
     return (
