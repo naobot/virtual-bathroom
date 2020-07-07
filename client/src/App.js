@@ -15,7 +15,7 @@ class App extends Component {
       stalls: [], // array of Stall components
     };
     this.max_occupancy = 1; // ADJUST AS NEEDED
-    this.num_stalls = 1; // ADJUST AS NEEDED
+    this.num_stalls = 2; // ADJUST AS NEEDED
     this.handleEnterStall = this.handleEnterStall.bind(this);
     this.updateOccupants = this.updateOccupants.bind(this);
   }
