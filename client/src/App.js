@@ -16,7 +16,7 @@ class App extends Component {
       stalls: [], // array of Stall components
       inLine: [], // pusher members object
     };
-    this.max_occupancy = 1; // ADJUST AS NEEDED
+    this.max_occupancy = 2; // ADJUST AS NEEDED
     this.num_stalls = 1; // ADJUST AS NEEDED
     this.handleEnterStall = this.handleEnterStall.bind(this);
     this.updateOccupants = this.updateOccupants.bind(this);
@@ -106,7 +106,7 @@ class App extends Component {
       }
       // console.log('someone joined Bathroom App');
     });
-    this.presenceChannel.bind('pusher:member_removed', () => {
+    this.presenceChannel.bind('pusher:member_removed', (member) => {
       this.updateVisitors(this.presenceChannel.members);
       if (this.state.currentViewType === 'waiting') {
         this.setState(currentState => {
@@ -115,7 +115,7 @@ class App extends Component {
           };
         });
       }
-      console.log('someone left Bathroom App');
+      console.log(`${member.id} left Bathroom App`);
     });
     // someone joined a stall
     this.presenceChannel.bind('subscribed-stall', data => {
