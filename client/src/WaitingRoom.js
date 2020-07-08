@@ -18,12 +18,6 @@ class WaitingRoom extends Component {
     this.props.onEnterStall(e);
   }
 
-  componentDidMount() {
-    console.log('joined the queue for the bathroom');
-    console.log('currently in line:');
-    console.log(this.visitors);
-  }
-
   render() {
     let visitorsList = [];
     if (this.state.visitors !== []) {

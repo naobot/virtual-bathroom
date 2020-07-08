@@ -16,7 +16,7 @@ class App extends Component {
       inLine: [], // pusher members object
     };
     this.max_occupancy = 1; // ADJUST AS NEEDED
-    this.num_stalls = 2; // ADJUST AS NEEDED
+    this.num_stalls = 1; // ADJUST AS NEEDED
     this.handleEnterStall = this.handleEnterStall.bind(this);
     this.updateOccupants = this.updateOccupants.bind(this);
   }
@@ -69,7 +69,6 @@ class App extends Component {
         membersList.push(member.id);
       });
     }
-    // console.log('number of visitors updated')
     )
   }
 
@@ -92,7 +91,7 @@ class App extends Component {
           currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} inLine={this.state.inLine} />
         };
       });
-      console.log(this.presenceChannel.members.me.id + ' subscribed to WaitingRoom');
+      // console.log(this.presenceChannel.members.me.id + ' subscribed to WaitingRoom');
     });
     this.presenceChannel.bind('pusher:member_added', () => {
       this.updateVisitors(this.presenceChannel.members);
@@ -102,7 +101,7 @@ class App extends Component {
           currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} inLine={this.state.inLine} />
         };
       });
-      console.log(this.presenceChannel.members.me.id + ' joined WaitingRoom');
+      // console.log('someone joined Bathroom');
     });
     this.presenceChannel.bind('pusher:member_removed', () => {
       this.updateVisitors(this.presenceChannel.members);
@@ -113,11 +112,16 @@ class App extends Component {
           currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} inLine={this.state.inLine} />
         };
       });
-      console.log('someone left WaitingRoom');
+      console.log('someone left Bathroom App');
     });
     // someone joined a stall
     this.presenceChannel.bind('subscribed-stall', data => {
-      console.log(`${data.userId} joined Stall ${data.stallId}`);
+      // console.log(`${data.userId} joined Stall ${data.stallId}`);
+      this.updateOccupants(data.stallId, data.currentOccupants);
+    });
+    // someone left a stall
+    this.presenceChannel.bind('left-stall', data => {
+      console.log(`someone left Stall ${data.stallId}`);
       this.updateOccupants(data.stallId, data.currentOccupants);
     });
   }
@@ -125,7 +129,6 @@ class App extends Component {
   componentWillUnmount() {
     this.pusher.unsubscribe('presence-bathroom');
     this.presenceChannel.unbind(); // remove all handlers defined in DidMount()
-    // console.log('unmounting WaitingRoom');
   }
 
   render() {

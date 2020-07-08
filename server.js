@@ -35,22 +35,35 @@ app.get('/', (req, res) => {
 app.post('/join-stall', (req, res) => {
   const { userId, stallId, currentOccupants, message } = req.body;
   pusher.trigger('presence-bathroom', 'subscribed-stall', {
+    userId: userId,
+    stallId: stallId,
+    currentOccupants: currentOccupants,
     message: `${userId} joined stall ${stallId}`,
   });
   res.status(200).send('OK');
 });
 
-app.post('/comment', (req, res) => {
-  db.insert(Object.assign({}, req.body), (err, newComment) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    pusher.trigger('comments', 'new-comment', {
-      comment: newComment,
-    });
-    res.status(200).send('OK');
+app.post('/leave-stall', (req, res) => {
+  const { stallId, currentOccupants, message } = req.body;
+  pusher.trigger('presence-bathroom', 'left-stall', {
+    stallId: stallId,
+    currentOccupants: currentOccupants,
+    message: `someone left stall ${stallId}`,
   });
+  res.status(200).send('OK');
 });
+
+// app.post('/comment', (req, res) => {
+//   db.insert(Object.assign({}, req.body), (err, newComment) => {
+//     if (err) {
+//       return res.status(500).send(err);
+//     }
+//     pusher.trigger('comments', 'new-comment', {
+//       comment: newComment,
+//     });
+//     res.status(200).send('OK');
+//   });
+// });
 
 app.set('port', process.env.PORT || 5000);
 const server = app.listen(app.get('port'), () => {
@@ -70,22 +83,22 @@ app.post('/pusher/auth', (req, res) => {
   res.send(auth);
 });
 
-app.post('/vote', (req, res) => {
-  const { id, vote } = req.body;
-  db.findOne({ _id: id }, function (err, doc) {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    db.update({ _id: id }, { $set: { votes: doc.votes + vote } }, { returnUpdatedDocs: true }, (err, num, updatedDoc) => {
-      if (err) {
-        return res.status(500).send(err);
-      }
-      pusher.trigger('comments', 'new-vote', {
-        comment: updatedDoc,
-      });
-    });
-  });
-});
+// app.post('/vote', (req, res) => {
+//   const { id, vote } = req.body;
+//   db.findOne({ _id: id }, function (err, doc) {
+//     if (err) {
+//       return res.status(500).send(err);
+//     }
+//     db.update({ _id: id }, { $set: { votes: doc.votes + vote } }, { returnUpdatedDocs: true }, (err, num, updatedDoc) => {
+//       if (err) {
+//         return res.status(500).send(err);
+//       }
+//       pusher.trigger('comments', 'new-vote', {
+//         comment: updatedDoc,
+//       });
+//     });
+//   });
+// });
 
 // create a GET route
 // app.get('/express_backend', (req, res) => {
