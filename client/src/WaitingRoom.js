@@ -8,10 +8,8 @@ class WaitingRoom extends Component {
   constructor(props) {
     super(props);
     this.pusher = props.pusher;
-    this.presenceChannel = null;
     this.state = {
-      visitors: [], // pusher members object
-      visitorList: [], // member id array
+      visitors: props.inLine
     };
     this.handleEnterStallClick = this.handleEnterStallClick.bind(this);
   }
@@ -21,50 +19,21 @@ class WaitingRoom extends Component {
   }
 
   componentDidMount() {
-    this.presenceChannel = this.pusher.subscribe('presence-bathroom');
-    this.presenceChannel.bind('pusher:subscription_succeeded', () => {
-      this.updateVisitors(this.presenceChannel.members);
-      // console.log(this.presenceChannel.members.me.id + ' joined WaitingRoom');
-    });
-    this.presenceChannel.bind('pusher:member_added', () => {
-      this.updateVisitors(this.presenceChannel.members);
-    });
-    this.presenceChannel.bind('pusher:member_removed', () => {
-      this.updateVisitors(this.presenceChannel.members);
-      // console.log('someone left WaitingRoom');
-    });
-  }
-
-  componentWillUnmount() {
-    this.pusher.unsubscribe('presence-bathroom');
-    this.presenceChannel.unbind(); // remove all handlers defined in DidMount()
-    // console.log('unmounting WaitingRoom');
-  }
-
-  updateVisitors(members) {
-    this.setState({
-      visitors: members,
-    },
-    () => {
-      var membersList = [];
-      members.each((member) => {
-        membersList.push(member.id);
-      });
-      this.setState({ visitorList: membersList });
-    }
-    // console.log('number of visitors updated')
-    )
+    console.log('joined the queue for the bathroom');
+    console.log('currently in line:');
+    console.log(this.visitors);
   }
 
   render() {
-    let visitorsList = null;
+    let visitorsList = [];
     if (this.state.visitors !== []) {
-      visitorsList = this.state.visitorList.map((visitor) => 
-        <li key={visitor.toString()}>{visitor}</li>
+      this.state.visitors.each((visitor) => 
+        visitorsList.push(<li key={visitor.id.toString()}>{visitor.id}</li>)
       );
     }
     return (
       <div id="waiting">
+        <h2>Waiting Room</h2>
         In line: {this.state.visitors.count}<br/>
         <ul>{visitorsList}</ul>
         <EnterStall onClick={this.handleEnterStallClick} />

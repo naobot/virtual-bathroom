@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 // import Pusher from 'pusher-js';
 
 class Stall extends Component {
@@ -18,7 +19,14 @@ class Stall extends Component {
     this.presenceChannel = this.pusher.subscribe(`presence-stall-${this.id}`);
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
       this.updateOccupants(this.presenceChannel.members);
-      console.log(this.presenceChannel.members.me.id + ' joined Stall');
+      // POST join-stall
+      axios.post('/join-stall', {
+        userId: this.presenceChannel.members.me.id,
+        stallId: this.id,
+        currentOccupants: this.presenceChannel.members.count,
+        message: 'joined stall',
+      });
+      // console.log(this.presenceChannel.members.me.id + ' joined Stall');
     });
     this.presenceChannel.bind('pusher:member_added', () => {
       this.updateOccupants(this.presenceChannel.members);

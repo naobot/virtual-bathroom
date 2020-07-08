@@ -32,6 +32,14 @@ app.get('/', (req, res) => {
   });
 });
 
+app.post('/join-stall', (req, res) => {
+  const { userId, stallId, currentOccupants, message } = req.body;
+  pusher.trigger('presence-bathroom', 'subscribed-stall', {
+    message: `${userId} joined stall ${stallId}`,
+  });
+  res.status(200).send('OK');
+});
+
 app.post('/comment', (req, res) => {
   db.insert(Object.assign({}, req.body), (err, newComment) => {
     if (err) {
