@@ -33,13 +33,7 @@ class Stall extends Component {
     });
     this.presenceChannel.bind('pusher:member_removed', () => {
       this.updateOccupants(this.presenceChannel.members);
-      // POST leave-stall
-      axios.post('/leave-stall', {
-        stallId: this.id,
-        currentOccupants: this.presenceChannel.members.count,
-        message: 'left stall',
-      });
-      // console.log('someone left Stall');
+      console.log(`Stall.js: someone left Stall ${this.id}`);
     });
   }
 

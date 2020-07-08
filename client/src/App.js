@@ -11,6 +11,7 @@ class App extends Component {
       encrypted: true,
     });
     this.state = {
+      currentViewType: 'waiting',
       currentView: null,
       stalls: [], // array of Stall components
       inLine: [], // pusher members object
@@ -31,6 +32,7 @@ class App extends Component {
         this.updateOccupants(i, currentStall.occupants+1);
         this.setState(currentState => {
           return {
+            currentViewType: 'stall',
             currentView: <Stall id={stallId} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateOccupants} />,
           };
         });
@@ -62,14 +64,7 @@ class App extends Component {
   updateVisitors(members) {
     this.setState({
       inLine: members,
-    },
-    () => {
-      var membersList = [];
-      members.each((member) => {
-        membersList.push(member.id);
-      });
-    }
-    )
+    });
   }
 
   componentDidMount() {
@@ -80,6 +75,12 @@ class App extends Component {
       stallList.push(stall);
     }
 
+    this.setState(currentState => {
+      return {
+        stalls: stallList,
+      }
+    })
+
     // main app channel
     this.presenceChannel = this.pusher.subscribe('presence-bathroom');
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
@@ -87,7 +88,7 @@ class App extends Component {
       // in WaitingRoom by default
       this.setState(currentState => {
         return {
-          stalls: stallList,
+          currentViewType: 'waiting',
           currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} inLine={this.state.inLine} />
         };
       });
@@ -95,23 +96,25 @@ class App extends Component {
     });
     this.presenceChannel.bind('pusher:member_added', () => {
       this.updateVisitors(this.presenceChannel.members);
-      this.setState(currentState => {
-        return {
-          stalls: stallList,
-          currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} inLine={this.state.inLine} />
-        };
-      });
-      // console.log('someone joined Bathroom');
+      console.log(this.state.currentViewType);
+      if (this.state.currentViewType === 'waiting') {
+        this.setState(currentState => {
+          return {
+            currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} inLine={this.state.inLine} />
+          };
+        });
+      }
+      // console.log('someone joined Bathroom App');
     });
     this.presenceChannel.bind('pusher:member_removed', () => {
       this.updateVisitors(this.presenceChannel.members);
-      // in WaitingRoom by default
-      this.setState(currentState => {
-        return {
-          stalls: stallList,
-          currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} inLine={this.state.inLine} />
-        };
-      });
+      if (this.state.currentViewType === 'waiting') {
+        this.setState(currentState => {
+          return {
+            currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} inLine={this.state.inLine} />
+          };
+        });
+      }
       console.log('someone left Bathroom App');
     });
     // someone joined a stall
@@ -121,7 +124,7 @@ class App extends Component {
     });
     // someone left a stall
     this.presenceChannel.bind('left-stall', data => {
-      console.log(`someone left Stall ${data.stallId}`);
+      console.log(`App.js: someone left Stall ${data.stallId}`);
       this.updateOccupants(data.stallId, data.currentOccupants);
     });
   }
