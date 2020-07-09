@@ -53,7 +53,7 @@ class Stall extends Component {
 
   render() {
     return (
-      <div id="stall">
+      <div id="stall" class="component-box">
         Stall: {this.state.occupants.count} / {this.max_occupancy}
       </div>
     );

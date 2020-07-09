@@ -17,7 +17,7 @@ class WaitingRoom extends Component {
 
   render() {
     return (
-      <div id="waiting">
+      <div id="waiting" class="component-box">
         <h2>Waiting Room</h2>
         In line: {this.in_line}<br/>
         <EnterStall onClick={this.handleEnterStallClick} />

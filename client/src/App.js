@@ -168,10 +168,12 @@ class App extends Component {
         visitorsList.push(<li key={visitor.id.toString()}>{visitor.id}</li>)
       );
     }
+    let in_stall = this.state.stalls.map((stall) => stall.occupants).reduce((a,b)=>a+b, 0);
     return (
-      <div id="app">
+      <div id="app" class="component-box">
         Number of Stalls: {this.num_stalls}<br/>
         <h3>Current Users</h3>
+        <p><strong>In line:</strong> {this.state.pusher_app_members.count-in_stall}</p>
         <ul>{visitorsList}</ul>
         <h3>Stalls</h3>
         {stalls}<br/>
