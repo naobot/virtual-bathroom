@@ -14,7 +14,7 @@ class App extends Component {
       currentViewType: 'waiting',
       currentView: null,
       stalls: [], // array of Stall components
-      inLine: [], // pusher members object
+      pusher_app_members: [], // pusher members object
     };
     this.max_occupancy = 2; // ADJUST AS NEEDED
     this.num_stalls = 1; // ADJUST AS NEEDED
@@ -63,7 +63,7 @@ class App extends Component {
   // in line
   updateVisitors(members) {
     this.setState({
-      inLine: members,
+      pusher_app_members: members,
     });
   }
 
@@ -89,7 +89,7 @@ class App extends Component {
       this.setState(currentState => {
         return {
           currentViewType: 'waiting',
-          currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} inLine={this.state.inLine} />
+          currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} pusher_app_members={this.state.pusher_app_members} />
         };
       });
       // console.log(this.presenceChannel.members.me.id + ' subscribed to WaitingRoom');
@@ -100,7 +100,7 @@ class App extends Component {
       if (this.state.currentViewType === 'waiting') {
         this.setState(currentState => {
           return {
-            currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} inLine={this.state.inLine} />
+            currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} pusher_app_members={this.state.pusher_app_members} />
           };
         });
       }
@@ -111,7 +111,7 @@ class App extends Component {
       if (this.state.currentViewType === 'waiting') {
         this.setState(currentState => {
           return {
-            currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} inLine={this.state.inLine} />
+            currentView: <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} pusher_app_members={this.state.pusher_app_members} />
           };
         });
       }

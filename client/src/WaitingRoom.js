@@ -9,7 +9,7 @@ class WaitingRoom extends Component {
     super(props);
     this.pusher = props.pusher;
     this.state = {
-      visitors: props.inLine
+      visitors: props.pusher_app_members
     };
     this.handleEnterStallClick = this.handleEnterStallClick.bind(this);
   }
