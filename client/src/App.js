@@ -15,6 +15,13 @@ class App extends Component {
       currentView: null,
       stalls: [], // array of Stall components
       pusher_app_members: [], // pusher members object
+      /*
+        [
+          ...
+          { id: int, stall: int }
+        ]
+       */
+      stall_occupants: [],
     };
     this.max_occupancy = 2; // ADJUST AS NEEDED
     this.num_stalls = 1; // ADJUST AS NEEDED
