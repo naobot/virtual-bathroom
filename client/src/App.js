@@ -10,6 +10,7 @@ class App extends Component {
       cluster: 'us2',
       encrypted: true,
     });
+    this.me = null;
     this.state = {
       currentViewType: 'waiting',
       currentView: null,
@@ -18,7 +19,7 @@ class App extends Component {
       /*
         [
           ...
-          { id: int, stall: int }
+          { id: str, stall: int }
         ]
        */
       stall_occupants: [],
@@ -37,10 +38,12 @@ class App extends Component {
       let stallId = i;
       if (currentStall.occupants < this.max_occupancy) {
         this.updateOccupants(i, currentStall.occupants+1);
+        this.addOccupant(i, this.me);
         this.setState(currentState => {
           return {
             currentViewType: 'stall',
             currentView: <Stall id={stallId} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateOccupants} />,
+
           };
         });
         stallEntered = true;
@@ -63,6 +66,17 @@ class App extends Component {
     this.setState(currentState => {
       return {
         stalls: stallsCopy,
+      }
+    });
+  }
+
+  addOccupant(stallId, userId) {
+    // console.log(updatedOccupants);
+    this.setState(currentState => {
+      var updatedOccupants = Array.from(this.state.stall_occupants);
+      updatedOccupants.push({ id: userId, stall: stallId });
+      return {
+        stall_occupants: updatedOccupants,
       }
     });
   }
@@ -91,6 +105,7 @@ class App extends Component {
     // main app channel
     this.presenceChannel = this.pusher.subscribe('presence-bathroom');
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
+      this.me = this.presenceChannel.members.me.id;
       this.updateVisitors(this.presenceChannel.members);
       // in WaitingRoom by default
       this.setState(currentState => {
@@ -103,7 +118,7 @@ class App extends Component {
     });
     this.presenceChannel.bind('pusher:member_added', () => {
       this.updateVisitors(this.presenceChannel.members);
-      console.log(this.state.currentViewType);
+      console.log(`currentViewType: ${this.state.currentViewType}`);
       if (this.state.currentViewType === 'waiting') {
         this.setState(currentState => {
           return {
