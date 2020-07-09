@@ -7,10 +7,7 @@ import EnterStall from './EnterStall';
 class WaitingRoom extends Component {
   constructor(props) {
     super(props);
-    this.pusher = props.pusher;
-    this.state = {
-      visitors: props.pusher_app_members
-    };
+    this.in_line = props.in_line
     this.handleEnterStallClick = this.handleEnterStallClick.bind(this);
   }
 
@@ -19,17 +16,10 @@ class WaitingRoom extends Component {
   }
 
   render() {
-    let visitorsList = [];
-    if (this.state.visitors !== []) {
-      this.state.visitors.each((visitor) => 
-        visitorsList.push(<li key={visitor.id.toString()}>{visitor.id}</li>)
-      );
-    }
     return (
       <div id="waiting">
         <h2>Waiting Room</h2>
-        In line: {this.state.visitors.count}<br/>
-        <ul>{visitorsList}</ul>
+        In line: {this.in_line}<br/>
         <EnterStall onClick={this.handleEnterStallClick} />
       </div>
     );
