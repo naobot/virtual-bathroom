@@ -16,7 +16,7 @@ class App extends Component {
       currentView: null,
       stalls: [], // array of Stall components
       pusher_app_members: { count: 0 }, // pusher members object
-      /*
+      /* THIS IS NOT WORKING FOR SOME REASON
         [
           ...
           { id: str, stall: int }
@@ -139,6 +139,7 @@ class App extends Component {
           };
         });
       }
+      console.log(this.state.stall_occupants);
       console.log(`${member.id} left Bathroom App`);
     });
     // someone joined a stall
@@ -174,6 +175,7 @@ class App extends Component {
         Number of Stalls: {this.num_stalls}<br/>
         <h3>Current Users</h3>
         <p><strong>In line:</strong> {this.state.pusher_app_members.count-in_stall}</p>
+        <p><strong>In app:</strong> {this.state.pusher_app_members.count}</p>
         <ul>{visitorsList}</ul>
         <h3>Stalls</h3>
         {stalls}<br/>
