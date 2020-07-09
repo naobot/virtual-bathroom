@@ -16,15 +16,12 @@ class App extends Component {
       currentView: null,
       stalls: [], // array of Stall components
       pusher_app_members: { count: 0 }, // pusher members object
-      /* THIS IS NOT WORKING FOR SOME REASON
-        [
-          ...
-          { id: str, stall: int }
-        ]
-       */
-      stall_occupants: [],
       message: '',
     };
+    /* THIS IS NOT WORKING FOR SOME REASON
+      { userId: stallId }
+     */
+    this.occupant_dict = {};
     this.max_occupancy = 2; // ADJUST AS NEEDED
     this.num_stalls = 1; // ADJUST AS NEEDED
     this.handleEnterStall = this.handleEnterStall.bind(this);
@@ -49,6 +46,7 @@ class App extends Component {
           };
         });
         stallEntered = true;
+        console.log(this.occupant_dict);
       }
       else {
         console.log(`Stall ${i} full`);
@@ -73,14 +71,15 @@ class App extends Component {
   }
 
   addOccupant(stallId, userId) {
-    var updatedOccupants = Array.from(this.state.stall_occupants);
-    updatedOccupants.push({ id: userId, stall: stallId });
-    this.setState(currentState => {
-      return {
-        ...currentState,
-        stall_occupants: updatedOccupants,
-      }
-    });
+    this.occupant_dict[userId] = stallId;
+    // var updatedOccupants = Array.from(this.state.stall_occupants);
+    // updatedOccupants.push({ id: userId, stall: stallId });
+    // this.setState(currentState => {
+    //   return {
+    //     ...currentState,
+    //     stall_occupants: updatedOccupants,
+    //   }
+    // });
   }
 
   // in line
@@ -113,7 +112,7 @@ class App extends Component {
       this.setState(currentState => {
         return {
           currentViewType: 'waiting',
-          currentView: <WaitingRoom onEnterStall={this.handleEnterStall} in_line={this.state.pusher_app_members.count-this.state.stall_occupants.length} />
+          currentView: <WaitingRoom onEnterStall={this.handleEnterStall} in_line={this.state.pusher_app_members.count} />
         };
       });
       // console.log(this.presenceChannel.members.me.id + ' subscribed to WaitingRoom');
@@ -124,7 +123,7 @@ class App extends Component {
       if (this.state.currentViewType === 'waiting') {
         this.setState(currentState => {
           return {
-            currentView: <WaitingRoom onEnterStall={this.handleEnterStall} in_line={this.state.pusher_app_members.count-this.state.stall_occupants.length} />
+            currentView: <WaitingRoom onEnterStall={this.handleEnterStall} in_line={this.state.pusher_app_members.count} />
           };
         });
       }
@@ -135,11 +134,11 @@ class App extends Component {
       if (this.state.currentViewType === 'waiting') {
         this.setState(currentState => {
           return {
-            currentView: <WaitingRoom onEnterStall={this.handleEnterStall} in_line={this.state.pusher_app_members.count-this.state.stall_occupants.length} />
+            currentView: <WaitingRoom onEnterStall={this.handleEnterStall} in_line={this.state.pusher_app_members.count} />
           };
         });
       }
-      console.log(this.state.stall_occupants);
+      console.log(this.occupant_dict);
       console.log(`${member.id} left Bathroom App`);
     });
     // someone joined a stall
