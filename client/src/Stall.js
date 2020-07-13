@@ -12,20 +12,22 @@ class Stall extends Component {
       occupants: {count: 0},
     };
     this.max_occupancy = props.max;
-    this.handleOccupancyChange = this.updateOccupants.bind(this);
+    this.updateOccupants = this.updateOccupants.bind(this);
+    this.countOccupants = this.countOccupants.bind(this);
   }
 
   componentDidMount() {
     this.presenceChannel = this.pusher.subscribe(`presence-stall-${this.id}`);
+    console.log(this.presenceChannel);
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
       this.updateOccupants(this.presenceChannel.members);
-      // POST join-stall
-      axios.post('/join-stall', {
-        userId: this.presenceChannel.members.me.id,
-        stallId: this.id,
-        currentOccupants: this.presenceChannel.members.count,
-        message: 'joined stall',
-      });
+      // // POST join-stall
+      // axios.post('/join-stall', {
+      //   userId: this.presenceChannel.members.me.id,
+      //   stallId: this.id,
+      //   currentOccupants: this.presenceChannel.members.count,
+      //   message: 'joined stall',
+      // });
       // console.log(this.presenceChannel.members.me.id + ' joined Stall');
     });
     this.presenceChannel.bind('pusher:member_added', () => {
@@ -44,17 +46,30 @@ class Stall extends Component {
     });
   }
 
+  // returns true count of occupants (excluding spies)
+  countOccupants(members) {
+    var count = 0;
+    console.log(`countOccupants() members:`);
+    if (members.count > 0) {
+      members.each(function (member) {
+        if (!member.info.isSpy) { count++ }
+      });
+    }
+    return count
+  }
+
   updateOccupants(members) {
     console.log(`Stall.js updateOccupants: stall id ${this.id}, numOccupants ${members.count}`);
     this.setState({
       occupants: members,
-    }, () => this.props.onOccupancyChange(this.id, members.count));
+    }, () => this.props.onOccupancyChange(this.id, this.countOccupants(members)));
   }
 
   render() {
     return (
       <div id="stall" class="component-box">
-        Stall: {this.state.occupants.count} / {this.max_occupancy}
+        <h2>Stall {this.id}</h2>
+        Stall: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}
       </div>
     );
   }

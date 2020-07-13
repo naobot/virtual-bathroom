@@ -10,99 +10,39 @@ class App extends Component {
       cluster: 'us2',
       encrypted: true,
     });
+    this.spy = new Pusher('93d5b6db6095187f5ef6', {
+      encrypted: true,
+      cluster: 'us2',
+      auth: {
+        params: {
+          isSpy: true
+        }
+      }
+    });
     this.me = null;
     this.state = {
       currentViewType: 'waiting',
       currentView: null,
-      stalls: [], // array of Stall components
+      stalls: [], // object of Stall components
       pusher_app_members: { count: 0 }, // pusher members object
       message: '',
     };
     /* THIS IS NOT WORKING FOR SOME REASON
       { userId: stallId }
      */
-    this.occupant_dict = {};
     this.max_occupancy = 2; // ADJUST AS NEEDED
     this.num_stalls = 1; // ADJUST AS NEEDED
+    this.listMembers = this.listMembers.bind(this);
+    this.spyOn = this.spyOn.bind(this);
     this.handleEnterStall = this.handleEnterStall.bind(this);
     this.updateOccupants = this.updateOccupants.bind(this);
-    this.addOccupant = this.addOccupant.bind(this);
   }
 
-  handleEnterStall(e) {
-    var stallEntered = false;
-
-    for (var i = 0; !stallEntered && i < this.state.stalls.length; i++) {
-      var currentStall = {...this.state.stalls[i]};
-      let stallId = i;
-      if (currentStall.occupants < this.max_occupancy) {
-        this.updateOccupants(i, currentStall.occupants+1);
-        this.addOccupant(i, this.me);
-        this.setState(currentState => {
-          return {
-            currentViewType: 'stall',
-            currentView: <Stall id={stallId} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateOccupants} />,
-
-          };
-        });
-        stallEntered = true;
-        console.log(this.occupant_dict);
-      }
-      else {
-        console.log(`Stall ${i} full`);
-      }
-    }
-
-    if (!stallEntered) {
-      alert('no vacant stalls available!');
-    }
-
-  }
-
-  // in stall
-  updateOccupants(stallId, numOccupants) {
-    var stallsCopy = Array.from(this.state.stalls);
-    stallsCopy[stallId]['occupants'] = numOccupants;
-    this.setState(currentState => {
-      return {
-        stalls: stallsCopy,
-      }
-    });
-  }
-
-  addOccupant(stallId, userId) {
-    this.occupant_dict[userId] = stallId;
-    // var updatedOccupants = Array.from(this.state.stall_occupants);
-    // updatedOccupants.push({ id: userId, stall: stallId });
-    // this.setState(currentState => {
-    //   return {
-    //     ...currentState,
-    //     stall_occupants: updatedOccupants,
-    //   }
-    // });
-  }
-
-  // in line
-  updateVisitors(members) {
-    this.setState({
-      pusher_app_members: members,
-    });
-  }
 
   componentDidMount() {
-    // create stalls
-    var stallList = [];
     for (var i = 0; i < this.num_stalls; i++) {
-      let stall = { id: i, occupants: 0 };
-      stallList.push(stall);
+      this.spyOn(`presence-stall-${i}`);
     }
-
-    this.setState(currentState => {
-      return {
-        stalls: stallList,
-      }
-    })
-
     // main app channel
     this.presenceChannel = this.pusher.subscribe('presence-bathroom');
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
@@ -129,6 +69,7 @@ class App extends Component {
       }
       // console.log('someone joined Bathroom App');
     });
+    // someone left App
     this.presenceChannel.bind('pusher:member_removed', (member) => {
       this.updateVisitors(this.presenceChannel.members);
       if (this.state.currentViewType === 'waiting') {
@@ -138,30 +79,104 @@ class App extends Component {
           };
         });
       }
-      console.log(this.occupant_dict);
       console.log(`${member.id} left Bathroom App`);
-    });
-    // someone joined a stall
-    this.presenceChannel.bind('subscribed-stall', data => {
-      // console.log(`${data.userId} joined Stall ${data.stallId}`);
-      this.updateOccupants(data.stallId, data.currentOccupants);
-    });
-    // someone left a stall
-    this.presenceChannel.bind('left-stall', data => {
-      console.log(`App.js: someone left Stall ${data.stallId}`);
-      this.updateOccupants(data.stallId, data.currentOccupants);
     });
   }
 
   componentWillUnmount() {
     this.pusher.unsubscribe('presence-bathroom');
-    this.presenceChannel.unbind(); // remove all handlers defined in DidMount()
+  }
+
+  // returns a channel specific function that lists all currently connected
+  // members – ignoring spies
+  listMembers(channel) {
+    console.log("Current users in " + channel.name + ":");
+    var count = 0;
+    var stallId = channel.name.split('-').pop();
+    channel.members.each(function (member) {
+      if (!member.info.isSpy) { console.log("user: " + member.id); count++; }
+    });
+    return count
+  };
+
+  // spy on a channel
+  spyOn(channelName) {
+    var channel = this.spy.subscribe(channelName);
+    var stallId = channelName.split('-').pop();
+    // console.log('trying to spy');
+    // console.log(channel);
+    channel.bind("pusher:subscription_succeeded", () => {
+      console.log(`spying on ${channelName}`);
+      this.setState(currentState => {
+        var stallsCopy = Array.from(currentState.stalls);
+        stallsCopy[stallId] = { id: stallId, occupants: this.listMembers(channel) };
+        return {
+          stalls: stallsCopy,
+        }
+      })
+    });
+    channel.bind("pusher:member_added", () => {
+      this.updateOccupants(stallId, this.listMembers(channel));
+    });
+    channel.bind("pusher:member_removed", () => {
+      this.updateOccupants(stallId, this.listMembers(channel));
+    });
+  };
+
+  handleEnterStall(e) {
+    var stallEntered = false;
+
+    for (var i = 0; !stallEntered && i < this.state.stalls.length; i++) {
+      var currentStall = {...this.state.stalls[i]};
+      let stallId = i;
+      if (currentStall.occupants < this.max_occupancy) {
+        this.updateOccupants(i, currentStall.occupants+1);
+        this.setState(currentState => {
+          return {
+            currentViewType: 'stall',
+            currentView: <Stall id={stallId} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateOccupants} />,
+
+          };
+        });
+        stallEntered = true;
+        console.log(this.occupant_dict);
+      }
+      else {
+        console.log(`Stall ${i} full`);
+      }
+    }
+
+    if (!stallEntered) {
+      alert('no vacant stalls available!');
+    }
+
+  }
+
+  // in stall
+  updateOccupants(stallId, numOccupants) {
+    var stallsCopy = Array.from(this.state.stalls);
+    console.log(stallsCopy);
+    console.log(`stallId: ${stallId}`);
+    stallsCopy[stallId] = { id: stallId, occupants: numOccupants };
+    this.setState(currentState => {
+      return {
+        stalls: stallsCopy,
+      }
+    });
+  }
+
+  // in line
+  updateVisitors(members) {
+    this.setState({
+      pusher_app_members: members,
+    });
   }
 
   render() {
     const stalls = this.state.stalls.map((stall) =>
       <li key={stall.id.toString()}>Stall {stall.id}: {stall.occupants}/{this.max_occupancy}</li>
     );
+
     let visitorsList = [];
     if (this.state.pusher_app_members.count > 0) {
       this.state.pusher_app_members.each((visitor) => 
