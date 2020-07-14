@@ -9,6 +9,7 @@ class Stall extends Component {
     this.presenceChannel = null;
     this.state = {
       occupants: {count: 0},
+      userHex: '#ffffff',
     };
     this.max_occupancy = props.max;
     this.updateOccupants = this.updateOccupants.bind(this);
@@ -17,8 +18,10 @@ class Stall extends Component {
 
   componentDidMount() {
     this.presenceChannel = this.pusher.subscribe(`presence-stall-${this.id}`);
-    console.log(this.presenceChannel);
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
+      this.setState(currentState => {
+        return {userHex: '#' + Math.floor(parseInt(this.presenceChannel.members.me.id)*16777215).toString(16).slice(-6)}
+      });
       this.updateOccupants(this.presenceChannel.members);
     });
     this.presenceChannel.bind('pusher:member_added', () => {
@@ -33,7 +36,7 @@ class Stall extends Component {
   // returns true count of occupants (excluding spies)
   countOccupants(members) {
     var count = 0;
-    console.log(`countOccupants() members:`);
+    console.log(`countOccupants() members in stall ${this.id}:`);
     if (members.count > 0) {
       members.each(function (member) {
         if (!member.info.isSpy) { count++ }
@@ -50,8 +53,11 @@ class Stall extends Component {
   }
 
   render() {
+    const colorStyle = {
+      color: this.state.userHex,
+    }
     return (
-      <div id="stall" className="component-box">
+      <div id="stall" className="component-box" style={colorStyle}>
         <h2>Stall {this.id}</h2>
         Stall: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}
       </div>
