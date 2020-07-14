@@ -6,6 +6,7 @@ class WaitingRoom extends Component {
     super(props);
     this.pusher = props.pusher;
     this.state = {
+      me: 0,
       occupants: { count: 0 },
     }
     this.countOccupants = this.countOccupants.bind(this);
@@ -15,6 +16,7 @@ class WaitingRoom extends Component {
   componentDidMount() {
     this.presenceChannel = this.pusher.subscribe(`presence-bathroom`);
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
+      this.setState({ me: this.presenceChannel.members.me.id });
       this.updateOccupants(this.presenceChannel.members);
     });
     this.presenceChannel.bind('pusher:member_added', () => {
@@ -52,19 +54,30 @@ class WaitingRoom extends Component {
 
   render() {
     let trueOccupants = [];
+    let trueOccupantsList = [];
     if (this.state.occupants.count > 0) {
       this.state.occupants.each((visitor) => {
         if (!visitor.info.isSpy) {
-          trueOccupants.push(<li key={visitor.id.toString()}>{visitor.id}</li>);
+          trueOccupants.push(visitor.id);
+          trueOccupantsList.push(<li key={visitor.id.toString()}>{visitor.id}</li>);
         }
       });
     }
+    let ahead = trueOccupants.length - trueOccupants.indexOf(this.state.me.toString()) - 1;
+    let enterMessage = 'please wait...';
+    if (ahead > 0) {
+      enterMessage = `${ahead} ahead of you in line`;
+    }
+    else {
+      enterMessage = <Button onClick={this.handleEnterStallClick} buttonText="Enter Stall" />;
+    }
+
     return (
       <div id="waiting" className="component-box">
         <h2>Waiting Room</h2>
         In line: {this.countOccupants(this.state.occupants)}<br/>
-        <ul>{trueOccupants}</ul>
-        <Button onClick={this.handleEnterStallClick} buttonText="Enter Stall" />
+        <ul>{trueOccupantsList}</ul>
+        {enterMessage}
       </div>
     );
   }

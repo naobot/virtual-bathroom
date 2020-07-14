@@ -7,6 +7,7 @@ class Stall extends Component {
     this.pusher = props.pusher;
     this.id = props.id;
     this.presenceChannel = null;
+    this.me = null;
     this.state = {
       occupants: {count: 0},
       userHex: '#ffffff',
@@ -19,8 +20,11 @@ class Stall extends Component {
   componentDidMount() {
     this.presenceChannel = this.pusher.subscribe(`presence-stall-${this.id}`);
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
+      this.me = this.presenceChannel.members.me.id;
       this.setState(currentState => {
-        return {userHex: '#' + Math.floor(parseInt(this.presenceChannel.members.me.id)*16777215).toString(16).slice(-6)}
+        return {
+          userHex: '#' + Math.floor(parseInt(this.presenceChannel.members.me.id)*16777215).toString(16).slice(-6)
+        }
       });
       this.updateOccupants(this.presenceChannel.members);
     });
