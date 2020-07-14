@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-// import Pusher from 'pusher-js';
-// import axios from 'axios';
-// import Stall from './Stall';
 import EnterStall from './EnterStall';
 
 class WaitingRoom extends Component {
@@ -17,7 +14,7 @@ class WaitingRoom extends Component {
 
   render() {
     return (
-      <div id="waiting" class="component-box">
+      <div id="waiting" className="component-box">
         <h2>Waiting Room</h2>
         In line: {this.in_line}<br/>
         <EnterStall onClick={this.handleEnterStallClick} />

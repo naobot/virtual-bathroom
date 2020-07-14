@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 // import Pusher from 'pusher-js';
 
 class Stall extends Component {
@@ -21,14 +20,6 @@ class Stall extends Component {
     console.log(this.presenceChannel);
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
       this.updateOccupants(this.presenceChannel.members);
-      // // POST join-stall
-      // axios.post('/join-stall', {
-      //   userId: this.presenceChannel.members.me.id,
-      //   stallId: this.id,
-      //   currentOccupants: this.presenceChannel.members.count,
-      //   message: 'joined stall',
-      // });
-      // console.log(this.presenceChannel.members.me.id + ' joined Stall');
     });
     this.presenceChannel.bind('pusher:member_added', () => {
       this.updateOccupants(this.presenceChannel.members);
@@ -36,13 +27,6 @@ class Stall extends Component {
     this.presenceChannel.bind('pusher:member_removed', () => {
       this.updateOccupants(this.presenceChannel.members);
       console.log(`Stall.js: someone left Stall ${this.id}`);
-      // POST leave-stall
-      // axios.post('/join-stall', {
-      //   userId: this.presenceChannel.members.me.id,
-      //   stallId: this.id,
-      //   currentOccupants: this.presenceChannel.members.count,
-      //   message: 'joined stall',
-      // });
     });
   }
 
@@ -67,7 +51,7 @@ class Stall extends Component {
 
   render() {
     return (
-      <div id="stall" class="component-box">
+      <div id="stall" className="component-box">
         <h2>Stall {this.id}</h2>
         Stall: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}
       </div>

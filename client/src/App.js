@@ -30,8 +30,8 @@ class App extends Component {
     /* THIS IS NOT WORKING FOR SOME REASON
       { userId: stallId }
      */
-    this.max_occupancy = 2; // ADJUST AS NEEDED
-    this.num_stalls = 1; // ADJUST AS NEEDED
+    this.max_occupancy = 1; // ADJUST AS NEEDED
+    this.num_stalls = 2; // ADJUST AS NEEDED
     this.listMembers = this.listMembers.bind(this);
     this.spyOn = this.spyOn.bind(this);
     this.handleEnterStall = this.handleEnterStall.bind(this);
@@ -185,7 +185,7 @@ class App extends Component {
     }
     let in_stall = this.state.stalls.map((stall) => stall.occupants).reduce((a,b)=>a+b, 0);
     return (
-      <div id="app" class="component-box">
+      <div id="app" className="component-box">
         Number of Stalls: {this.num_stalls}<br/>
         <h3>Current Users</h3>
         <p><strong>In line:</strong> {this.state.pusher_app_members.count-in_stall}</p>

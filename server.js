@@ -17,7 +17,6 @@ const pusher = new Pusher({
   cluster: process.env.PUSHER_APP_CLUSTER,
   useTLS: true,
 });
-// pusher.trigger('my-channel', 'my-event', {"message": "hello world"});
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
