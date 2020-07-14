@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import EnterStall from './EnterStall';
 
-class WaitingRoom extends Component {
+class WaitingRoom extends PureComponent {
   constructor(props) {
     super(props);
-    this.in_line = props.in_line
     this.handleEnterStallClick = this.handleEnterStallClick.bind(this);
   }
+
+  // componentDidMount() {
+  //   console.log(`waiting room mounted`);
+  // }
 
   handleEnterStallClick(e) {
     this.props.onEnterStall(e);
@@ -16,7 +19,7 @@ class WaitingRoom extends Component {
     return (
       <div id="waiting" className="component-box">
         <h2>Waiting Room</h2>
-        In line: {this.in_line}<br/>
+        In line: {this.props.inLine}<br/>
         <EnterStall onClick={this.handleEnterStallClick} />
       </div>
     );

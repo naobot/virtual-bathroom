@@ -21,18 +21,14 @@ class App extends Component {
     });
     this.me = null;
     this.state = {
-      currentViewType: 'waiting',
-      currentView: null,
+      currentView: { type: 'waiting', id: null },
       stalls: [], // object of Stall components
       pusher_app_members: { count: 0 }, // pusher members object
       message: '',
     };
-    /* THIS IS NOT WORKING FOR SOME REASON
-      { userId: stallId }
-     */
     this.max_occupancy = 1; // ADJUST AS NEEDED
     this.num_stalls = 2; // ADJUST AS NEEDED
-    this.listMembers = this.listMembers.bind(this);
+    this.countMembers = this.countMembers.bind(this);
     this.spyOn = this.spyOn.bind(this);
     this.handleEnterStall = this.handleEnterStall.bind(this);
     this.updateOccupants = this.updateOccupants.bind(this);
@@ -47,50 +43,33 @@ class App extends Component {
     this.presenceChannel = this.pusher.subscribe('presence-bathroom');
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
       this.me = this.presenceChannel.members.me.id;
-      this.updateVisitors(this.presenceChannel.members);
-      // in WaitingRoom by default
-      this.setState(currentState => {
-        return {
-          currentViewType: 'waiting',
-          currentView: <WaitingRoom onEnterStall={this.handleEnterStall} in_line={this.state.pusher_app_members.count} />
-        };
-      });
+      this.updateAppMembers(this.presenceChannel.members);
       // console.log(this.presenceChannel.members.me.id + ' subscribed to WaitingRoom');
     });
     this.presenceChannel.bind('pusher:member_added', () => {
-      this.updateVisitors(this.presenceChannel.members);
+      this.updateAppMembers(this.presenceChannel.members);
       console.log(`currentViewType: ${this.state.currentViewType}`);
-      if (this.state.currentViewType === 'waiting') {
-        this.setState(currentState => {
-          return {
-            currentView: <WaitingRoom onEnterStall={this.handleEnterStall} in_line={this.state.pusher_app_members.count} />
-          };
-        });
-      }
       // console.log('someone joined Bathroom App');
     });
     // someone left App
     this.presenceChannel.bind('pusher:member_removed', (member) => {
-      this.updateVisitors(this.presenceChannel.members);
-      if (this.state.currentViewType === 'waiting') {
-        this.setState(currentState => {
-          return {
-            currentView: <WaitingRoom onEnterStall={this.handleEnterStall} in_line={this.state.pusher_app_members.count} />
-          };
-        });
-      }
+      this.updateAppMembers(this.presenceChannel.members);
       console.log(`${member.id} left Bathroom App`);
     });
   }
+
+  // componentDidUpdate() {
+  //   console.log('App updated');
+  // }
 
   componentWillUnmount() {
     this.pusher.unsubscribe('presence-bathroom');
   }
 
-  // returns a channel specific function that lists all currently connected
-  // members – ignoring spies
-  listMembers(channel) {
-    console.log("Current users in " + channel.name + ":");
+  // returns a the number of members connected to channel
+  // excluding spies
+  countMembers(channel) {
+    // console.log("Current users in " + channel.name + ":");
     var count = 0;
     var stallId = channel.name.split('-').pop();
     channel.members.each(function (member) {
@@ -109,17 +88,17 @@ class App extends Component {
       console.log(`spying on ${channelName}`);
       this.setState(currentState => {
         var stallsCopy = Array.from(currentState.stalls);
-        stallsCopy[stallId] = { id: stallId, occupants: this.listMembers(channel) };
+        stallsCopy[stallId] = { id: stallId, occupants: this.countMembers(channel) };
         return {
           stalls: stallsCopy,
         }
       })
     });
     channel.bind("pusher:member_added", () => {
-      this.updateOccupants(stallId, this.listMembers(channel));
+      this.updateOccupants(stallId, this.countMembers(channel));
     });
     channel.bind("pusher:member_removed", () => {
-      this.updateOccupants(stallId, this.listMembers(channel));
+      this.updateOccupants(stallId, this.countMembers(channel));
     });
   };
 
@@ -133,9 +112,7 @@ class App extends Component {
         this.updateOccupants(i, currentStall.occupants+1);
         this.setState(currentState => {
           return {
-            currentViewType: 'stall',
-            currentView: <Stall id={stallId} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateOccupants} />,
-
+            currentView: { type: 'stall', id: stallId },
           };
         });
         stallEntered = true;
@@ -166,7 +143,7 @@ class App extends Component {
   }
 
   // in line
-  updateVisitors(members) {
+  updateAppMembers(members) {
     this.setState({
       pusher_app_members: members,
     });
@@ -184,16 +161,22 @@ class App extends Component {
       );
     }
     let in_stall = this.state.stalls.map((stall) => stall.occupants).reduce((a,b)=>a+b, 0);
+    let in_line = this.state.pusher_app_members.count-in_stall;
+    // default view is waiting room
+    let currentView = <WaitingRoom onEnterStall={this.handleEnterStall} inLine={in_line} />;
+    if (this.state.currentView.type === 'stall') {
+      currentView = <Stall id={this.state.currentView.id} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateOccupants} />;
+    }
     return (
       <div id="app" className="component-box">
         Number of Stalls: {this.num_stalls}<br/>
         <h3>Current Users</h3>
-        <p><strong>In line:</strong> {this.state.pusher_app_members.count-in_stall}</p>
+        <p><strong>In line:</strong> {in_line}</p>
         <p><strong>In app:</strong> {this.state.pusher_app_members.count}</p>
         <ul>{visitorsList}</ul>
         <h3>Stalls</h3>
         {stalls}<br/>
-        {this.state.currentView}
+        {currentView}
       </div>
     );
   }
