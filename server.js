@@ -50,6 +50,13 @@ app.post('/pusher/auth', (req, res) => {
   res.send(auth);
 });
 
+app.post('/message', (req, res) => {
+  const payload = req.body;
+  const channel = req.body.channel_name;
+  pusher.trigger(channel, 'message', payload);
+  res.send(payload);
+});
+
 // create a GET route
 // app.get('/express_backend', (req, res) => {
 //   res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });

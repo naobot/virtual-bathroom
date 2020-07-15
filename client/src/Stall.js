@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-// import Pusher from 'pusher-js';
+import Button from './Button';
+import StallFront from './StallFront';
+import StallUp from './StallUp';
+import StallLeft from './StallLeft';
+import StallRight from './StallRight';
+import StallDown from './StallDown';
+import StallBack from './StallBack';
 
 class Stall extends Component {
   constructor(props) {
@@ -11,10 +17,12 @@ class Stall extends Component {
     this.state = {
       occupants: {count: 0},
       userHex: '#ffffff',
+      currentView: 'stall-front',
     };
     this.max_occupancy = props.max;
     this.updateOccupants = this.updateOccupants.bind(this);
     this.countOccupants = this.countOccupants.bind(this);
+    this.handleNavigationClick = this.handleNavigationClick.bind(this);
   }
 
   componentDidMount() {
@@ -40,7 +48,7 @@ class Stall extends Component {
   // returns true count of occupants (excluding spies)
   countOccupants(members) {
     var count = 0;
-    console.log(`countOccupants() members in stall ${this.id}:`);
+    // console.log(`countOccupants() members in stall ${this.id}:`);
     if (members.count > 0) {
       members.each(function (member) {
         if (!member.info.isSpy) { count++ }
@@ -50,20 +58,45 @@ class Stall extends Component {
   }
 
   updateOccupants(members) {
-    console.log(`Stall.js updateOccupants: stall id ${this.id}, numOccupants ${members.count}`);
+    // console.log(`Stall.js updateOccupants: stall id ${this.id}, numOccupants ${members.count}`);
     this.setState({
       occupants: members,
     }, () => this.props.onOccupancyChange(this.countOccupants(members), 'stall', this.id));
+  }
+
+  handleNavigationClick(target) {
+    this.setState({ currentView: target });
   }
 
   render() {
     const colorStyle = {
       color: this.state.userHex,
     }
+    var currentView = <StallFront handleNavigationClick={this.handleNavigationClick} />;
+    switch (this.state.currentView) {
+      case 'stall-front':
+        currentView = <StallFront handleNavigationClick={this.handleNavigationClick} />;
+        break;
+      case 'stall-up':
+        currentView = <StallUp handleNavigationClick={this.handleNavigationClick} />;
+        break;
+      case 'stall-left':
+        currentView = <StallLeft handleNavigationClick={this.handleNavigationClick} />;
+        break;
+      case 'stall-right': // contains chatbox
+        currentView = <StallRight channel={this.presenceChannel} userHex={this.state.userHex} handleNavigationClick={this.handleNavigationClick} />;
+        break;
+      case 'stall-down':
+        currentView = <StallDown handleNavigationClick={this.handleNavigationClick} />;
+        break;
+      case 'stall-back':
+        currentView = <StallBack handleNavigationClick={this.handleNavigationClick} />;
+        break;
+    }
     return (
-      <div id="stall" className="component-box" style={colorStyle}>
-        <h2>Stall {this.id}</h2>
-        Stall: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}
+      <div id="stall" className="component-box">
+        <h2>Stall {this.id}: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}</h2>
+        {currentView}
       </div>
     );
   }

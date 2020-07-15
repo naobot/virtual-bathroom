@@ -82,6 +82,31 @@ class App extends Component {
     return count
   };
 
+  // generic 'true' member count (excludes spies)
+  updateMemberCount(num, location, stallId) {
+    if (location === 'stall') {
+      var stallsCopy = Array.from(this.state.stalls);
+      stallsCopy[stallId] = { id: stallId, occupants: num };
+      this.setState(currentState => {
+        return {
+          stalls: stallsCopy,
+        }
+      });
+    }
+    else if (location === 'waiting') {
+      this.setState(currentState => {
+        return { inLine: num }
+      });
+    }
+  }
+
+  // in app
+  updateAppMembers(members) {
+    this.setState({
+      pusher_app_members: members,
+    });
+  }
+
   // spy on a channel
   spyOn(channelName, location) {
     var channel = this.spy.subscribe(channelName);
@@ -104,6 +129,10 @@ class App extends Component {
     });
   };
 
+  /* BEGIN: View transition functions 
+    -----------------------------------
+  */
+  // hallway -> bathroom
   handleEnterBathroom(e) {
     this.setState(currentState => {
       return {
@@ -112,6 +141,7 @@ class App extends Component {
     })
   }
 
+  // bathroom -> stall
   handleEnterStall(e) {
     var stallEntered = false;
     this.pusher.unsubscribe('presence-bathroom');
@@ -127,7 +157,6 @@ class App extends Component {
           };
         });
         stallEntered = true;
-        console.log(this.occupant_dict);
       }
       else {
         console.log(`Stall ${i} full`);
@@ -137,32 +166,6 @@ class App extends Component {
     if (!stallEntered) {
       alert('no vacant stalls available!');
     }
-
-  }
-
-  // generic
-  updateMemberCount(num, location, stallId) {
-    if (location === 'stall') {
-      var stallsCopy = Array.from(this.state.stalls);
-      stallsCopy[stallId] = { id: stallId, occupants: num };
-      this.setState(currentState => {
-        return {
-          stalls: stallsCopy,
-        }
-      });
-    }
-    else if (location === 'waiting') {
-      this.setState(currentState => {
-        return { inLine: num }
-      });
-    }
-  }
-
-  // in line
-  updateAppMembers(members) {
-    this.setState({
-      pusher_app_members: members,
-    });
   }
 
   render() {
@@ -170,12 +173,12 @@ class App extends Component {
       <li key={stall.id.toString()}>Stall {stall.id}: {stall.occupants}/{this.max_occupancy}</li>
     );
 
-    let visitorsList = [];
-    if (this.state.pusher_app_members.count > 0) {
-      this.state.pusher_app_members.each((visitor) => 
-        visitorsList.push(<li key={visitor.id.toString()}>{visitor.id}</li>)
-      );
-    }
+    // let visitorsList = [];
+    // if (this.state.pusher_app_members.count > 0) {
+    //   this.state.pusher_app_members.each((visitor) => 
+    //     visitorsList.push(<li key={visitor.id.toString()}>{visitor.id}</li>)
+    //   );
+    // }
     // default view is hallway
     let currentView = <Hallway onEnterBathroom={this.handleEnterBathroom} />
     if (this.state.currentView.type === 'waiting') { 
@@ -187,10 +190,8 @@ class App extends Component {
     return (
       <div id="app" className="component-box">
         Number of Stalls: {this.num_stalls}<br/>
-        <h3>Current Users</h3>
+        <h3>Current Users: {this.state.pusher_app_members.count}</h3>
         <p><strong>In line:</strong> {this.state.inLine}</p>
-        <p><strong>In app:</strong> {this.state.pusher_app_members.count}</p>
-        <ul>{visitorsList}</ul>
         <h3>Stalls</h3>
         {stalls}<br/>
         {currentView}
