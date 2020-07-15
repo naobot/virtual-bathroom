@@ -8,8 +8,6 @@ const Datastore = require('nedb');
 
 const app = express();
 
-const db = new Datastore();
-
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID,
   key: process.env.PUSHER_APP_KEY,
@@ -23,12 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  db.find({}, (err, data) => {
-    if (err) {
-      return res.status(500).send(err);
-      res.json(data);
-    }
-  });
+  res.sendfile('public/index.html');
 });
 
 app.set('port', process.env.PORT || 5000);
