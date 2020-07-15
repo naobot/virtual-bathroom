@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Button from './Button';
 import StallFront from './StallFront';
 import StallUp from './StallUp';
 import StallLeft from './StallLeft';
@@ -74,9 +73,6 @@ class Stall extends Component {
     }
     var currentView = <StallFront handleNavigationClick={this.handleNavigationClick} />;
     switch (this.state.currentView) {
-      case 'stall-front':
-        currentView = <StallFront handleNavigationClick={this.handleNavigationClick} />;
-        break;
       case 'stall-up':
         currentView = <StallUp handleNavigationClick={this.handleNavigationClick} />;
         break;
@@ -92,9 +88,13 @@ class Stall extends Component {
       case 'stall-back':
         currentView = <StallBack handleNavigationClick={this.handleNavigationClick} />;
         break;
+      case 'stall-front':
+      default:
+        currentView = <StallFront handleNavigationClick={this.handleNavigationClick} />;
+        break;
     }
     return (
-      <div id="stall" className="component-box">
+      <div id="stall">
         <h2>Stall {this.id}: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}</h2>
         {currentView}
       </div>

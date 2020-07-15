@@ -3,6 +3,8 @@ import Pusher from 'pusher-js';
 import Hallway from './Hallway'
 import WaitingRoom from './WaitingRoom';
 import Stall from './Stall';
+import './css/normalize.css';
+import './css/App.css';
 
 class App extends Component {
   constructor(props) {
@@ -28,7 +30,7 @@ class App extends Component {
       inLine: 0,
       message: '',
     };
-    this.max_occupancy = 1; // ADJUST AS NEEDED
+    this.max_occupancy = 2; // ADJUST AS NEEDED
     this.num_stalls = 2; // ADJUST AS NEEDED
     this.countMembers = this.countMembers.bind(this);
     this.spyOn = this.spyOn.bind(this);
@@ -61,10 +63,6 @@ class App extends Component {
       console.log(`${member.id} left Bathroom App`);
     });
   }
-
-  // componentDidUpdate() {
-  //   console.log('App updated');
-  // }
 
   componentWillUnmount() {
     this.pusher.unsubscribe('presence-app');
@@ -188,12 +186,14 @@ class App extends Component {
       currentView = <Stall id={this.state.currentView.id} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateMemberCount} />;
     }
     return (
-      <div id="app" className="component-box">
-        Number of Stalls: {this.num_stalls}<br/>
-        <h3>Current Users: {this.state.pusher_app_members.count}</h3>
-        <p><strong>In line:</strong> {this.state.inLine}</p>
-        <h3>Stalls</h3>
-        {stalls}<br/>
+      <div id="app">
+        <div id="debug-console" className="hide">
+          Number of Stalls: {this.num_stalls}<br/>
+          <h3>Current Users: {this.state.pusher_app_members.count}</h3>
+          <p><strong>In line:</strong> {this.state.inLine}</p>
+          <h3>Stalls</h3>
+          {stalls}<br/>
+        </div>
         {currentView}
       </div>
     );

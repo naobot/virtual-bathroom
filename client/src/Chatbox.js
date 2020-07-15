@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Button from './Button';
 import Chatlist from './Chatlist';
 import axios from 'axios';
 
@@ -29,9 +28,10 @@ export default class Chatbox extends Component {
         message: this.state.text,
       };
       axios.post('http://localhost:5000/message', payload);
+      this.setState({ text: '' });
     }
     else {
-      this.setState({ text: e.target.value })
+      this.setState({ text: e.target.value });
     }
   }
 

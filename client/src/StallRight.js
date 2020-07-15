@@ -16,7 +16,7 @@ export default class StallRight extends PureComponent {
 
   render() {
     return (
-      <div id="stall-right" className="component-box">
+      <div id="stall-right" className="view">
         <h2>Stall: Right</h2>
         <Button onClick={() => this.handleNavigationClick('stall-front')} buttonText="Front" /><br />
         <Button onClick={() => this.handleNavigationClick('stall-up')} buttonText="Up" /><br />

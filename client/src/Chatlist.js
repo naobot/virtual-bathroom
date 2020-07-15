@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Button from './Button';
-import axios from 'axios';
 
 export default class Chatlist extends Component {
   constructor(props) {
