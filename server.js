@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.sendfile('public/index.html');
+  res.sendFile('/build/index.html');
 });
 
 app.set('port', process.env.PORT || 5000);
