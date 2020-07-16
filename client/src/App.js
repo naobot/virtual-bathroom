@@ -172,10 +172,11 @@ class App extends Component {
   }
 
   render() {
+    var hide = 'hide';
     if (LOGGING) { console.log('render() rooms:') }
-    if (LOGGING) { console.log(this.state.rooms); }
+    if (LOGGING) { console.log(this.state.rooms); hide = null }
     const rooms = this.state.rooms.map((room) =>
-      <li key={room.id.toString()}>Room {room.id}: {room.occupants}/{this.max_occupancy}</li>
+      <li key={room.id.toString()}><strong>Room {room.id}:</strong> {room.occupants}/{this.max_occupancy}</li>
     );
 
     // let visitorsList = [];
@@ -194,12 +195,16 @@ class App extends Component {
     }
     return (
       <div id="app">
-        <div id="debug-console" className="show">
-          Number of Rooms: {this.num_rooms}<br/>
-          <h3>Current Users: {this.state.pusher_app_members.count}</h3>
-          <p><strong>In line:</strong> {this.state.inLine}</p>
-          <h3>Rooms</h3>
-          {rooms}<br/>
+        <div id="debug-console" className={hide}>
+          <div>
+            <div>Number of Rooms: {this.num_rooms}</div>
+            <div><strong>Current Users:</strong> {this.state.pusher_app_members.count}</div>
+            <div><strong>In line:</strong> {this.state.inLine}</div>
+          </div>
+          <div>
+            <strong>Rooms:</strong>
+            {rooms}
+          </div>
         </div>
         {currentView}
       </div>

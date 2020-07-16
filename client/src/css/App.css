@@ -2,6 +2,14 @@
   display: none;
 }
 
+#debug-console {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 12px;
+  background-color: #eae9ba;
+  color: #6b695a;
+}
+
 #app {
   position: fixed;
   top: 0;
@@ -17,6 +25,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 12px;
 }
 
 #hallway {
