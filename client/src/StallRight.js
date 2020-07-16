@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Button from './Button';
 import Chatbox from './Chatbox';
 
-export default class StallRight extends PureComponent {
+export default class RoomRight extends PureComponent {
   constructor(props) {
     super(props);
     this.channel = props.channel;

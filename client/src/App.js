@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Pusher from 'pusher-js';
 import Hallway from './Hallway'
 import WaitingRoom from './WaitingRoom';
-import Stall from './Stall';
+import Room from './Room';
 import './css/normalize.css';
 import './css/App.css';
 
@@ -25,25 +25,25 @@ class App extends Component {
     this.me = null;
     this.state = {
       currentView: { type: 'hallway', id: null },
-      stalls: [], // object of Stall components
+      rooms: [], // object of Room components
       pusher_app_members: { count: 0 }, // pusher members object
       inLine: 0,
       message: '',
     };
     this.max_occupancy = 2; // ADJUST AS NEEDED
-    this.num_stalls = 2; // ADJUST AS NEEDED
+    this.num_rooms = 2; // ADJUST AS NEEDED
     this.countMembers = this.countMembers.bind(this);
     this.spyOn = this.spyOn.bind(this);
     this.handleEnterBathroom = this.handleEnterBathroom.bind(this);
-    this.handleEnterStall = this.handleEnterStall.bind(this);
+    this.handleEnterRoom = this.handleEnterRoom.bind(this);
     this.updateMemberCount = this.updateMemberCount.bind(this);
   }
 
 
   componentDidMount() {
     this.spyOn('presence-bathroom', 'waiting');
-    for (var i = 0; i < this.num_stalls; i++) {
-      this.spyOn(`presence-stall-${i}`, 'stall');
+    for (var i = 0; i < this.num_rooms; i++) {
+      this.spyOn(`presence-room-${i}`, 'room');
     }
     // main app channel
     this.presenceChannel = this.pusher.subscribe('presence-app');
@@ -73,7 +73,7 @@ class App extends Component {
   countMembers(channel) {
     // console.log("Current users in " + channel.name + ":");
     var count = 0;
-    // var stallId = channel.name.split('-').pop();
+    // var roomId = channel.name.split('-').pop();
     channel.members.each(function (member) {
       if (!member.info.isSpy) { console.log("user: " + member.id); count++; }
     });
@@ -81,13 +81,13 @@ class App extends Component {
   };
 
   // generic 'true' member count (excludes spies)
-  updateMemberCount(num, location, stallId) {
-    if (location === 'stall') {
-      var stallsCopy = Array.from(this.state.stalls);
-      stallsCopy[stallId] = { id: stallId, occupants: num };
+  updateMemberCount(num, location, roomId) {
+    if (location === 'room') {
+      var roomsCopy = Array.from(this.state.rooms);
+      roomsCopy[roomId] = { id: roomId, occupants: num };
       this.setState(currentState => {
         return {
-          stalls: stallsCopy,
+          rooms: roomsCopy,
         }
       });
     }
@@ -108,22 +108,22 @@ class App extends Component {
   // spy on a channel
   spyOn(channelName, location) {
     var channel = this.spy.subscribe(channelName);
-    var stallId = null;
-    if (location === 'stall') {
-      stallId = channelName.split('-').pop();
+    var roomId = null;
+    if (location === 'room') {
+      roomId = channelName.split('-').pop();
     }
     // console.log('trying to spy');
     // console.log(channel);
     channel.bind("pusher:subscription_succeeded", () => {
       console.log(`spying on ${channelName}`);
-      this.updateMemberCount(this.countMembers(channel), location, stallId);
+      this.updateMemberCount(this.countMembers(channel), location, roomId);
     });
     channel.bind("pusher:member_added", () => {
-      this.updateMemberCount(this.countMembers(channel), location, stallId);
+      this.updateMemberCount(this.countMembers(channel), location, roomId);
     });
     channel.bind("pusher:member_removed", () => {
       console.log(`someone left ${channelName}`);
-      this.updateMemberCount(this.countMembers(channel), location, stallId);
+      this.updateMemberCount(this.countMembers(channel), location, roomId);
     });
   };
 
@@ -139,36 +139,36 @@ class App extends Component {
     })
   }
 
-  // bathroom -> stall
-  handleEnterStall(e) {
-    var stallEntered = false;
+  // bathroom -> room
+  handleEnterRoom(e) {
+    var roomEntered = false;
     this.pusher.unsubscribe('presence-bathroom');
 
-    for (var i = 0; !stallEntered && i < this.state.stalls.length; i++) {
-      var currentStall = {...this.state.stalls[i]};
-      let stallId = i;
-      if (currentStall.occupants < this.max_occupancy) {
-        this.updateMemberCount(currentStall.occupants+1, 'stall', i);
+    for (var i = 0; !roomEntered && i < this.state.rooms.length; i++) {
+      var currentRoom = {...this.state.rooms[i]};
+      let roomId = i;
+      if (currentRoom.occupants < this.max_occupancy) {
+        this.updateMemberCount(currentRoom.occupants+1, 'room', i);
         this.setState(currentState => {
           return {
-            currentView: { type: 'stall', id: stallId },
+            currentView: { type: 'room', id: roomId },
           };
         });
-        stallEntered = true;
+        roomEntered = true;
       }
       else {
-        console.log(`Stall ${i} full`);
+        console.log(`Room ${i} full`);
       }
     }
 
-    if (!stallEntered) {
-      alert('no vacant stalls available!');
+    if (!roomEntered) {
+      alert('no vacant rooms available!');
     }
   }
 
   render() {
-    const stalls = this.state.stalls.map((stall) =>
-      <li key={stall.id.toString()}>Stall {stall.id}: {stall.occupants}/{this.max_occupancy}</li>
+    const rooms = this.state.rooms.map((room) =>
+      <li key={room.id.toString()}>Room {room.id}: {room.occupants}/{this.max_occupancy}</li>
     );
 
     // let visitorsList = [];
@@ -180,19 +180,19 @@ class App extends Component {
     // default view is hallway
     let currentView = <Hallway onEnterBathroom={this.handleEnterBathroom} />
     if (this.state.currentView.type === 'waiting') { 
-      currentView = <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} onOccupancyChange={this.updateMemberCount} />; 
+      currentView = <WaitingRoom onEnterRoom={this.handleEnterRoom} pusher={this.pusher} onOccupancyChange={this.updateMemberCount} />; 
     }
-    if (this.state.currentView.type === 'stall') {
-      currentView = <Stall id={this.state.currentView.id} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateMemberCount} />;
+    if (this.state.currentView.type === 'room') {
+      currentView = <Room id={this.state.currentView.id} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateMemberCount} />;
     }
     return (
       <div id="app">
         <div id="debug-console" className="hide">
-          Number of Stalls: {this.num_stalls}<br/>
+          Number of Rooms: {this.num_rooms}<br/>
           <h3>Current Users: {this.state.pusher_app_members.count}</h3>
           <p><strong>In line:</strong> {this.state.inLine}</p>
-          <h3>Stalls</h3>
-          {stalls}<br/>
+          <h3>Rooms</h3>
+          {rooms}<br/>
         </div>
         {currentView}
       </div>

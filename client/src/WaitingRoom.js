@@ -10,7 +10,7 @@ class WaitingRoom extends Component {
       occupants: { count: 0 },
     }
     this.countOccupants = this.countOccupants.bind(this);
-    this.handleEnterStallClick = this.handleEnterStallClick.bind(this);
+    this.handleEnterRoomClick = this.handleEnterRoomClick.bind(this);
   }
 
   componentDidMount() {
@@ -24,7 +24,7 @@ class WaitingRoom extends Component {
     });
     this.presenceChannel.bind('pusher:member_removed', () => {
       this.updateOccupants(this.presenceChannel.members);
-      console.log(`WaitingRoom.js: someone left Stall ${this.id}`);
+      console.log(`WaitingRoom.js: someone left Room ${this.id}`);
     });
   }
 
@@ -48,8 +48,8 @@ class WaitingRoom extends Component {
   }
 
 
-  handleEnterStallClick(e) {
-    this.props.onEnterStall(e);
+  handleEnterRoomClick(e) {
+    this.props.onEnterRoom(e);
   }
 
   render() {
@@ -69,7 +69,7 @@ class WaitingRoom extends Component {
       enterMessage = `${ahead} ahead of you in line`;
     }
     else {
-      enterMessage = <Button onClick={this.handleEnterStallClick} buttonText="Enter Stall" />;
+      enterMessage = <Button onClick={this.handleEnterRoomClick} buttonText="Enter Stall" />;
     }
 
     return (
