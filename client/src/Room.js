@@ -25,7 +25,7 @@ class Stall extends Component {
   }
 
   componentDidMount() {
-    this.presenceChannel = this.pusher.subscribe(`presence-stall-${this.id}`);
+    this.presenceChannel = this.pusher.subscribe(`presence-room-${this.id}`);
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
       this.me = this.presenceChannel.members.me.id;
       this.setState(currentState => {
@@ -60,7 +60,7 @@ class Stall extends Component {
     // console.log(`Stall.js updateOccupants: stall id ${this.id}, numOccupants ${members.count}`);
     this.setState({
       occupants: members,
-    }, () => this.props.onOccupancyChange(this.countOccupants(members), 'stall', this.id));
+    }, () => this.props.onOccupancyChange(this.countOccupants(members), 'room', this.id));
   }
 
   handleNavigationClick(target) {
@@ -94,8 +94,8 @@ class Stall extends Component {
         break;
     }
     return (
-      <div id="stall">
-        <h2>Stall {this.id}: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}</h2>
+      <div id="room">
+        <h2>Room {this.id}: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}</h2>
         {currentView}
       </div>
     );

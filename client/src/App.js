@@ -6,6 +6,8 @@ import Room from './Room';
 import './css/normalize.css';
 import './css/App.css';
 
+const LOGGING = true;
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,7 @@ class App extends Component {
     this.me = null;
     this.state = {
       currentView: { type: 'hallway', id: null },
-      rooms: [], // object of Room components
+      rooms: [], // array of Room components
       pusher_app_members: { count: 0 }, // pusher members object
       inLine: 0,
       message: '',
@@ -50,17 +52,19 @@ class App extends Component {
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
       this.me = this.presenceChannel.members.me.id;
       this.updateAppMembers(this.presenceChannel.members);
-      // console.log(this.presenceChannel.members.me.id + ' subscribed to WaitingRoom');
+      if (LOGGING) { console.log(this.presenceChannel.members.me.id + ' subscribed to WaitingRoom'); }
     });
     this.presenceChannel.bind('pusher:member_added', () => {
       this.updateAppMembers(this.presenceChannel.members);
-      console.log(`currentViewType: ${this.state.currentViewType}`);
-      // console.log('someone joined Bathroom App');
+      if (LOGGING) {
+        console.log(`currentView: ${this.state.currentView}`);
+        console.log('someone joined Bathroom App');
+      }
     });
     // someone left App
     this.presenceChannel.bind('pusher:member_removed', (member) => {
       this.updateAppMembers(this.presenceChannel.members);
-      console.log(`${member.id} left Bathroom App`);
+      if (LOGGING) { console.log(`${member.id} left Bathroom App`); }
     });
   }
 
@@ -71,7 +75,7 @@ class App extends Component {
   // returns a the number of members connected to channel
   // excluding spies
   countMembers(channel) {
-    // console.log("Current users in " + channel.name + ":");
+    if (LOGGING) { console.log("countMembers(): Current users in " + channel.name + ":"); }
     var count = 0;
     // var roomId = channel.name.split('-').pop();
     channel.members.each(function (member) {
@@ -112,17 +116,18 @@ class App extends Component {
     if (location === 'room') {
       roomId = channelName.split('-').pop();
     }
-    // console.log('trying to spy');
-    // console.log(channel);
+    if (LOGGING) {
+      console.log(`trying to spy on ${channel.name}`);
+    }
     channel.bind("pusher:subscription_succeeded", () => {
-      console.log(`spying on ${channelName}`);
+      if (LOGGING) { console.log(`spying on ${channelName}`); }
       this.updateMemberCount(this.countMembers(channel), location, roomId);
     });
     channel.bind("pusher:member_added", () => {
       this.updateMemberCount(this.countMembers(channel), location, roomId);
     });
     channel.bind("pusher:member_removed", () => {
-      console.log(`someone left ${channelName}`);
+      if (LOGGING) { console.log(`someone left ${channelName}`); }
       this.updateMemberCount(this.countMembers(channel), location, roomId);
     });
   };
@@ -167,6 +172,8 @@ class App extends Component {
   }
 
   render() {
+    if (LOGGING) { console.log('render() rooms:') }
+    if (LOGGING) { console.log(this.state.rooms); }
     const rooms = this.state.rooms.map((room) =>
       <li key={room.id.toString()}>Room {room.id}: {room.occupants}/{this.max_occupancy}</li>
     );
@@ -187,7 +194,7 @@ class App extends Component {
     }
     return (
       <div id="app">
-        <div id="debug-console" className="hide">
+        <div id="debug-console" className="show">
           Number of Rooms: {this.num_rooms}<br/>
           <h3>Current Users: {this.state.pusher_app_members.count}</h3>
           <p><strong>In line:</strong> {this.state.inLine}</p>

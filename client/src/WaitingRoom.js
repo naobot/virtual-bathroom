@@ -59,7 +59,12 @@ class WaitingRoom extends Component {
       this.state.occupants.each((visitor) => {
         if (!visitor.info.isSpy) {
           trueOccupants.push(visitor.id);
-          trueOccupantsList.push(<li key={visitor.id.toString()}>{visitor.id}</li>);
+          if (visitor.id === this.state.me) {
+            trueOccupantsList.push(<li key={visitor.id.toString()}><strong>{visitor.id}</strong></li>);
+          }
+          else {
+            trueOccupantsList.push(<li key={visitor.id.toString()}>{visitor.id}</li>);
+          }
         }
       });
     }
