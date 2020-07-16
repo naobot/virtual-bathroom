@@ -4,11 +4,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Pusher = require('pusher');
-const Datastore = require('nedb');
+const path = require('path');
 
 const app = express();
-
-const db = new Datastore();
 
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID,
@@ -22,13 +20,10 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(express.static(path.join(__dirname, 'build')));
+
 app.get('/', (req, res) => {
-  db.find({}, (err, data) => {
-    if (err) {
-      return res.status(500).send(err);
-      res.json(data);
-    }
-  });
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.set('port', process.env.PORT || 5000);
