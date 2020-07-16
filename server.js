@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Pusher = require('pusher');
-const Datastore = require('nedb');
+const path = require('path');
 
 const app = express();
 
@@ -20,8 +20,10 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(express.static(path.join(__dirname, 'build')));
+
 app.get('/', (req, res) => {
-  res.sendFile('/build/index.html');
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.set('port', process.env.PORT || 5000);

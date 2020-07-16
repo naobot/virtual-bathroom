@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import Button from './Button';
 
-export default class StallUp extends PureComponent {
+export default class RoomUp extends PureComponent {
   constructor(props) {
     super(props);
     this.handleNavigationClick = this.handleNavigationClick.bind(this);
   }
 
   // componentDidMount() {
-  //   console.log(`waiting room mounted`);
+  //   console.log(`waiting stall mounted`);
   // }
 
   handleNavigationClick(target) {
