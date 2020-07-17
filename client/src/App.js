@@ -176,7 +176,10 @@ class App extends Component {
   }
 
   render() {
-    var hide = process.env.NODE_ENV === 'production';
+    var hide = null;
+    if (process.env.NODE_ENV !== 'production') {
+      hide = 'hide';
+    }
     if (LOGGING) { console.log('render() rooms:') }
     if (LOGGING) { console.log(this.state.rooms); hide = null }
     console.log(`running in ${process.env.NODE_ENV} mode`);
