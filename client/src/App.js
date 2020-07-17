@@ -177,9 +177,9 @@ class App extends Component {
 
   render() {
     var hide = null;
-    if (process.env.NODE_ENV !== 'production') {
-      hide = 'hide';
-    }
+    // if (process.env.NODE_ENV === 'production') {
+    //   hide = 'hide';
+    // }
     if (LOGGING) { console.log('render() rooms:') }
     if (LOGGING) { console.log(this.state.rooms); hide = null }
     console.log(`running in ${process.env.NODE_ENV} mode`);
@@ -206,7 +206,7 @@ class App extends Component {
         <div id="debug-console" className={hide}>
           <div>
             THE APP IS RUNNING IN <strong>{process.env.NODE_ENV}</strong> MODE<br/>
-            this box will not visible in production
+            this box is for development purposes only
           </div>
           <div>
             <div>Number of Rooms: {this.num_rooms}</div>
