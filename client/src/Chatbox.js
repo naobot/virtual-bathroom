@@ -11,6 +11,7 @@ export default class Chatbox extends Component {
     this.channel = props.channel;
     this.userHex = props.userHex;
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
     this.state = {
       text: '',
       chats: [],
@@ -21,6 +22,14 @@ export default class Chatbox extends Component {
     this.channel.bind('message', data => {
       this.setState({ chats: [...this.state.chats, data], test: '' });
     });
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   handleTextChange(e) {
@@ -40,6 +49,7 @@ export default class Chatbox extends Component {
       }
       axios.post(ENDPOINT + 'message', payload);
       this.setState({ text: '' });
+      this.scrollToBottom();
     }
     else {
       this.setState({ text: e.target.value });
@@ -50,7 +60,12 @@ export default class Chatbox extends Component {
     return (
       <div id="chatbox" className="component-box">
         <h2>Chatbox</h2>
-        <Chatlist chats={this.state.chats} />
+        <div className="chatlist-container">
+          <Chatlist chats={this.state.chats} />
+          <div style={{ float:"left", clear: "both" }}
+             ref={(el) => { this.messagesEnd = el; }}>
+          </div>
+        </div>
         <input
           type="text"
           value={this.state.text}
