@@ -95,8 +95,12 @@ class Stall extends Component {
     }
     return (
       <div id="room">
-        <h2>Room {this.id}: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}</h2>
-        {currentView}
+        <div>
+          <h2>Room {this.id}: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}</h2>
+        </div>
+        <div>
+          {currentView}
+        </div>
       </div>
     );
   }

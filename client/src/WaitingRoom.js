@@ -79,10 +79,16 @@ class WaitingRoom extends Component {
 
     return (
       <div id="waiting" className="view">
-        <h2>Waiting Room</h2>
-        In line: {this.countOccupants(this.state.occupants)}<br/>
-        <ul>{trueOccupantsList}</ul>
-        {enterMessage}
+        <div>
+          <h2>Waiting Room</h2>
+        </div>
+        <div>
+          In line: {this.countOccupants(this.state.occupants)}
+        </div>
+        <div>
+          <ul>{trueOccupantsList}</ul>
+          {enterMessage}
+        </div>
       </div>
     );
   }
