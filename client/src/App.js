@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
 import Pusher from 'pusher-js';
+import dotenv from 'dotenv';
+
 import Hallway from './Hallway'
 import WaitingRoom from './WaitingRoom';
 import Room from './Room';
+
 import './css/normalize.css';
 import './css/App.css';
 
-const LOGGING = true;
+dotenv.config({ path: '.env' });
+const LOGGING = process.env.NODE_ENV === 'development';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.pusher = new Pusher('93d5b6db6095187f5ef6', {
-      cluster: 'us2',
+    this.pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
+      cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
       encrypted: true,
     });
-    this.spy = new Pusher('93d5b6db6095187f5ef6', {
+    this.spy = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
       encrypted: true,
-      cluster: 'us2',
+      cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
       auth: {
         params: {
           isSpy: true
@@ -172,9 +176,10 @@ class App extends Component {
   }
 
   render() {
-    var hide = 'hide';
+    var hide = process.env.NODE_ENV === 'production';
     if (LOGGING) { console.log('render() rooms:') }
     if (LOGGING) { console.log(this.state.rooms); hide = null }
+    console.log(`running in ${process.env.NODE_ENV} mode`);
     const rooms = this.state.rooms.map((room) =>
       <li key={room.id.toString()}><strong>Room {room.id}:</strong> {room.occupants}/{this.max_occupancy}</li>
     );
@@ -196,6 +201,10 @@ class App extends Component {
     return (
       <div id="app">
         <div id="debug-console" className={hide}>
+          <div>
+            THE APP IS RUNNING IN <strong>{process.env.NODE_ENV}</strong> MODE<br/>
+            this box will not visible in production
+          </div>
           <div>
             <div>Number of Rooms: {this.num_rooms}</div>
             <div><strong>Current Users:</strong> {this.state.pusher_app_members.count}</div>

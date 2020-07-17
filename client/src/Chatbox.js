@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Chatlist from './Chatlist';
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
 
 export default class Chatbox extends Component {
   constructor(props) {
@@ -27,7 +30,15 @@ export default class Chatbox extends Component {
         userhex: this.userHex,
         message: this.state.text,
       };
-      axios.post('http://localhost:5000/message', payload);
+      // TODO: must change on deployment...
+      var ENDPOINT;
+      if (process.env.NODE_ENV === 'development' ) {
+        ENDPOINT = 'http://localhost:5000/'
+      }
+      else if (process.env.NODE_ENV === 'staging') {
+        ENDPOINT = 'https://virtual-bathroom.herokuapp.com/'
+      }
+      axios.post(ENDPOINT + 'message', payload);
       this.setState({ text: '' });
     }
     else {
