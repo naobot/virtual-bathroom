@@ -35,7 +35,7 @@ export default class Chatbox extends Component {
       if (process.env.NODE_ENV === 'development' ) {
         ENDPOINT = 'http://localhost:5000/'
       }
-      else if (process.env.NODE_ENV === 'staging') {
+      else {
         ENDPOINT = 'https://virtual-bathroom.herokuapp.com/'
       }
       axios.post(ENDPOINT + 'message', payload);
