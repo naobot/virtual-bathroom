@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import Hallway from './Hallway'
 import WaitingRoom from './WaitingRoom';
 import Room from './Room';
+import Bathroom from './Bathroom';
 
 import './css/normalize.css';
 import './css/App.css';
@@ -41,6 +42,7 @@ class App extends Component {
     this.countMembers = this.countMembers.bind(this);
     this.spyOn = this.spyOn.bind(this);
     this.handleEnterBathroom = this.handleEnterBathroom.bind(this);
+    this.handleEnterWaiting = this.handleEnterWaiting.bind(this);
     this.handleEnterRoom = this.handleEnterRoom.bind(this);
     this.updateMemberCount = this.updateMemberCount.bind(this);
   }
@@ -143,12 +145,21 @@ class App extends Component {
   handleEnterBathroom(e) {
     this.setState(currentState => {
       return {
+        currentView: { type: 'bathroom', id: null },
+      }
+    })
+  }
+
+  // bathroom -> wait for stall
+  handleEnterWaiting(e) {
+    this.setState(currentState => {
+      return {
         currentView: { type: 'waiting', id: null },
       }
     })
   }
 
-  // bathroom -> room
+  // waiting -> stall
   handleEnterRoom(e) {
     var roomEntered = false;
     this.pusher.unsubscribe('presence-bathroom');
@@ -195,7 +206,10 @@ class App extends Component {
     // }
     // default view is hallway
     let currentView = <Hallway onEnterBathroom={this.handleEnterBathroom} />
-    if (this.state.currentView.type === 'waiting') { 
+    if (this.state.currentView.type === 'bathroom') {
+      currentView = <Bathroom onEnterWaiting={this.handleEnterWaiting} />
+    }
+    else if (this.state.currentView.type === 'waiting') { 
       currentView = <WaitingRoom onEnterRoom={this.handleEnterRoom} pusher={this.pusher} onOccupancyChange={this.updateMemberCount} />; 
     }
     if (this.state.currentView.type === 'room') {
