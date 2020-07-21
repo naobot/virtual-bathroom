@@ -40,6 +40,18 @@
   background-position: center center;
   background-repeat: no-repeat;
 }
+#waiting {
+  background-image: url('../assets/bg-waiting.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+#mirrors {
+  background-image: url('../assets/bg-mirrors.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 
 #chatbox {
   justify-content: start;

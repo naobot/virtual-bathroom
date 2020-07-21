@@ -68,9 +68,6 @@ class Stall extends Component {
   }
 
   render() {
-    const colorStyle = {
-      color: this.state.userHex,
-    }
     var currentView = <StallFront handleNavigationClick={this.handleNavigationClick} />;
     switch (this.state.currentView) {
       case 'stall-up':

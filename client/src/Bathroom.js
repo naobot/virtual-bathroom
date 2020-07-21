@@ -39,9 +39,9 @@ class Bathroom extends Component {
     }
 
     return (
-      <div id="bathroom" className="view">
+      <div id={this.state.currentView} className="view">
         <div>
-          <h2>Bathroom</h2>
+          <h2>{this.state.currentView}</h2>
         </div>
         {currentView}
       </div>
