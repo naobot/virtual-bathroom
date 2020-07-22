@@ -61,7 +61,7 @@ export default class Chatbox extends Component {
       <div id="chatbox" className="component-box">
         <h2>Chatbox</h2>
         <div className="chatlist-container">
-          <Chatlist chats={this.state.chats} />
+          <Chatlist chats={this.state.chats} myHex={this.userHex} />
           <div style={{ float:"left", clear: "both" }}
              ref={(el) => { this.messagesEnd = el; }}>
           </div>

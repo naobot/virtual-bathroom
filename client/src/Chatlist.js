@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 export default class Chatlist extends Component {
   constructor(props) {
     super(props);
+    this.myHex = this.props.myHex;
     this.getColorStyle = this.getColorStyle.bind(this);
   }
 
@@ -19,7 +20,7 @@ export default class Chatlist extends Component {
             <div className="chatMessage">
               <div key={chat.id} className="box">
                 <p>
-                  <strong style={this.getColorStyle(chat.userhex)}>someone</strong>
+                  <strong style={this.getColorStyle(chat.userhex)}>{ chat.userhex === this.myHex ? 'you' : 'someone' }</strong>
                 </p>
                 <p>{chat.message}</p>
               </div>
