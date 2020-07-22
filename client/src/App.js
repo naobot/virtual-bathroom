@@ -37,7 +37,7 @@ class App extends Component {
       inLine: 0,
       message: '',
     };
-    this.max_occupancy = 2; // ADJUST AS NEEDED
+    this.max_occupancy = 3; // ADJUST AS NEEDED
     this.num_rooms = 2; // ADJUST AS NEEDED
     this.countMembers = this.countMembers.bind(this);
     this.spyOn = this.spyOn.bind(this);

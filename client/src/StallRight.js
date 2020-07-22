@@ -7,6 +7,7 @@ export default class RoomRight extends PureComponent {
     super(props);
     this.channel = props.channel;
     this.userHex = props.userHex;
+    this.myId = props.myId;
     this.handleNavigationClick = this.handleNavigationClick.bind(this);
   }
 
@@ -24,7 +25,7 @@ export default class RoomRight extends PureComponent {
         <Button onClick={() => this.handleNavigationClick('stall-right')} buttonText="Right" /><br />
         <Button onClick={() => this.handleNavigationClick('stall-down')} buttonText="Down" /><br />
         <Button onClick={() => this.handleNavigationClick('stall-back')} buttonText="Back" /><br />
-        <Chatbox userHex={this.userHex} channel={this.channel} />
+        <Chatbox userHex={this.userHex} occupantsByStall={this.props.occupantsByStall} channel={this.channel} myId={this.myId} />
       </div>
     );
   }
