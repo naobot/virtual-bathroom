@@ -10,6 +10,7 @@ class WaitingRoom extends Component {
       occupants: { count: 0 },
     }
     this.countOccupants = this.countOccupants.bind(this);
+    this.sortByEntryTime = this.sortByEntryTime.bind(this);
     this.handleEnterRoomClick = this.handleEnterRoomClick.bind(this);
   }
 
@@ -52,23 +53,37 @@ class WaitingRoom extends Component {
     this.props.onEnterRoom(e);
   }
 
+  sortByEntryTime(occupants) {
+    let sorted = []
+    occupants.forEach((member) => {
+      sorted.push(member);
+    });
+    return sorted.sort((a,b) => {
+      if (parseInt(a.info.entry_time) < parseInt(b.info.entry_time)) { return -1 }
+      if (parseInt(a.info.entry_time) > parseInt(b.info.entry_time)) { return 1 }
+      return 0
+    });
+  }
+
   render() {
     let trueOccupants = [];
     let trueOccupantsList = [];
     if (this.state.occupants.count > 0) {
       this.state.occupants.each((visitor) => {
         if (!visitor.info.isSpy) {
-          trueOccupants.push(visitor.id);
-          if (visitor.id === this.state.me) {
-            trueOccupantsList.push(<li key={visitor.id.toString()}><strong>{visitor.id}</strong></li>);
+          trueOccupants.push(visitor);
+          if (visitor.id.toString() === this.state.me.toString()) {
+            trueOccupantsList.push(<li key={visitor.id.toString()}><strong>{visitor.id}</strong> ({visitor.info.entry_time})</li>);
           }
           else {
-            trueOccupantsList.push(<li key={visitor.id.toString()}>{visitor.id}</li>);
+            trueOccupantsList.push(<li key={visitor.id.toString()}>{visitor.id} ({visitor.info.entry_time})</li>);
           }
         }
       });
+      trueOccupants = this.sortByEntryTime(trueOccupants);
     }
-    let ahead = trueOccupants.length - trueOccupants.indexOf(this.state.me.toString()) - 1;
+    
+    let ahead = trueOccupants.map((e) => { return e.id.toString() }).indexOf(this.state.me.toString());
     let enterMessage = 'please wait...';
     if (ahead > 0) {
       enterMessage = `${ahead} ahead of you in line`;
