@@ -21,7 +21,7 @@ export default class Chatlist extends Component {
             <div className="chatMessage">
               <div key={chat.id} className="box">
                 <p>
-                  <strong style={this.getColorStyle(chat.userhex)}>{ chat.userhex === this.myHex ? 'you' : `stall mate ${this.stallMap[chat.userId]}` }</strong>
+                  <strong style={this.getColorStyle(chat.userhex)}>{ chat.userhex === this.myHex ? 'you' : 'someone' }</strong>
                 </p>
                 <p>{chat.message}</p>
               </div>
