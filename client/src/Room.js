@@ -14,6 +14,8 @@ class Stall extends Component {
     this.presenceChannel = null;
     this.me = null;
     this.state = {
+      myStall: null,
+      occupantsByStall: {},
       occupants: {count: 0},
       userHex: '#ffffff',
       currentView: 'stall-front',
@@ -29,18 +31,54 @@ class Stall extends Component {
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
       this.me = this.presenceChannel.members.me.id;
       this.setState(currentState => {
+        let stall = 0;
+        let _occupantsByStall = {};
+        let _myStall = null;
+        var currentOccupants = this.presenceChannel.members.each((member) => {
+          if (!member.info.isSpy) {
+            _occupantsByStall[stall] = member.id;
+            if (member.id === this.me) {
+              _myStall = stall;
+            }
+            stall++;
+          }
+        });
         return {
+          myStall: _myStall,
+          occupantsByStall: _occupantsByStall,
           userHex: '#' + Math.floor(parseInt(this.presenceChannel.members.me.id)*16777215).toString(16).slice(-6)
         }
       });
       this.updateOccupants(this.presenceChannel.members);
     });
-    this.presenceChannel.bind('pusher:member_added', () => {
+    this.presenceChannel.bind('pusher:member_added', (member) => {
+      this.setState(currentState => {
+        let _occupantsByStall = Object.assign({}, currentState.occupantsByStall);
+        let stall = 0;
+        while (_occupantsByStall[stall] && stall < this.max_occupancy) {
+          stall++;
+        }
+        _occupantsByStall[stall] = member.id;
+        return {
+          occupantsByStall: _occupantsByStall,
+        }
+      });
       this.updateOccupants(this.presenceChannel.members);
     });
-    this.presenceChannel.bind('pusher:member_removed', () => {
+    this.presenceChannel.bind('pusher:member_removed', (member) => {
+      this.setState(currentState => {
+        let _occupantsByStall = Object.assign({}, currentState.occupantsByStall);
+        let stall = 0;
+        while (_occupantsByStall[stall] !== member.id && stall < this.max_occupancy) {
+          stall++;
+        }
+        _occupantsByStall[stall] = null;
+        return {
+          occupantsByStall: _occupantsByStall,
+        }
+      });
       this.updateOccupants(this.presenceChannel.members);
-      console.log(`Stall.js: someone left Stall ${this.id}`);
+      console.log(`Stall.js: ${member.id} left Stall ${this.id}`);
     });
   }
 
@@ -77,7 +115,7 @@ class Stall extends Component {
         currentView = <StallLeft handleNavigationClick={this.handleNavigationClick} />;
         break;
       case 'stall-right': // contains chatbox
-        currentView = <StallRight channel={this.presenceChannel} userHex={this.state.userHex} handleNavigationClick={this.handleNavigationClick} />;
+        currentView = <StallRight myId={this.me} occupantsByStall={this.state.occupantsByStall} channel={this.presenceChannel} userHex={this.state.userHex} handleNavigationClick={this.handleNavigationClick} />;
         break;
       case 'stall-down':
         currentView = <StallDown handleNavigationClick={this.handleNavigationClick} />;
