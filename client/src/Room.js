@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import StallFront from './StallFront';
-import StallUp from './StallUp';
-import StallLeft from './StallLeft';
+import Stall from './Stall';
+import Button from './Button';
+// import StallUp from './StallUp';
+// import StallLeft from './StallLeft';
 import StallRight from './StallRight';
-import StallDown from './StallDown';
-import StallBack from './StallBack';
+// import StallDown from './StallDown';
+// import StallBack from './StallBack';
+import Parallax from 'parallax-js';
 
-class Stall extends Component {
+class Room extends Component {
   constructor(props) {
     super(props);
     this.pusher = props.pusher;
@@ -24,6 +26,7 @@ class Stall extends Component {
     this.updateOccupants = this.updateOccupants.bind(this);
     this.countOccupants = this.countOccupants.bind(this);
     this.handleNavigationClick = this.handleNavigationClick.bind(this);
+    this.restartParallax = this.restartParallax.bind(this);
   }
 
   componentDidMount() {
@@ -94,6 +97,14 @@ class Stall extends Component {
     return count
   }
 
+  restartParallax() {
+    var container = document.getElementById('app');
+    var parallaxInstance = new Parallax(container, {
+      selector: '.layer',
+      pointerEvents: true,
+    });
+  }
+
   updateOccupants(members) {
     // console.log(`Stall.js updateOccupants: stall id ${this.id}, numOccupants ${members.count}`);
     this.setState({
@@ -106,31 +117,83 @@ class Stall extends Component {
   }
 
   render() {
-    var currentView = <StallFront handleNavigationClick={this.handleNavigationClick} />;
+    var currentView = 
+          <Stall direction="front" handleNavigationClick={this.handleNavigationClick}>
+            <Button onClick={() => this.handleNavigationClick('stall-front')} buttonText="Front" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-left')} buttonText="Left" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-right')} buttonText="Right" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-up')} buttonText="Up" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-down')} buttonText="Down" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-back')} buttonText="Back" /><br />
+          </Stall>;
     switch (this.state.currentView) {
       case 'stall-up':
-        currentView = <StallUp handleNavigationClick={this.handleNavigationClick} />;
+        currentView = 
+          <Stall direction="up" handleNavigationClick={this.handleNavigationClick}>
+            <Button onClick={() => this.handleNavigationClick('stall-front')} buttonText="Front" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-left')} buttonText="Left" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-right')} buttonText="Right" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-up')} buttonText="Up" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-down')} buttonText="Down" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-back')} buttonText="Back" /><br />
+          </Stall>;
+        this.restartParallax();
         break;
       case 'stall-left':
-        currentView = <StallLeft handleNavigationClick={this.handleNavigationClick} />;
+        currentView = 
+          <Stall direction="left" handleNavigationClick={this.handleNavigationClick}>
+            <Button onClick={() => this.handleNavigationClick('stall-front')} buttonText="Front" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-right')} buttonText="Right" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-up')} buttonText="Up" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-down')} buttonText="Down" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-back')} buttonText="Back" /><br />
+          </Stall>;
+        this.restartParallax();
         break;
       case 'stall-right': // contains chatbox
         currentView = <StallRight myId={this.me} occupantsByStall={this.state.occupantsByStall} channel={this.presenceChannel} userHex={this.state.userHex} handleNavigationClick={this.handleNavigationClick} />;
         break;
       case 'stall-down':
-        currentView = <StallDown handleNavigationClick={this.handleNavigationClick} />;
+        currentView = 
+          <Stall direction="down" handleNavigationClick={this.handleNavigationClick}>
+            <Button onClick={() => this.handleNavigationClick('stall-front')} buttonText="Front" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-left')} buttonText="Left" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-right')} buttonText="Right" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-up')} buttonText="Up" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-down')} buttonText="Down" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-back')} buttonText="Back" /><br />
+          </Stall>;
+        this.restartParallax();
         break;
       case 'stall-back':
-        currentView = <StallBack handleNavigationClick={this.handleNavigationClick} />;
+        currentView = 
+          <Stall direction="back" handleNavigationClick={this.handleNavigationClick}>
+            <Button onClick={() => this.handleNavigationClick('stall-front')} buttonText="Front" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-left')} buttonText="Left" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-right')} buttonText="Right" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-up')} buttonText="Up" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-down')} buttonText="Down" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-back')} buttonText="Back" /><br />
+          </Stall>;
+        this.restartParallax();
         break;
       case 'stall-front':
       default:
-        currentView = <StallFront handleNavigationClick={this.handleNavigationClick} />;
+        currentView = 
+          <Stall direction="front" handleNavigationClick={this.handleNavigationClick}>
+            <Button onClick={() => this.handleNavigationClick('stall-front')} buttonText="Front" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-left')} buttonText="Left" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-right')} buttonText="Right" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-up')} buttonText="Up" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-down')} buttonText="Down" /><br />
+            <Button onClick={() => this.handleNavigationClick('stall-back')} buttonText="Back" /><br />
+          </Stall>;
+        this.restartParallax();
         break;
     }
     return (
-      <div id="room">
-        <div>
+      <div id="room" className="view">
+        <div className="hide">
           <h2>Room {this.id}: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}</h2>
         </div>
         {currentView}
@@ -140,4 +203,4 @@ class Stall extends Component {
 
 }
 
-export default Stall;
+export default Room;

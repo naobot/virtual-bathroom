@@ -29,11 +29,11 @@ class Bathroom extends Component {
     }
 
     return (
-      <div id={this.state.currentView} className="view">
-        <div>
+      <div id={this.state.currentView} className="view layer" data-depth="0.2">
+        <div className="content">
           <h2>{this.state.currentView}</h2>
+          {currentView}
         </div>
-        {currentView}
       </div>
     );
   }

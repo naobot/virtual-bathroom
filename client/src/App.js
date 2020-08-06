@@ -7,6 +7,7 @@ import WaitingRoom from './WaitingRoom';
 import Room from './Room';
 import Bathroom from './Bathroom';
 
+import Parallax from 'parallax-js';
 import './css/normalize.css';
 import './css/App.css';
 
@@ -48,11 +49,15 @@ class App extends Component {
     this.handleEnterWaiting = this.handleEnterWaiting.bind(this);
     this.handleEnterRoom = this.handleEnterRoom.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.restartParallax = this.restartParallax.bind(this);
     this.updateMemberCount = this.updateMemberCount.bind(this);
   }
 
 
   componentDidMount() {
+    // parallax effect for background
+    this.restartParallax();
+
     this.spyOn('presence-bathroom', 'waiting');
     for (var i = 0; i < this.num_rooms; i++) {
       this.spyOn(`presence-room-${i}`, 'room');
@@ -93,6 +98,14 @@ class App extends Component {
     });
     return count
   };
+
+  restartParallax() {
+    var container = document.getElementById('app');
+    var parallaxInstance = new Parallax(container, {
+      selector: '.layer',
+      pointerEvents: true,
+    });
+  }
 
   // generic 'true' member count (excludes spies)
   updateMemberCount(num, location, roomId) {
@@ -168,7 +181,9 @@ class App extends Component {
       return {
         currentView: { type: 'bathroom', id: null },
       }
-    })
+    },
+    () => { this.restartParallax();
+    });
   }
 
   // bathroom -> wait for stall
@@ -177,7 +192,8 @@ class App extends Component {
       return {
         currentView: { type: 'waiting', id: null },
       }
-    })
+    },
+    () => { this.restartParallax(); });
   }
 
   // waiting -> stall
@@ -194,7 +210,7 @@ class App extends Component {
           return {
             currentView: { type: 'room', id: roomId },
           };
-        });
+        }, () => { this.restartParallax() });
         roomEntered = true;
       }
       else {

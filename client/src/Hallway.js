@@ -17,10 +17,12 @@ class Hallway extends PureComponent {
 
   render() {
     return (
-      <div id="hallway" className="view">
-        <h2>Hallway</h2>
-        <div className="hotspots">
-          <Button onClick={this.handleEnterBathroomClick} buttonText="Enter Bathroom" />
+      <div id="hallway" className="view layer" data-depth="0.2">
+        <div className="content">
+          <h2>Hallway</h2>
+          <div className="hotspots">
+            <Button onClick={this.handleEnterBathroomClick} buttonText="Enter Bathroom" />
+          </div>
         </div>
       </div>
     );
