@@ -14,9 +14,6 @@ class Bathroom extends Component {
     if (target === 'waiting') {
       this.props.onEnterWaiting();
     }
-    else if (target === 'mirrors') {
-      this.setState({ currentView: 'mirrors' });
-    }
     else if (target === 'bathroom') {
       this.setState({ currentView: 'bathroom' });
     }
@@ -28,14 +25,7 @@ class Bathroom extends Component {
       currentView = 
         <div>
           <Button onClick={() => this.handleNavigationClick('waiting')} buttonText="Wait for Stall" />
-          <Button onClick={() => this.handleNavigationClick('mirrors')} buttonText="Go to Mirrors" />
         </div>;
-    }
-    else if (this.state.currentView === 'mirrors') {
-      currentView = 
-        <div id="mirrors">
-          <Button onClick={() => this.handleNavigationClick('bathroom')} buttonText="Back" />
-        </div>
     }
 
     return (
