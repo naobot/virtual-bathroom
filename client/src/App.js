@@ -30,6 +30,7 @@ class App extends Component {
       }
     });
     this.me = null;
+    this.timeoutId = null;
     this.state = {
       currentView: { type: 'hallway', id: null },
       rooms: [], // array of Room components
@@ -41,9 +42,12 @@ class App extends Component {
     this.num_rooms = 2; // ADJUST AS NEEDED
     this.countMembers = this.countMembers.bind(this);
     this.spyOn = this.spyOn.bind(this);
+    this.startInactivityCheck = this.startInactivityCheck.bind(this);
+    this.userActivityDetected = this.userActivityDetected.bind(this);
     this.handleEnterBathroom = this.handleEnterBathroom.bind(this);
     this.handleEnterWaiting = this.handleEnterWaiting.bind(this);
     this.handleEnterRoom = this.handleEnterRoom.bind(this);
+    this.handleMouseMove = this.handleMouseMove.bind(this);
     this.updateMemberCount = this.updateMemberCount.bind(this);
   }
 
@@ -138,6 +142,23 @@ class App extends Component {
     });
   };
 
+  startInactivityCheck() {
+    this.timeoutId = window.setTimeout(() => {
+      this.pusher.disconnect();
+    }, 5 * 60 * 1000); // SET TIMEOUT: time out after 5 minutes
+  }
+
+  userActivityDetected() {
+    if (this.timeoutId !== null) {
+      window.clearTimeout(this.timeoutId);
+    }
+    if (this.pusher.connection.state === 'disconnected') {
+      alert(`You've been ushered out of the bathroom for taking so long! Please line up again to re-enter the bathroom.`);
+      window.location.reload();
+    }
+    this.startInactivityCheck();
+  }
+
   /* BEGIN: View transition functions 
     -----------------------------------
   */
@@ -186,6 +207,10 @@ class App extends Component {
     }
   }
 
+  handleMouseMove() {
+    this.userActivityDetected();
+  }
+
   render() {
     var hide = null;
     // if (process.env.NODE_ENV === 'production') {
@@ -216,7 +241,7 @@ class App extends Component {
       currentView = <Room id={this.state.currentView.id} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateMemberCount} />;
     }
     return (
-      <div id="app">
+      <div id="app" onMouseMove={this.handleMouseMove}>
         <div id="debug-console" className={hide}>
           <div>
             THE APP IS RUNNING IN <strong>{process.env.NODE_ENV}</strong> MODE<br/>
