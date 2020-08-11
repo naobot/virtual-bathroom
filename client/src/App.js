@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import Hallway from './Hallway'
 import WaitingRoom from './WaitingRoom';
 import Room from './Room';
-import Bathroom from './Bathroom';
+import Mirrors from './Mirrors';
 
 import Parallax from 'parallax-js';
 import './css/normalize.css';
@@ -45,7 +45,7 @@ class App extends Component {
     this.spyOn = this.spyOn.bind(this);
     this.startInactivityCheck = this.startInactivityCheck.bind(this);
     this.userActivityDetected = this.userActivityDetected.bind(this);
-    this.handleEnterBathroom = this.handleEnterBathroom.bind(this);
+    this.handleExitStall = this.handleExitStall.bind(this);
     this.handleEnterWaiting = this.handleEnterWaiting.bind(this);
     this.handleEnterRoom = this.handleEnterRoom.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -158,7 +158,7 @@ class App extends Component {
   startInactivityCheck() {
     this.timeoutId = window.setTimeout(() => {
       this.pusher.disconnect();
-    }, 5 * 60 * 1000); // SET TIMEOUT: time out after 5 minutes
+    }, 10 * 60 * 1000); // SET TIMEOUT: time out after 5 minutes
   }
 
   userActivityDetected() {
@@ -175,11 +175,11 @@ class App extends Component {
   /* BEGIN: View transition functions 
     -----------------------------------
   */
-  // hallway -> bathroom
-  handleEnterBathroom(e) {
+  // stall -> mirrors
+  handleExitStall(e) {
     this.setState(currentState => {
       return {
-        currentView: { type: 'bathroom', id: null },
+        currentView: { type: 'mirrors', id: null },
       }
     },
     () => { this.restartParallax();
@@ -246,9 +246,9 @@ class App extends Component {
     //   );
     // }
     // default view is hallway
-    let currentView = <Hallway onEnterBathroom={this.handleEnterBathroom} />
+    let currentView = <Hallway onEnterBathroom={this.handleEnterWaiting} />
     if (this.state.currentView.type === 'bathroom') {
-      currentView = <Bathroom onEnterWaiting={this.handleEnterWaiting} />
+      currentView = <Mirrors onEnterWaiting={this.handleEnterWaiting} />
     }
     else if (this.state.currentView.type === 'waiting') { 
       currentView = <WaitingRoom onEnterRoom={this.handleEnterRoom} pusher={this.pusher} onOccupancyChange={this.updateMemberCount} />; 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from './Button';
 
-class Bathroom extends Component {
+class Mirrors extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,4 +40,4 @@ class Bathroom extends Component {
 
 }
 
-export default Bathroom;
+export default Mirrors;
