@@ -8,6 +8,7 @@ import Room from './Room';
 import Mirrors from './Mirrors';
 
 import Parallax from 'parallax-js';
+import 'animate.css/animate.min.css';
 import './css/normalize.css';
 import './css/App.css';
 
@@ -56,6 +57,7 @@ class App extends Component {
 
   componentDidMount() {
     // parallax effect for background
+    // this.startAnimations();
     this.restartParallax();
 
     this.spyOn('presence-bathroom', 'waiting');
