@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from './Button';
+import enterStallButton from './assets/actions/3_enter-stall.png';
 
 class WaitingRoom extends Component {
   constructor(props) {
@@ -68,6 +69,12 @@ class WaitingRoom extends Component {
   render() {
     let trueOccupants = [];
     let trueOccupantsList = [];
+    const positioningCss = {
+      top: "50vh",
+      left: "60vw",
+      width: "300px",
+      position: "relative",
+    };
     if (this.state.occupants.count > 0) {
       this.state.occupants.each((visitor) => {
         if (!visitor.info.isSpy) {
@@ -86,23 +93,17 @@ class WaitingRoom extends Component {
     let ahead = trueOccupants.map((e) => { return e.id.toString() }).indexOf(this.state.me.toString());
     let enterMessage = 'please wait...';
     if (ahead > 0) {
-      enterMessage = `${ahead} ahead of you in line`;
+      enterMessage = <div className="please-wait" style={positioningCss}>PLEASE WAIT...<br/>&nbsp;&nbsp;&nbsp;&nbsp;{ahead} ahead of you in line</div>;
     }
     else {
-      enterMessage = <Button onClick={this.handleEnterRoomClick} buttonText="Enter Stall" />;
+      enterMessage = <Button onClick={this.handleEnterRoomClick} altText="Enter Stall" imgSrc={enterStallButton} top={positioningCss.top} left={positioningCss.left} width={positioningCss.width} />;
     }
-
+    console.log('In line:');
+    console.log(`\t${this.countOccupants(this.state.occupants)}`)
     return (
-      <div id="waiting" className="view layer" data-depth="0.2">
-        <div className="content">
-          <div>
-            <h2>Waiting Room</h2>
-          </div>
-          <div>
-            In line: {this.countOccupants(this.state.occupants)}
-          </div>
-          <div>
-            <ul>{trueOccupantsList}</ul>
+      <div className="view layer" data-depth="0.1">
+        <div id="waiting" className="content">
+          <div className="hotspots layer" data-depth="0.1">
             {enterMessage}
           </div>
         </div>
