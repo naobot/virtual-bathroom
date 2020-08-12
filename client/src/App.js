@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import Pusher from 'pusher-js';
 import dotenv from 'dotenv';
 
-import Hallway from './Hallway'
+// import Audio from './Audio';
+// import audioSrc from './assets/sounds/bg-audio-sketch.mp3';
+
+import Hallway from './Hallway';
 import WaitingRoom from './WaitingRoom';
 import Room from './Room';
 import Mirrors from './Mirrors';
@@ -13,7 +16,8 @@ import './css/normalize.css';
 import './css/App.css';
 
 dotenv.config({ path: '.env' });
-const LOGGING = process.env.NODE_ENV === 'development';
+const LOGGING = null;
+// const LOGGING = process.env.NODE_ENV === 'development';
 
 class App extends Component {
   constructor(props) {
@@ -57,7 +61,6 @@ class App extends Component {
 
   componentDidMount() {
     // parallax effect for background
-    // this.startAnimations();
     this.restartParallax();
 
     this.spyOn('presence-bathroom', 'waiting');
@@ -230,7 +233,7 @@ class App extends Component {
   }
 
   render() {
-    var hide = null;
+    var hide = 'hide';
     // if (process.env.NODE_ENV === 'production') {
     //   hide = 'hide';
     // }

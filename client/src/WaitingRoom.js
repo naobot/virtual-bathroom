@@ -102,6 +102,7 @@ class WaitingRoom extends Component {
     console.log(`\t${this.countOccupants(this.state.occupants)}`)
     return (
       <div className="view layer" data-depth="0.1">
+      
         <div id="waiting" className="content">
           <div className="hotspots layer" data-depth="0.1">
             {enterMessage}
