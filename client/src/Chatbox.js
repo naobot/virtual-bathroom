@@ -10,7 +10,7 @@ export default class Chatbox extends Component {
     super(props);
     this.stallsByOccupant = Object.assign({}, ...Object.entries(props.occupantsByStall).map(([a,b]) => ({ [b]: a })));
     this.channel = props.channel;
-    this.myId = props.myId;
+    this.myId = props.channel.members.me.id;
     this.userHex = props.userHex;
     this.handleTextChange = this.handleTextChange.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);

@@ -142,6 +142,10 @@
 
 #chatbox {
   justify-content: start;
+  width: 200px;
+  position: absolute;
+  top: 35vh;
+  left: 40vw;
 }
 .chatlist-container {
   height: 200px;

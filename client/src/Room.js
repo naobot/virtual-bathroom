@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import Stall from './Stall';
 import Button from './Button';
 import Mirrors from './Mirrors';
+import Chatbox from './Chatbox';
 // import StallUp from './StallUp';
 // import StallLeft from './StallLeft';
-import StallRight from './StallRight';
+// import StallRight from './StallRight';
 // import StallDown from './StallDown';
 // import StallBack from './StallBack';
 import Parallax from 'parallax-js';
@@ -196,7 +197,18 @@ class Room extends Component {
         this.restartParallax();
         break;
       case 'stall-right': // contains chatbox
-        currentView = <StallRight myId={this.me} occupantsByStall={this.state.occupantsByStall} channel={this.presenceChannel} userHex={this.state.userHex} handleNavigationClick={this.handleNavigationClick} />;
+        currentView = 
+          <Stall direction="right" handleNavigationClick={this.handleNavigationClick}>
+            <Button 
+              onClick={() => this.handleNavigationClick('stall-front')} 
+              altText="Flush/Exit"
+              imgSrc={navBackButton}
+              width="23vw"
+              top="77vh"
+              left="70vw"
+               />
+            <Chatbox userHex={this.state.userHex} occupantsByStall={this.state.occupantsByStall} channel={this.presenceChannel} />
+          </Stall>;
         this.restartParallax();
         break;
       case 'stall-down':
