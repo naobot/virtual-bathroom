@@ -4,7 +4,7 @@ class Button extends PureComponent {
   render() {
     const { top, left, width } = this.props;
     const style = {
-      position: 'relative',
+      position: 'absolute',
       top: top,
       left: left,
       width: width,

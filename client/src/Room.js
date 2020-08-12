@@ -7,6 +7,10 @@ import StallRight from './StallRight';
 // import StallDown from './StallDown';
 // import StallBack from './StallBack';
 import Parallax from 'parallax-js';
+import navUpButton from './assets/actions/4_stare-at-ceiling.png';
+import navDownButton from './assets/actions/4_cry.png';
+import navLeftButton from './assets/actions/4_check-phone.png';
+import navRightButton from './assets/actions/4_talk-to-stranger.png';
 
 class Room extends Component {
   constructor(props) {
@@ -119,12 +123,38 @@ class Room extends Component {
   render() {
     var currentView = 
           <Stall direction="front" handleNavigationClick={this.handleNavigationClick}>
-            <Button onClick={() => this.handleNavigationClick('stall-front')} buttonText="Front" /><br />
-            <Button onClick={() => this.handleNavigationClick('stall-left')} buttonText="Left" /><br />
-            <Button onClick={() => this.handleNavigationClick('stall-right')} buttonText="Right" /><br />
-            <Button onClick={() => this.handleNavigationClick('stall-up')} buttonText="Up" /><br />
-            <Button onClick={() => this.handleNavigationClick('stall-down')} buttonText="Down" /><br />
-            <Button onClick={() => this.handleNavigationClick('stall-back')} buttonText="Back" /><br />
+            <Button 
+              onClick={() => this.handleNavigationClick('stall-up')} 
+              altText="Stare At Ceiling"
+              imgSrc={navUpButton}
+              width="20vw"
+              top="20vh"
+              left="50vw"
+               />
+            <Button 
+              onClick={() => this.handleNavigationClick('stall-left')} 
+              altText="Check Phone"
+              imgSrc={navLeftButton}
+              width="16vw"
+              top="60vh"
+              left="18vw"
+               />
+            <Button 
+              onClick={() => this.handleNavigationClick('stall-down')} 
+              altText="Cry"
+              imgSrc={navDownButton}
+              width="11vw"
+              top="95vh"
+              left="51vw"
+               />
+            <Button 
+              onClick={() => this.handleNavigationClick('stall-right')} 
+              altText="Talk to Stranger"
+              imgSrc={navRightButton}
+              width="23vw"
+              top="66vh"
+              left="85vw"
+               />
           </Stall>;
     switch (this.state.currentView) {
       case 'stall-up':
@@ -179,20 +209,11 @@ class Room extends Component {
         break;
       case 'stall-front':
       default:
-        currentView = 
-          <Stall direction="front" handleNavigationClick={this.handleNavigationClick}>
-            <Button onClick={() => this.handleNavigationClick('stall-front')} buttonText="Front" /><br />
-            <Button onClick={() => this.handleNavigationClick('stall-left')} buttonText="Left" /><br />
-            <Button onClick={() => this.handleNavigationClick('stall-right')} buttonText="Right" /><br />
-            <Button onClick={() => this.handleNavigationClick('stall-up')} buttonText="Up" /><br />
-            <Button onClick={() => this.handleNavigationClick('stall-down')} buttonText="Down" /><br />
-            <Button onClick={() => this.handleNavigationClick('stall-back')} buttonText="Back" /><br />
-          </Stall>;
         this.restartParallax();
         break;
     }
     return (
-      <div id="room" className="view">
+      <div className="view">
         <div className="hide">
           <h2>Room {this.id}: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}</h2>
         </div>

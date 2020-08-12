@@ -95,6 +95,18 @@
   background-position: center center;
   background-repeat: no-repeat;
 }
+#stall-front {
+  background-image: url('../assets/bg-stall-front.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+#stall-left {
+  background-image: url('../assets/bg-stall-left.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 
 .layer {
   width: 110vw;
