@@ -227,9 +227,22 @@ class Room extends Component {
         break;
       case 'stall-back':
         currentView = 
-          <Mirrors />;
+          <Stall direction="back" handleNavigationClick={this.handleNavigationClick}>
+            <Button 
+              onClick={() => this.handleNavigationClick('mirrors')} 
+              altText="Flush/Exit"
+              imgSrc={navBackButton}
+              width="23vw"
+              top="41vh"
+              left="43vw"
+               />
+          </Stall>;
         this.restartParallax();
         break;
+      case 'mirrors':
+        currentView =
+          <Mirrors />;
+          this.restartParallax();
       case 'stall-front':
       default:
         this.restartParallax();

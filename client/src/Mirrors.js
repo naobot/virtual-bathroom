@@ -31,7 +31,6 @@ class Mirrors extends Component {
     return (
       <div id={this.state.currentView} className="view layer" data-depth="0.2">
         <div className="content">
-          <h2>{this.state.currentView}</h2>
           {currentView}
         </div>
       </div>

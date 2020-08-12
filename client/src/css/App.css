@@ -108,7 +108,19 @@
   background-repeat: no-repeat;
 }
 #stall-right {
-  background-image: url('../assets/bg-stall-front.jpg');
+  background-image: url('../assets/bg-stall-right.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+#stall-down {
+  background-image: url('../assets/bg-stall-down.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+#stall-back {
+  background-image: url('../assets/bg-stall-back.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
