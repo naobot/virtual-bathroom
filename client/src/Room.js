@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Stall from './Stall';
 import Button from './Button';
 import Mirrors from './Mirrors';
+import Hotspots from './Hotspots';
 import Chatbox from './Chatbox';
+import Phone from './Phone';
 // import StallUp from './StallUp';
 // import StallLeft from './StallLeft';
 // import StallRight from './StallRight';
@@ -14,6 +16,7 @@ import navDownButton from './assets/actions/4_cry.png';
 import navLeftButton from './assets/actions/4_check-phone.png';
 import navRightButton from './assets/actions/4_talk-to-stranger.png';
 import navBackButton from './assets/actions/5_flush.png';
+import phoneImg from './assets/fixed-phone.png';
 
 const PSEUDONYMS = [
   'someone',
@@ -101,116 +104,129 @@ class Room extends Component {
   render() {
     var currentView = 
           <Stall direction="front" handleNavigationClick={this.handleNavigationClick}>
-            <Button 
-              onClick={() => this.handleNavigationClick('stall-up')} 
-              altText="Stare At Ceiling"
-              imgSrc={navUpButton}
-              width="20vw"
-              top="20vh"
-              left="50vw"
-               />
-            <Button 
-              onClick={() => this.handleNavigationClick('stall-left')} 
-              altText="Check Phone"
-              imgSrc={navLeftButton}
-              width="16vw"
-              top="60vh"
-              left="18vw"
-               />
-            <Button 
-              onClick={() => this.handleNavigationClick('stall-down')} 
-              altText="Cry"
-              imgSrc={navDownButton}
-              width="11vw"
-              top="95vh"
-              left="51vw"
-               />
-            <Button 
-              onClick={() => this.handleNavigationClick('stall-right')} 
-              altText="Talk to Stranger"
-              imgSrc={navRightButton}
-              width="23vw"
-              top="66vh"
-              left="85vw"
-               />
-            <Button 
-              onClick={() => this.handleNavigationClick('stall-back')} 
-              altText="Flush/Exit"
-              imgSrc={navBackButton}
-              width="23vw"
-              top="77vh"
-              left="70vw"
-               />
+            <Hotspots>
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-up')} 
+                altText="Stare At Ceiling"
+                imgSrc={navUpButton}
+                width="20vw"
+                top="20vh"
+                left="50vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-left')} 
+                altText="Check Phone"
+                imgSrc={navLeftButton}
+                width="16vw"
+                top="60vh"
+                left="18vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-down')} 
+                altText="Cry"
+                imgSrc={navDownButton}
+                width="11vw"
+                top="95vh"
+                left="51vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-right')} 
+                altText="Talk to Stranger"
+                imgSrc={navRightButton}
+                width="23vw"
+                top="66vh"
+                left="85vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-back')} 
+                altText="Flush/Exit"
+                imgSrc={navBackButton}
+                width="23vw"
+                top="77vh"
+                left="70vw"
+                 />
+            </Hotspots>
           </Stall>;
     switch (this.state.currentView) {
       case 'stall-up':
         currentView = 
           <Stall direction="up" handleNavigationClick={this.handleNavigationClick}>
-            <Button 
-              onClick={() => this.handleNavigationClick('stall-front')} 
-              altText="Flush/Exit"
-              imgSrc={navBackButton}
-              width="23vw"
-              top="77vh"
-              left="70vw"
-               />
+            <Hotspots>
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-front')} 
+                altText="Flush/Exit"
+                imgSrc={navBackButton}
+                width="23vw"
+                top="77vh"
+                left="70vw"
+                 />
+            </Hotspots>
           </Stall>;
         this.restartParallax();
         break;
       case 'stall-left':
         currentView = 
           <Stall direction="left" handleNavigationClick={this.handleNavigationClick}>
-            <Button 
-              onClick={() => this.handleNavigationClick('stall-front')} 
-              altText="Flush/Exit"
-              imgSrc={navBackButton}
-              width="23vw"
-              top="77vh"
-              left="70vw"
-               />
+            <Phone />
+            <Hotspots>
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-front')} 
+                altText="Flush/Exit"
+                imgSrc={navBackButton}
+                width="23vw"
+                top="77vh"
+                left="70vw"
+                 />
+            </Hotspots>
           </Stall>;
         this.restartParallax();
         break;
       case 'stall-right': // contains chatbox
         currentView = 
           <Stall direction="right" handleNavigationClick={this.handleNavigationClick}>
-            <Button 
-              onClick={() => this.handleNavigationClick('stall-front')} 
-              altText="Flush/Exit"
-              imgSrc={navBackButton}
-              width="23vw"
-              top="77vh"
-              left="70vw"
-               />
-            <Chatbox userName={this.state.userName} userHex={this.state.userHex} occupantsByStall={this.state.occupantsByStall} channel={this.presenceChannel} />
+            <Hotspots>
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-front')} 
+                altText="Flush/Exit"
+                imgSrc={navBackButton}
+                width="23vw"
+                top="77vh"
+                left="70vw"
+                 />
+              <Chatbox userName={this.state.userName} userHex={this.state.userHex} occupantsByStall={this.state.occupantsByStall} channel={this.presenceChannel} />
+            </Hotspots>
           </Stall>;
         this.restartParallax();
         break;
       case 'stall-down':
         currentView = 
           <Stall direction="down" handleNavigationClick={this.handleNavigationClick}>
-            <Button 
-              onClick={() => this.handleNavigationClick('stall-front')} 
-              altText="Flush/Exit"
-              imgSrc={navBackButton}
-              width="23vw"
-              top="77vh"
-              left="70vw"
-               />
+            <Hotspots>
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-front')} 
+                altText="Flush/Exit"
+                imgSrc={navBackButton}
+                width="23vw"
+                top="77vh"
+                left="70vw"
+                 />
+            </Hotspots>
           </Stall>;
         this.restartParallax();
         break;
       case 'stall-back':
         currentView = 
           <Stall direction="back" handleNavigationClick={this.handleNavigationClick}>
-            <Button 
-              onClick={() => this.handleNavigationClick('mirrors')} 
-              altText="Flush/Exit"
-              imgSrc={navBackButton}
-              width="23vw"
-              top="41vh"
-              left="43vw"
-               />
+            <Hotspots>
+              <Button 
+                onClick={() => this.handleNavigationClick('mirrors')} 
+                altText="Flush/Exit"
+                imgSrc={navBackButton}
+                width="23vw"
+                top="41vh"
+                left="43vw"
+                 />
+            </Hotspots>
           </Stall>;
         this.restartParallax();
         break;

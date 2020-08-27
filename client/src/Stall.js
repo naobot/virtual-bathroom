@@ -18,11 +18,9 @@ export default class Stall extends PureComponent {
   render() {
     const stallId = `stall-${this.props.direction}`;
     return (     
-      <div id={stallId} className="view layer" data-depth="0.2">
+      <div id={stallId} className="layer" data-depth="0.2">
         <div className="content">
-          <div className="hotspots layer" data-depth="0.1">
             {this.props.children}
-          </div>
         </div>
       </div>
     );
