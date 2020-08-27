@@ -9,15 +9,20 @@ class Button extends PureComponent {
       left: left,
       width: width,
     }
-    if (this.props.noAnimate) {
-      var className = "nav-image"
+    var className = this.props.className + " nav-image";
+    if (!this.props.noAnimate) {
+      className += " animate__animated animate__infinite animate__slower animate__pulse"
+    }
+    if (this.props.imgSrc) {
+      return (
+        <img className={className} src={this.props.imgSrc} onClick={this.props.onClick} text={this.props.altText} style={style} />
+      );
     }
     else {
-      var className = "nav-image animate__animated animate__infinite animate__slower animate__pulse"
+      return (
+        <div className={className} onClick={this.props.onClick} style={style}>{this.props.children}</div>
+      );
     }
-    return (
-      <img className={className} src={this.props.imgSrc} onClick={this.props.onClick} text={this.props.altText} style={style} />
-    );
   }
 
 }

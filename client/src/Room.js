@@ -191,6 +191,12 @@ class Room extends Component {
                 top="93vh"
                 left="10vw"
                  />
+              <Button
+                className="check-phone neon"
+                onClick={null}
+                >
+                check phone
+              </Button>
             </Hotspots>
           </Stall>;
         this.restartParallax();

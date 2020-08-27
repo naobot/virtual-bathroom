@@ -132,6 +132,13 @@
   background-repeat: no-repeat;
 }
 
+.check-phone {
+  position: absolute;
+  z-index: 9;
+  top: 40vh;
+  left: 42vw;
+}
+
 .view {
   position: absolute;
   margin: 0;
@@ -158,7 +165,7 @@
   cursor: pointer;
 }
 
-.please-wait {
+.neon {
   font-weight: 600;
   font-family: Verdana;
   font-size: 16pt;

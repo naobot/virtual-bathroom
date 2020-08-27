@@ -93,7 +93,7 @@ class WaitingRoom extends Component {
     let ahead = trueOccupants.map((e) => { return e.id.toString() }).indexOf(this.state.me.toString());
     let enterMessage = 'please wait...';
     if (ahead > 0) {
-      enterMessage = <div className="please-wait" style={positioningCss}>PLEASE WAIT...<br/>&nbsp;&nbsp;&nbsp;&nbsp;{ahead} ahead of you in line</div>;
+      enterMessage = <div className="please-wait neon" style={positioningCss}>PLEASE WAIT...<br/>&nbsp;&nbsp;&nbsp;&nbsp;{ahead} ahead of you in line</div>;
     }
     else {
       enterMessage = <Button onClick={this.handleEnterRoomClick} altText="Enter Stall" imgSrc={enterStallButton} top={positioningCss.top} left={positioningCss.left} width={positioningCss.width} />;
