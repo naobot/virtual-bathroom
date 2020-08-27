@@ -11,11 +11,11 @@ import Phone from './Phone';
 // import StallDown from './StallDown';
 // import StallBack from './StallBack';
 import Parallax from 'parallax-js';
-import navUpButton from './assets/actions/4_stare-at-ceiling.png';
-import navDownButton from './assets/actions/4_cry.png';
-import navLeftButton from './assets/actions/4_check-phone.png';
-import navRightButton from './assets/actions/4_talk-to-stranger.png';
-import navBackButton from './assets/actions/5_flush.png';
+import navUpButton from './assets/actions/flat-arrow-up.png';
+import navDownButton from './assets/actions/flat-arrow-down.png';
+import navLeftButton from './assets/actions/flat-arrow-left.png';
+import navRightButton from './assets/actions/flat-arrow-right.png';
+import navBackButton from './assets/actions/flat-arrow-back.png';
 import phoneImg from './assets/fixed-phone.png';
 
 const PSEUDONYMS = [
@@ -109,41 +109,36 @@ class Room extends Component {
                 onClick={() => this.handleNavigationClick('stall-up')} 
                 altText="Stare At Ceiling"
                 imgSrc={navUpButton}
-                width="20vw"
-                top="20vh"
+                top="7vh"
                 left="50vw"
                  />
               <Button 
                 onClick={() => this.handleNavigationClick('stall-left')} 
                 altText="Check Phone"
                 imgSrc={navLeftButton}
-                width="16vw"
-                top="60vh"
-                left="18vw"
+                top="53vh"
+                left="10vw"
                  />
               <Button 
                 onClick={() => this.handleNavigationClick('stall-down')} 
                 altText="Cry"
                 imgSrc={navDownButton}
-                width="11vw"
-                top="95vh"
-                left="51vw"
+                top="88vh"
+                left="50vw"
                  />
               <Button 
                 onClick={() => this.handleNavigationClick('stall-right')} 
                 altText="Talk to Stranger"
                 imgSrc={navRightButton}
-                width="23vw"
-                top="66vh"
-                left="85vw"
+                top="53vh"
+                left="90vw"
                  />
               <Button 
                 onClick={() => this.handleNavigationClick('stall-back')} 
                 altText="Flush/Exit"
                 imgSrc={navBackButton}
-                width="23vw"
-                top="77vh"
-                left="70vw"
+                top="98vh"
+                left="23vw"
                  />
             </Hotspots>
           </Stall>;
@@ -156,9 +151,8 @@ class Room extends Component {
                 onClick={() => this.handleNavigationClick('stall-front')} 
                 altText="Flush/Exit"
                 imgSrc={navBackButton}
-                width="23vw"
-                top="77vh"
-                left="70vw"
+                top="87vh"
+                left="77vw"
                  />
             </Hotspots>
           </Stall>;
@@ -170,12 +164,32 @@ class Room extends Component {
             <Phone />
             <Hotspots>
               <Button 
+                onClick={() => this.handleNavigationClick('stall-up')} 
+                altText="Stare At Ceiling"
+                imgSrc={navUpButton}
+                top="7vh"
+                left="50vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-down')} 
+                altText="Cry"
+                imgSrc={navDownButton}
+                top="88vh"
+                left="50vw"
+                 />
+              <Button 
                 onClick={() => this.handleNavigationClick('stall-front')} 
+                altText="Gaze at Stall"
+                imgSrc={navRightButton}
+                top="53vh"
+                left="90vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-back')} 
                 altText="Flush/Exit"
                 imgSrc={navBackButton}
-                width="23vw"
-                top="77vh"
-                left="70vw"
+                top="93vh"
+                left="10vw"
                  />
             </Hotspots>
           </Stall>;
@@ -186,12 +200,32 @@ class Room extends Component {
           <Stall direction="right" handleNavigationClick={this.handleNavigationClick}>
             <Hotspots>
               <Button 
+                onClick={() => this.handleNavigationClick('stall-up')} 
+                altText="Stare At Ceiling"
+                imgSrc={navUpButton}
+                top="7vh"
+                left="50vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-down')} 
+                altText="Cry"
+                imgSrc={navDownButton}
+                top="88vh"
+                left="50vw"
+                 />
+              <Button 
                 onClick={() => this.handleNavigationClick('stall-front')} 
+                altText="Gaze at Stall"
+                imgSrc={navLeftButton}
+                top="53vh"
+                left="10vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-back')} 
                 altText="Flush/Exit"
                 imgSrc={navBackButton}
-                width="23vw"
-                top="77vh"
-                left="70vw"
+                top="93vh"
+                left="83vw"
                  />
               <Chatbox userName={this.state.userName} userHex={this.state.userHex} occupantsByStall={this.state.occupantsByStall} channel={this.presenceChannel} />
             </Hotspots>
@@ -204,11 +238,10 @@ class Room extends Component {
             <Hotspots>
               <Button 
                 onClick={() => this.handleNavigationClick('stall-front')} 
-                altText="Flush/Exit"
-                imgSrc={navBackButton}
-                width="23vw"
-                top="77vh"
-                left="70vw"
+                altText="Gaze at Stall Door"
+                imgSrc={navUpButton}
+                top="7vh"
+                left="50vw"
                  />
             </Hotspots>
           </Stall>;
@@ -222,7 +255,6 @@ class Room extends Component {
                 onClick={() => this.handleNavigationClick('mirrors')} 
                 altText="Flush/Exit"
                 imgSrc={navBackButton}
-                width="23vw"
                 top="41vh"
                 left="43vw"
                  />
