@@ -15,6 +15,16 @@ import navLeftButton from './assets/actions/4_check-phone.png';
 import navRightButton from './assets/actions/4_talk-to-stranger.png';
 import navBackButton from './assets/actions/5_flush.png';
 
+const PSEUDONYMS = [
+  'someone',
+  'somebody',
+  'a stallmate',
+  'a person',
+  'another person',
+  'person in next stall',
+  'some person',
+];
+
 class Room extends Component {
   constructor(props) {
     super(props);
@@ -23,11 +33,11 @@ class Room extends Component {
     this.presenceChannel = null;
     this.me = null;
     this.state = {
-      myStall: null,
       occupantsByStall: {},
       occupants: {count: 0},
       userHex: '#ffffff',
       currentView: 'stall-front',
+      userName: 'someone',
     };
     this.max_occupancy = props.max;
     this.updateOccupants = this.updateOccupants.bind(this);
@@ -41,52 +51,17 @@ class Room extends Component {
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
       this.me = this.presenceChannel.members.me.id;
       this.setState(currentState => {
-        let stall = 0;
-        let _occupantsByStall = {};
-        let _myStall = null;
-        var currentOccupants = this.presenceChannel.members.each((member) => {
-          if (!member.info.isSpy) {
-            _occupantsByStall[stall] = member.id;
-            if (member.id === this.me) {
-              _myStall = stall;
-            }
-            stall++;
-          }
-        });
         return {
-          myStall: _myStall,
-          occupantsByStall: _occupantsByStall,
+          userName: PSEUDONYMS[parseInt(this.me) % PSEUDONYMS.length],
           userHex: '#' + Math.floor(parseInt(this.presenceChannel.members.me.id)*16777215).toString(16).slice(-6)
         }
-      });
+      }, console.log(`my username: ${this.state.userName}`));
       this.updateOccupants(this.presenceChannel.members);
     });
     this.presenceChannel.bind('pusher:member_added', (member) => {
-      this.setState(currentState => {
-        let _occupantsByStall = Object.assign({}, currentState.occupantsByStall);
-        let stall = 0;
-        while (_occupantsByStall[stall] && stall < this.max_occupancy) {
-          stall++;
-        }
-        _occupantsByStall[stall] = member.id;
-        return {
-          occupantsByStall: _occupantsByStall,
-        }
-      });
       this.updateOccupants(this.presenceChannel.members);
     });
     this.presenceChannel.bind('pusher:member_removed', (member) => {
-      this.setState(currentState => {
-        let _occupantsByStall = Object.assign({}, currentState.occupantsByStall);
-        let stall = 0;
-        while (_occupantsByStall[stall] !== member.id && stall < this.max_occupancy) {
-          stall++;
-        }
-        _occupantsByStall[stall] = null;
-        return {
-          occupantsByStall: _occupantsByStall,
-        }
-      });
       this.updateOccupants(this.presenceChannel.members);
       console.log(`Stall.js: ${member.id} left Stall ${this.id}`);
     });
@@ -207,7 +182,7 @@ class Room extends Component {
               top="77vh"
               left="70vw"
                />
-            <Chatbox userHex={this.state.userHex} occupantsByStall={this.state.occupantsByStall} channel={this.presenceChannel} />
+            <Chatbox userName={this.state.userName} userHex={this.state.userHex} occupantsByStall={this.state.occupantsByStall} channel={this.presenceChannel} />
           </Stall>;
         this.restartParallax();
         break;

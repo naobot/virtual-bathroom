@@ -8,9 +8,9 @@ dotenv.config({ path: '.env' });
 export default class Chatbox extends Component {
   constructor(props) {
     super(props);
-    this.stallsByOccupant = Object.assign({}, ...Object.entries(props.occupantsByStall).map(([a,b]) => ({ [b]: a })));
     this.channel = props.channel;
     this.myId = props.channel.members.me.id;
+    this.userName = props.userName;
     this.userHex = props.userHex;
     this.handleTextChange = this.handleTextChange.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
@@ -24,10 +24,6 @@ export default class Chatbox extends Component {
     this.channel.bind('message', data => {
       this.setState({ chats: [...this.state.chats, data], test: '' });
     });
-    if (process.env.NODE_ENV === 'development') {
-      console.log('occupant id -> stall');
-      console.log(this.stallsByOccupant);
-    }
   }
 
   componentDidUpdate() {
@@ -43,6 +39,7 @@ export default class Chatbox extends Component {
       const payload = {
         channel_name: this.channel.name,
         userId: this.myId,
+        userName: this.userName,
         userhex: this.userHex,
         message: this.state.text,
       };
@@ -67,7 +64,7 @@ export default class Chatbox extends Component {
       <div id="chatbox" className="component-box">
         <h2>Chatbox</h2>
         <div className="chatlist-container">
-          <Chatlist chats={this.state.chats} myHex={this.userHex} stallMap={this.stallsByOccupant} />
+          <Chatlist chats={this.state.chats} myHex={this.userHex} />
           <div style={{ float:"left", clear: "both" }}
              ref={(el) => { this.messagesEnd = el; }}>
           </div>
