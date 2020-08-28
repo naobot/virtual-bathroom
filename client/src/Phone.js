@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from './Button';
 
 export default class Phone extends Component {
   constructor(props) { 
@@ -13,7 +14,14 @@ export default class Phone extends Component {
 
   render() {
     return (
-      <div id="phone-layer" className="bg-layer"></div>
+      <div id="phone-layer" className="bg-layer">
+        <Button
+          className="check-phone neon"
+          onClick={null}
+          >
+          check phone
+        </Button>
+      </div>
     );
   }
 

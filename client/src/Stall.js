@@ -17,8 +17,9 @@ export default class Stall extends PureComponent {
 
   render() {
     const stallId = `stall-${this.props.direction}`;
+    const classes = "layer " + this.props.className;
     return (     
-      <div id={stallId} className="layer" data-depth="0.2">
+      <div id={stallId} className={classes} data-depth="0.2">
         <div className="content">
             {this.props.children}
         </div>

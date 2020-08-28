@@ -9,12 +9,16 @@ class Audio extends PureComponent {
   }
   render() {
     const { autoplay } = this.props;
+    var style = {};
+    if (this.props.hidden) {
+      style = {
+        display: 'none',
+      }
+    }
     return (
-      <div>
-        <audio className="audio">
-          <source src={this.props.audioSrc}></source>
-        </audio>
-      </div>
+      <audio id={this.props.id} className="audio" style={style}>
+        <source src={this.props.audioSrc}></source>
+      </audio>
     );
   }
 

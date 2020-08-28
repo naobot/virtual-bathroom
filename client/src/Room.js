@@ -36,7 +36,6 @@ class Room extends Component {
     this.presenceChannel = null;
     this.me = null;
     this.state = {
-      occupantsByStall: {},
       occupants: {count: 0},
       userHex: '#ffffff',
       currentView: 'stall-front',
@@ -67,6 +66,12 @@ class Room extends Component {
     this.presenceChannel.bind('pusher:member_removed', (member) => {
       this.updateOccupants(this.presenceChannel.members);
       console.log(`Stall.js: ${member.id} left Stall ${this.id}`);
+    });
+    this.presenceChannel.bind('message', (data) => {
+      if (data.userId !== this.presenceChannel.members.me.id) {
+        const audioElement = document.getElementsByClassName("audio")[0];
+        audioElement.play();        
+      }
     });
   }
 
@@ -191,51 +196,45 @@ class Room extends Component {
                 top="93vh"
                 left="10vw"
                  />
-              <Button
-                className="check-phone neon"
-                onClick={null}
-                >
-                check phone
-              </Button>
             </Hotspots>
           </Stall>;
         this.restartParallax();
         break;
       case 'stall-right': // contains chatbox
-        currentView = 
-          <Stall direction="right" handleNavigationClick={this.handleNavigationClick}>
-            <Hotspots>
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-up')} 
-                altText="Stare At Ceiling"
-                imgSrc={navUpButton}
-                top="7vh"
-                left="50vw"
-                 />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-down')} 
-                altText="Cry"
-                imgSrc={navDownButton}
-                top="88vh"
-                left="50vw"
-                 />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-front')} 
-                altText="Gaze at Stall"
-                imgSrc={navLeftButton}
-                top="53vh"
-                left="10vw"
-                 />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-back')} 
-                altText="Flush/Exit"
-                imgSrc={navBackButton}
-                top="93vh"
-                left="83vw"
-                 />
-              <Chatbox userName={this.state.userName} userHex={this.state.userHex} occupantsByStall={this.state.occupantsByStall} channel={this.presenceChannel} />
-            </Hotspots>
-          </Stall>;
+        // currentView = 
+        //   <Stall direction="right" handleNavigationClick={this.handleNavigationClick}>
+        //     <Hotspots>
+        //       <Button 
+        //         onClick={() => this.handleNavigationClick('stall-up')} 
+        //         altText="Stare At Ceiling"
+        //         imgSrc={navUpButton}
+        //         top="7vh"
+        //         left="50vw"
+        //          />
+        //       <Button 
+        //         onClick={() => this.handleNavigationClick('stall-down')} 
+        //         altText="Cry"
+        //         imgSrc={navDownButton}
+        //         top="88vh"
+        //         left="50vw"
+        //          />
+        //       <Button 
+        //         onClick={() => this.handleNavigationClick('stall-front')} 
+        //         altText="Gaze at Stall"
+        //         imgSrc={navLeftButton}
+        //         top="53vh"
+        //         left="10vw"
+        //          />
+        //       <Button 
+        //         onClick={() => this.handleNavigationClick('stall-back')} 
+        //         altText="Flush/Exit"
+        //         imgSrc={navBackButton}
+        //         top="93vh"
+        //         left="83vw"
+        //          />
+        //       <Chatbox userName={this.state.userName} userHex={this.state.userHex} occupantsByStall={this.state.occupantsByStall} channel={this.presenceChannel} />
+        //     </Hotspots>
+        //   </Stall>;
         this.restartParallax();
         break;
       case 'stall-down':
@@ -277,12 +276,49 @@ class Room extends Component {
         this.restartParallax();
         break;
     }
+    var chatroomStall;
+    if (this.presenceChannel && this.me) {
+      chatroomStall = <Stall className={this.state.currentView === 'stall-right' ? '' : 'hide' } direction="right" handleNavigationClick={this.handleNavigationClick}>
+            <Hotspots>
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-up')} 
+                altText="Stare At Ceiling"
+                imgSrc={navUpButton}
+                top="7vh"
+                left="50vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-down')} 
+                altText="Cry"
+                imgSrc={navDownButton}
+                top="88vh"
+                left="50vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-front')} 
+                altText="Gaze at Stall"
+                imgSrc={navLeftButton}
+                top="53vh"
+                left="10vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-back')} 
+                altText="Flush/Exit"
+                imgSrc={navBackButton}
+                top="93vh"
+                left="83vw"
+                 />
+              <Chatbox userName={this.state.userName} userHex={this.state.userHex} channel={this.presenceChannel} />
+            </Hotspots>
+        </Stall>;
+    }
     return (
       <div className="view">
         <div className="hide">
           <h2>Room {this.id}: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}</h2>
         </div>
         {currentView}
+        {chatroomStall}
       </div>
     );
   }

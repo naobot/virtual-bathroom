@@ -176,13 +176,42 @@
 }
 
 #chatbox {
-  justify-content: start;
-  width: 200px;
+  width: 280px;
+  height: 300px;
   position: absolute;
+  background: rgba(300,300,300,0.93);
   top: 35vh;
   left: 40vw;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: stretch;
+}
+#chatbox input[type="text"] {
+  width: 100%;
+  position: relative;
 }
 .chatlist-container {
   height: 200px;
   overflow: scroll;
+  flex-grow: 8;
+  padding: 8px 0;
+}
+#chatlist ul {
+  margin: 0 0 8px 0;
+  padding: 0;
+}
+.chatMessage p {
+  font-family: "Segoe UI", Helvetica, Tahoma, Arial, sans-serif;
+  letter-spacing: 1px;
+}
+.chatMessage p.user {
+  margin: 3px 0;
+}
+.chatMessage p.message {
+  margin: 5px 0 10px 0;
+}
+.chatMessage.self {
+  text-align: right;
 }

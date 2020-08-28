@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Chatlist from './Chatlist';
+import Audio from './Audio';
+import notificationSound from './assets/sounds/clearly.mp3';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
@@ -62,7 +64,7 @@ export default class Chatbox extends Component {
   render() {
     return (
       <div id="chatbox" className="component-box">
-        <h2>Chatbox</h2>
+        <Audio id="notification-sound" audioSrc={notificationSound} />
         <div className="chatlist-container">
           <Chatlist chats={this.state.chats} myHex={this.userHex} />
           <div style={{ float:"left", clear: "both" }}
