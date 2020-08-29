@@ -4,6 +4,9 @@ import Button from './Button';
 export default class Phone extends Component {
   constructor(props) { 
     super(props);
+    this.classes = "bg-layer";
+    this.animatePhone = this.animatePhone.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -12,15 +15,32 @@ export default class Phone extends Component {
   componentDidUpdate() {
   }
 
+  animatePhone(element) {
+    new Promise((resolve, reject) => {
+      const node = document.querySelector(element);
+      node.classList.add('animate__animated', 'animate__delay-1s', 'animate__shakeX');
+
+      function handleAnimationEnd() {
+        node.classList.remove('animate__animated', 'animate__delay-1s', 'animate__shakeX');
+        node.removeEventListener('animationend', handleAnimationEnd);
+
+        resolve('Animation ended');
+      }
+
+      node.addEventListener('animationend', handleAnimationEnd);
+    })
+  }
+
+  handleClick() {
+    console.log('phone clicked!');
+  }
+
   render() {
+    window.setInterval(() => {
+      this.animatePhone('#phone-layer');
+    }, 4.5 * 1000);
     return (
-      <div id="phone-layer" className="bg-layer">
-        <Button
-          className="check-phone neon"
-          onClick={null}
-          >
-          check phone
-        </Button>
+      <div id="phone-layer" className={this.classes} onClick={this.handleClick}>
       </div>
     );
   }
