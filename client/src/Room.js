@@ -5,11 +5,6 @@ import Mirrors from './Mirrors';
 import Hotspots from './Hotspots';
 import Chatbox from './Chatbox';
 import Phone from './Phone';
-// import StallUp from './StallUp';
-// import StallLeft from './StallLeft';
-// import StallRight from './StallRight';
-// import StallDown from './StallDown';
-// import StallBack from './StallBack';
 import Parallax from 'parallax-js';
 import navUpButton from './assets/actions/flat-arrow-up.png';
 import navDownButton from './assets/actions/flat-arrow-down.png';
@@ -17,6 +12,7 @@ import navLeftButton from './assets/actions/flat-arrow-left.png';
 import navRightButton from './assets/actions/flat-arrow-right.png';
 import navBackButton from './assets/actions/flat-arrow-back.png';
 import phoneImg from './assets/fixed-phone.png';
+import bigPhone from './assets/closeup-phone.gif';
 
 const PSEUDONYMS = [
   'someone',
@@ -36,6 +32,7 @@ class Room extends Component {
     this.presenceChannel = null;
     this.me = null;
     this.state = {
+      newAlert: false,
       occupants: {count: 0},
       userHex: '#ffffff',
       currentView: 'stall-front',
@@ -46,6 +43,7 @@ class Room extends Component {
     this.countOccupants = this.countOccupants.bind(this);
     this.handleNavigationClick = this.handleNavigationClick.bind(this);
     this.restartParallax = this.restartParallax.bind(this);
+    this.togglePhone = this.togglePhone.bind(this);
   }
 
   componentDidMount() {
@@ -70,7 +68,10 @@ class Room extends Component {
     this.presenceChannel.bind('message', (data) => {
       if (data.userId !== this.presenceChannel.members.me.id) {
         const audioElement = document.getElementsByClassName("audio")[0];
-        audioElement.play();        
+        audioElement.play();
+        if (this.state.currentView !== 'stall-right') {
+          this.setState({ newAlert: true });
+        }
       }
     });
   }
@@ -95,6 +96,10 @@ class Room extends Component {
     });
   }
 
+  togglePhone() {
+
+  }
+
   updateOccupants(members) {
     // console.log(`Stall.js updateOccupants: stall id ${this.id}, numOccupants ${members.count}`);
     this.setState({
@@ -103,7 +108,12 @@ class Room extends Component {
   }
 
   handleNavigationClick(target) {
-    this.setState({ currentView: target });
+    if (target === 'stall-right') {
+      this.setState({ currentView: target, newAlert: false })
+    }
+    else {
+      this.setState({ currentView: target });
+    }
   }
 
   render() {
@@ -147,6 +157,14 @@ class Room extends Component {
                  />
             </Hotspots>
           </Stall>;
+    const newMsg = <Button 
+      className={this.state.newAlert ? "neon msg-alert" : "hide"}
+      onClick={() => this.handleNavigationClick('stall-right')}
+      top="90vh"
+      left="90vw"
+      >
+        !
+      </Button>;
     switch (this.state.currentView) {
       case 'stall-up':
         currentView = 
@@ -166,7 +184,7 @@ class Room extends Component {
       case 'stall-left':
         currentView = 
           <Stall direction="left" handleNavigationClick={this.handleNavigationClick}>
-            <Phone />
+            <Phone onClick={() => this.togglePhone()} />
             <Hotspots>
               <Button 
                 onClick={() => this.handleNavigationClick('stall-up')} 
@@ -257,12 +275,21 @@ class Room extends Component {
           <Stall direction="back" handleNavigationClick={this.handleNavigationClick}>
             <Hotspots>
               <Button 
+                onClick={() => this.handleNavigationClick('stall-front')} 
+                altText="Gaze at Stall Door"
+                imgSrc={navBackButton}
+                top="94vh"
+                left="76vw"
+                 />
+              <Button 
                 onClick={() => this.handleNavigationClick('mirrors')} 
                 altText="Flush/Exit"
-                imgSrc={navBackButton}
-                top="41vh"
-                left="43vw"
-                 />
+                className="neon"
+                top="43vh"
+                left="39vw"
+                >
+                Flush/Exit
+              </Button>
             </Hotspots>
           </Stall>;
         this.restartParallax();
@@ -319,6 +346,7 @@ class Room extends Component {
         </div>
         {currentView}
         {chatroomStall}
+        {newMsg}
       </div>
     );
   }

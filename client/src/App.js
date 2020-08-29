@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import Pusher from 'pusher-js';
 import dotenv from 'dotenv';
 
-// import Audio from './Audio';
-// import audioSrc from './assets/sounds/bg-audio-sketch.mp3';
-
 import Hallway from './Hallway';
 import WaitingRoom from './WaitingRoom';
 import Room from './Room';

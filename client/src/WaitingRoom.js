@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Button from './Button';
-import enterStallButton from './assets/actions/3_enter-stall.png';
+import enterStallButton from './assets/actions/flat-arrow-right.png';
+// import enterStallButton from './assets/actions/3_enter-stall.png';
+import Audio from './Audio';
+import audioSrc from './assets/sounds/bg-audio-sketch.mp3';
 
 class WaitingRoom extends Component {
   constructor(props) {
@@ -71,7 +74,7 @@ class WaitingRoom extends Component {
     let trueOccupantsList = [];
     const positioningCss = {
       top: "50vh",
-      left: "60vw",
+      left: "49vw",
       width: "300px",
       position: "relative",
     };
@@ -96,7 +99,7 @@ class WaitingRoom extends Component {
       enterMessage = <div className="please-wait neon" style={positioningCss}>PLEASE WAIT...<br/>&nbsp;&nbsp;&nbsp;&nbsp;{ahead} ahead of you in line</div>;
     }
     else {
-      enterMessage = <Button onClick={this.handleEnterRoomClick} altText="Enter Stall" imgSrc={enterStallButton} top={positioningCss.top} left={positioningCss.left} width={positioningCss.width} />;
+      enterMessage = <Button onClick={this.handleEnterRoomClick} altText="Enter Stall" imgSrc={enterStallButton} top={positioningCss.top} left={positioningCss.left}  />;
     }
     console.log('In line:');
     console.log(`\t${this.countOccupants(this.state.occupants)}`)
@@ -104,6 +107,7 @@ class WaitingRoom extends Component {
       <div className="view layer" data-depth="0.1">
       
         <div id="waiting" className="content">
+          <Audio audioSrc={audioSrc} hidden="true" autoplay="true" />
           <div className="hotspots layer" data-depth="0.1">
             {enterMessage}
           </div>
