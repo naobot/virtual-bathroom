@@ -75,8 +75,7 @@ class WaitingRoom extends Component {
     const positioningCss = {
       top: "86vh",
       left: "58vw",
-      width: "6vw",
-      position: "relative",
+      position: "absolute",
     };
     if (this.state.occupants.count > 0) {
       this.state.occupants.each((visitor) => {
