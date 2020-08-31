@@ -163,6 +163,9 @@
   width: 110vw;
   height: 110vh;
 }
+.hotspots {
+  z-index: 50;
+}
 
 .nav-image {
   opacity: 0.6;
