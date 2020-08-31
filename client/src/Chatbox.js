@@ -64,7 +64,7 @@ export default class Chatbox extends Component {
   render() {
     return (
       <div id="chatbox" className="component-box">
-        <Audio id="notification-sound" audioSrc={notificationSound} />
+        <Audio id="notification-sound" audioSrc={notificationSound} hidden="true" />
         <div className="chatlist-container">
           <Chatlist chats={this.state.chats} myHex={this.userHex} />
           <div style={{ float:"left", clear: "both" }}

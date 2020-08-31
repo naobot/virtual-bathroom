@@ -4,6 +4,7 @@ import enterStallButton from './assets/actions/perspective-round-arrow-up.png';
 // import enterStallButton from './assets/actions/3_enter-stall.png';
 import Audio from './Audio';
 import audioSrc from './assets/sounds/bg-audio-sketch.mp3';
+import vacancyAudioSrc from './assets/sounds/eventually.mp3';
 
 class WaitingRoom extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class WaitingRoom extends Component {
     this.state = {
       me: 0,
       occupants: { count: 0 },
+      ahead: 0,
     }
     this.countOccupants = this.countOccupants.bind(this);
     this.sortByEntryTime = this.sortByEntryTime.bind(this);
@@ -70,13 +72,14 @@ class WaitingRoom extends Component {
   }
 
   render() {
-    let trueOccupants = [];
-    let trueOccupantsList = [];
     const positioningCss = {
       top: "86vh",
       left: "58vw",
       position: "absolute",
     };
+
+    let trueOccupants = [];
+    let trueOccupantsList = [];
     if (this.state.occupants.count > 0) {
       this.state.occupants.each((visitor) => {
         if (!visitor.info.isSpy) {
@@ -98,15 +101,19 @@ class WaitingRoom extends Component {
       enterMessage = <div className="please-wait neon" style={positioningCss}>PLEASE WAIT...<br/>&nbsp;&nbsp;&nbsp;&nbsp;{ahead} ahead of you in line</div>;
     }
     else {
-      enterMessage = <Button className="arrow--enter-stall blue-glow" onClick={this.handleEnterRoomClick} altText="Enter Stall" imgSrc={enterStallButton} top={positioningCss.top} left={positioningCss.left}  />;
+      enterMessage = <>
+          <Audio id="enter-sound" audioSrc={vacancyAudioSrc} hidden="true" autoplay="true" />
+          <Button className="arrow--enter-stall blue-glow" onClick={this.handleEnterRoomClick} altText="Enter Stall" imgSrc={enterStallButton} top={positioningCss.top} left={positioningCss.left}  />
+        </>;
     }
     console.log('In line:');
-    console.log(`\t${this.countOccupants(this.state.occupants)}`)
+    console.log(`\t${this.countOccupants(this.state.occupants)}`);
+    const backgroundAudio = <Audio id="background-audio" audioSrc={audioSrc} hidden="true" autoplay="true" />;
     return (
       <div className="view layer" data-depth="0.1">
       
         <div id="waiting" className="content">
-          <Audio audioSrc={audioSrc} hidden="true" autoplay="true" />
+          {backgroundAudio}
           <div className="hotspots">
             {enterMessage}
           </div>

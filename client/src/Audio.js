@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 class Audio extends PureComponent {
   componentDidMount() {
     if (this.props.autoplay) {
-      const audioElement = document.getElementsByClassName("audio")[0];
+      const audioElement = document.getElementById(this.props.id);
       audioElement.play();
     }
   }
