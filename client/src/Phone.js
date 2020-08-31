@@ -7,12 +7,21 @@ export default class Phone extends Component {
     this.classes = "bg-layer";
     this.animatePhone = this.animatePhone.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.phoneVibe = null;
   }
 
   componentDidMount() {
+    this.phoneVibe = setInterval(() => {
+      this.animatePhone('#phone-layer');
+    }, 4.5 * 1000);
   }
 
   componentDidUpdate() {
+  }
+
+  componentWillUnmount() {
+    console.log('unmounting Phone.js');
+    clearInterval(this.phoneVibe);
   }
 
   animatePhone(element) {
@@ -32,13 +41,11 @@ export default class Phone extends Component {
   }
 
   handleClick() {
+    clearInterval(this.phoneVibe);
     console.log('phone clicked!');
   }
 
   render() {
-    window.setInterval(() => {
-      this.animatePhone('#phone-layer');
-    }, 4.5 * 1000);
     return (
       <div id="phone-layer" className={this.classes} onClick={this.handleClick}>
       </div>
