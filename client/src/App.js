@@ -12,6 +12,14 @@ import 'animate.css/animate.min.css';
 import './css/normalize.css';
 import './css/App.css';
 
+import bgStallUp from './assets/bg-stall-up.gif';
+import bgStallLeft from './assets/bg-stall-left.jpg';
+import bgStallRight from './assets/bg-stall-right.jpg';
+import bgStallDown from './assets/bg-stall-down.gif';
+import bgStallBack from './assets/bg-stall-back.jpg';
+import bgStallFront from './assets/bg-stall-front.jpg';
+import mirrorsGif from './assets/running-faucet-compressed.gif';
+
 dotenv.config({ path: '.env' });
 const LOGGING = null;
 // const LOGGING = process.env.NODE_ENV === 'development';
@@ -41,6 +49,7 @@ class App extends Component {
       inLine: 0,
       message: '',
     };
+    this.images = [bgStallFront, bgStallBack, bgStallDown, bgStallUp, bgStallLeft, bgStallRight, mirrorsGif];
     this.max_occupancy = 3; // ADJUST AS NEEDED
     this.num_rooms = 2; // ADJUST AS NEEDED
     this.countMembers = this.countMembers.bind(this);
@@ -59,6 +68,13 @@ class App extends Component {
   componentDidMount() {
     // parallax effect for background
     this.restartParallax();
+
+    // preload most images
+    for (var i = 0; i < this.images.length; i++) {
+      let imageSrc = this.images[i];
+      const img = new Image();
+      img.src = imageSrc;
+    }
 
     this.spyOn('presence-bathroom', 'waiting');
     for (var i = 0; i < this.num_rooms; i++) {
