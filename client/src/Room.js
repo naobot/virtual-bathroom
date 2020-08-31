@@ -288,7 +288,7 @@ class Room extends Component {
                 top="43vh"
                 left="39vw"
                 >
-                Flush/Exit
+                Flush
               </Button>
             </Hotspots>
           </Stall>;
