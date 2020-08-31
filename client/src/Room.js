@@ -11,6 +11,7 @@ import navDownButton from './assets/actions/flat-arrow-down.png';
 import navLeftButton from './assets/actions/flat-arrow-left.png';
 import navRightButton from './assets/actions/flat-arrow-right.png';
 import navBackButton from './assets/actions/flat-arrow-back.png';
+import chatNotification from './assets/chat-notification.svg';
 import phoneImg from './assets/fixed-phone.png';
 import bigPhone from './assets/closeup-phone.gif';
 
@@ -158,13 +159,13 @@ class Room extends Component {
             </Hotspots>
           </Stall>;
     const newMsg = <Button 
-      className={this.state.newAlert ? "neon msg-alert" : "hide"}
+      className={this.state.newAlert ? "blue-glow msg-alert" : "hide"}
       onClick={() => this.handleNavigationClick('stall-right')}
       top="90vh"
       left="90vw"
-      >
-        !
-      </Button>;
+      width="80px"
+      imgSrc={chatNotification} 
+      />;
     switch (this.state.currentView) {
       case 'stall-up':
         currentView = 
