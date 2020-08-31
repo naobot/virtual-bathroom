@@ -76,6 +76,37 @@
   flex-direction: column;
   justify-content: center;
 }
+.mirrors-content {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0 auto;
+  position: relative;
+  top: 17vh;
+  left: 11vw;
+  width: 85vw;
+  min-width: 280px;
+}
+.mirrors-content > div {
+  padding: 0 10px;
+  font-family: "Tahoma", sans-serif;
+  font-weight: 600;
+  color: #c7f3ff;
+}
+.mirrors-content .col-1 {
+  /*flex-grow: 3;*/
+  min-width: 320px;
+}
+.mirrors-content .col-2 {
+  min-width: 300px;
+}
+.mirrors-content h1, .mirrors-content h2 {
+  line-height: 0.8;
+  font-weight: 600;
+  font-family: "Verdana", sans-serif;
+  font-style: italic;
+  color: #c6e2ff;
+  /*animation: neon .08s ease-in-out infinite alternate;*/
+}
 
 #hallway {
   background-image: url('../assets/bg-hallway.jpg');
@@ -228,9 +259,6 @@
   text-align: right;
 }
 
-.arrow--enter-bathroom {
-
-}
 .arrow--enter-stall {
   transform: skewX(23deg);
 }

@@ -249,14 +249,14 @@ class App extends Component {
     // }
     // default view is hallway
     let currentView = <Hallway onEnterBathroom={this.handleEnterWaiting} />
-    if (this.state.currentView.type === 'bathroom') {
+    if (this.state.currentView.type === 'mirrors') {
       currentView = <Mirrors onEnterWaiting={this.handleEnterWaiting} />
     }
     else if (this.state.currentView.type === 'waiting') { 
       currentView = <WaitingRoom onEnterRoom={this.handleEnterRoom} pusher={this.pusher} onOccupancyChange={this.updateMemberCount} />; 
     }
     if (this.state.currentView.type === 'room') {
-      currentView = <Room id={this.state.currentView.id} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateMemberCount} />;
+      currentView = <Room id={this.state.currentView.id} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateMemberCount} onExit={this.handleExitStall} />;
     }
     return (
       <div id="app" onMouseMove={this.handleMouseMove}>

@@ -282,7 +282,7 @@ class Room extends Component {
                 left="76vw"
                  />
               <Button 
-                onClick={() => this.handleNavigationClick('mirrors')} 
+                onClick={this.props.onExit} 
                 altText="Flush/Exit"
                 className="neon"
                 top="43vh"
