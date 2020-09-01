@@ -34,10 +34,10 @@ export default class Phone extends Component {
   animatePhone(element, animationName) {
     new Promise((resolve, reject) => {
       const node = document.querySelector(element);
-      node.classList.add('animate__animated', 'animate__delay-1s', `animate__${animationName}`);
+      node.classList.add('animate__animated', `animate__${animationName}`);
 
       function handleAnimationEnd() {
-        node.classList.remove('animate__animated', 'animate__delay-1s', `animate__${animationName}`);
+        node.classList.remove('animate__animated', `animate__${animationName}`);
         node.removeEventListener('animationend', handleAnimationEnd);
 
         resolve('Animation ended');

@@ -8,10 +8,15 @@ class Hallway extends PureComponent {
   constructor(props) {
     super(props);
     this.handleEnterBathroomClick = this.handleEnterBathroomClick.bind(this);
+    this.handleAudioDescriptionClick = this.handleAudioDescriptionClick.bind(this);
   }
 
   handleEnterBathroomClick(e) {
     this.props.onEnterBathroom(e);
+  }
+
+  handleAudioDescriptionClick(e) {
+    alert('sorry! not yet implemented T__T');
   }
 
   render() {
@@ -20,7 +25,7 @@ class Hallway extends PureComponent {
         <div id="hallway" className="content">
           <div className="hotspots layer" data-depth="0.1">
             <Button onClick={this.handleEnterBathroomClick} altText="Enter Bathroom" imgSrc={enterButton} top="75vh" left="51vw" width="9vw" className="arrow--enter-bathroom blue-glow" />
-            <Button noAnimate={true} altText="Audio Guide" imgSrc={audioGuideButton} width="200px" top="93vh" left="12vw" />
+            <Button onClick={this.handleAudioDescriptionClick} noAnimate={true} altText="Audio Guide" imgSrc={audioGuideButton} width="200px" top="93vh" left="12vw" />
           </div>
         </div>
       </div>

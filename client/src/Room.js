@@ -6,6 +6,8 @@ import Hotspots from './Hotspots';
 import Chatbox from './Chatbox';
 import Phone from './Phone';
 import Parallax from 'parallax-js';
+import Audio from './Audio';
+
 import navUpButton from './assets/actions/flat-arrow-up.png';
 import navDownButton from './assets/actions/flat-arrow-down.png';
 import navLeftButton from './assets/actions/flat-arrow-left.png';
@@ -13,6 +15,7 @@ import navRightButton from './assets/actions/flat-arrow-right.png';
 import navBackButton from './assets/actions/flat-arrow-back.png';
 import chatNotification from './assets/chat-notification.svg';
 import phoneImg from './assets/fixed-phone.png';
+import bgAudioSrc from './assets/sounds/inside.mp3';
 
 const PSEUDONYMS = [
   'someone',
@@ -338,6 +341,7 @@ class Room extends Component {
         <div className="hide">
           <h2>Room {this.id}: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}</h2>
         </div>
+        <Audio id="background-audio" audioSrc={bgAudioSrc} hidden="true" autoplay="true" />
         {currentView}
         {chatroomStall}
         {newMsg}

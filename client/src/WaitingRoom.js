@@ -3,7 +3,7 @@ import Button from './Button';
 import enterStallButton from './assets/actions/perspective-round-arrow-up.png';
 // import enterStallButton from './assets/actions/3_enter-stall.png';
 import Audio from './Audio';
-import audioSrc from './assets/sounds/bg-audio-sketch.mp3';
+import audioSrc from './assets/sounds/outside.mp3';
 import vacancyAudioSrc from './assets/sounds/eventually.mp3';
 
 class WaitingRoom extends Component {
