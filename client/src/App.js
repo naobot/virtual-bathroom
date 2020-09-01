@@ -18,7 +18,7 @@ import bgStallRight from './assets/bg-stall-right.jpg';
 import bgStallDown from './assets/bg-stall-down.gif';
 import bgStallBack from './assets/bg-stall-back.jpg';
 import bgStallFront from './assets/bg-stall-front.jpg';
-import mirrorsGif from './assets/running-faucet-compressed.gif';
+import mirrorsGif from './assets/bg-mirrors.jpg';
 import phoneImg from './assets/fixed-phone.png';
 import bigPhone from './assets/closeup-phone.gif';
 
