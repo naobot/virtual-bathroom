@@ -1,32 +1,34 @@
 {
   "files": {
-    "main.css": "/static/css/main.9c3444e0.chunk.css",
-    "main.js": "/static/js/main.915c467b.chunk.js",
-    "main.js.map": "/static/js/main.915c467b.chunk.js.map",
+    "main.css": "/static/css/main.a4648ba5.chunk.css",
+    "main.js": "/static/js/main.7df7f915.chunk.js",
+    "main.js.map": "/static/js/main.7df7f915.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.7c9d7d74.js",
     "runtime-main.js.map": "/static/js/runtime-main.7c9d7d74.js.map",
     "static/css/2.f01c5455.chunk.css": "/static/css/2.f01c5455.chunk.css",
-    "static/js/2.bcb1be2c.chunk.js": "/static/js/2.bcb1be2c.chunk.js",
-    "static/js/2.bcb1be2c.chunk.js.map": "/static/js/2.bcb1be2c.chunk.js.map",
+    "static/js/2.865b440d.chunk.js": "/static/js/2.865b440d.chunk.js",
+    "static/js/2.865b440d.chunk.js.map": "/static/js/2.865b440d.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.cfcca18072734d99e1a706f6bbe489cd.js": "/precache-manifest.cfcca18072734d99e1a706f6bbe489cd.js",
+    "precache-manifest.9f7317997e718993ef64fa998d253cca.js": "/precache-manifest.9f7317997e718993ef64fa998d253cca.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.f01c5455.chunk.css.map": "/static/css/2.f01c5455.chunk.css.map",
-    "static/css/main.9c3444e0.chunk.css.map": "/static/css/main.9c3444e0.chunk.css.map",
-    "static/js/2.bcb1be2c.chunk.js.LICENSE.txt": "/static/js/2.bcb1be2c.chunk.js.LICENSE.txt",
+    "static/css/main.a4648ba5.chunk.css.map": "/static/css/main.a4648ba5.chunk.css.map",
+    "static/js/2.865b440d.chunk.js.LICENSE.txt": "/static/js/2.865b440d.chunk.js.LICENSE.txt",
     "static/media/2_audio-guide.png": "/static/media/2_audio-guide.3e47e291.png",
     "static/media/CCA_RGB_colour_e.svg": "/static/media/CCA_RGB_colour_e.3c468e95.svg",
-    "static/media/bg-audio-sketch.mp3": "/static/media/bg-audio-sketch.1b848198.mp3",
-    "static/media/App.css": "/static/media/running-faucet-compressed.47680988.gif",
+    "static/media/App.css": "/static/media/spider-view-3.81ce891b.png",
     "static/media/chat-notification.svg": "/static/media/chat-notification.be21ad47.svg",
     "static/media/clearly.mp3": "/static/media/clearly.a431eaad.mp3",
-    "static/media/eventually.mp3": "/static/media/eventually.b5e7acad.mp3"
+    "static/media/eventually.mp3": "/static/media/eventually.b5e7acad.mp3",
+    "static/media/inside.mp3": "/static/media/inside.90ed5ffe.mp3",
+    "static/media/outside.mp3": "/static/media/outside.bd516f05.mp3",
+    "static/media/running-faucet-compressed.gif": "/static/media/running-faucet-compressed.47680988.gif"
   },
   "entrypoints": [
     "static/js/runtime-main.7c9d7d74.js",
     "static/css/2.f01c5455.chunk.css",
-    "static/js/2.bcb1be2c.chunk.js",
-    "static/css/main.9c3444e0.chunk.css",
-    "static/js/main.915c467b.chunk.js"
+    "static/js/2.865b440d.chunk.js",
+    "static/css/main.a4648ba5.chunk.css",
+    "static/js/main.7df7f915.chunk.js"
   ]
 }
