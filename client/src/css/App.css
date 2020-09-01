@@ -150,7 +150,14 @@
   background-position: center center;
   background-repeat: no-repeat;
 }
-#phone-layer:hover {
+#big-phone {
+  background-image: url('../assets/closeup-phone.gif');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  backdrop-filter: blur(3px);
+}
+#phone-layer:hover, #big-phone:hover {
   cursor: pointer;
 }
 #stall-right {

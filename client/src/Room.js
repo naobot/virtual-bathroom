@@ -13,7 +13,6 @@ import navRightButton from './assets/actions/flat-arrow-right.png';
 import navBackButton from './assets/actions/flat-arrow-back.png';
 import chatNotification from './assets/chat-notification.svg';
 import phoneImg from './assets/fixed-phone.png';
-import bigPhone from './assets/closeup-phone.gif';
 
 const PSEUDONYMS = [
   'someone',
@@ -38,13 +37,13 @@ class Room extends Component {
       userHex: '#ffffff',
       currentView: 'stall-front',
       userName: 'someone',
+      showPhone: false,
     };
     this.max_occupancy = props.max;
     this.updateOccupants = this.updateOccupants.bind(this);
     this.countOccupants = this.countOccupants.bind(this);
     this.handleNavigationClick = this.handleNavigationClick.bind(this);
     this.restartParallax = this.restartParallax.bind(this);
-    this.togglePhone = this.togglePhone.bind(this);
   }
 
   componentDidMount() {
@@ -95,10 +94,6 @@ class Room extends Component {
       selector: '.layer',
       pointerEvents: true,
     });
-  }
-
-  togglePhone() {
-
   }
 
   updateOccupants(members) {
@@ -185,7 +180,7 @@ class Room extends Component {
       case 'stall-left':
         currentView = 
           <Stall direction="left" handleNavigationClick={this.handleNavigationClick}>
-            <Phone onClick={() => this.togglePhone()} />
+            <Phone />
             <Hotspots>
               <Button 
                 onClick={() => this.handleNavigationClick('stall-up')} 

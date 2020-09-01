@@ -10,10 +10,6 @@ class Hallway extends PureComponent {
     this.handleEnterBathroomClick = this.handleEnterBathroomClick.bind(this);
   }
 
-  // componentDidMount() {
-  //   console.log(`waiting room mounted`);
-  // }
-
   handleEnterBathroomClick(e) {
     this.props.onEnterBathroom(e);
   }
