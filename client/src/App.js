@@ -23,8 +23,8 @@ import phoneImg from './assets/fixed-phone.png';
 import bigPhone from './assets/closeup-phone.gif';
 
 dotenv.config({ path: '.env' });
-const LOGGING = null;
-// const LOGGING = process.env.NODE_ENV === 'development';
+// const LOGGING = null;
+const LOGGING = process.env.NODE_ENV === 'development';
 
 class App extends Component {
   constructor(props) {
@@ -53,7 +53,7 @@ class App extends Component {
     };
     this.images = [bgStallFront, bgStallBack, bgStallDown, bgStallUp, bgStallLeft, bgStallRight, mirrorsGif, phoneImg, bigPhone];
     this.max_occupancy = 4; // ADJUST AS NEEDED
-    this.num_rooms = 4; // ADJUST AS NEEDED
+    this.num_rooms = 5; // ADJUST AS NEEDED
     this.countMembers = this.countMembers.bind(this);
     this.spyOn = this.spyOn.bind(this);
     this.startInactivityCheck = this.startInactivityCheck.bind(this);
