@@ -280,9 +280,7 @@ class Room extends Component {
               <Button 
                 onClick={this.props.onExit} 
                 altText="Flush/Exit"
-                className="neon"
-                top="43vh"
-                left="39vw"
+                className="flush-button neon"
                 >
                 Flush
               </Button>

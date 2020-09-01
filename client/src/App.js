@@ -52,8 +52,8 @@ class App extends Component {
       message: '',
     };
     this.images = [bgStallFront, bgStallBack, bgStallDown, bgStallUp, bgStallLeft, bgStallRight, mirrorsGif, phoneImg, bigPhone];
-    this.max_occupancy = 3; // ADJUST AS NEEDED
-    this.num_rooms = 2; // ADJUST AS NEEDED
+    this.max_occupancy = 4; // ADJUST AS NEEDED
+    this.num_rooms = 9; // ADJUST AS NEEDED
     this.countMembers = this.countMembers.bind(this);
     this.spyOn = this.spyOn.bind(this);
     this.startInactivityCheck = this.startInactivityCheck.bind(this);

@@ -126,10 +126,30 @@
   background-position: center center;
   background-repeat: no-repeat;
 }
+@media screen and (min-width: 600px) {
+  #stall-up {
+    background-image: url('../assets/bg-stall-up.gif');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+  #stall-left {
+    background-image: url('../assets/bg-stall-left.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+  #phone-layer {
+    background-image: url('../assets/fixed-phone.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+}
 #stall-up {
   background-image: url('../assets/bg-stall-up.gif');
   background-size: cover;
-  background-position: center center;
+  background-position: 30% 50%;
   background-repeat: no-repeat;
 }
 #stall-front {
@@ -141,13 +161,13 @@
 #stall-left {
   background-image: url('../assets/bg-stall-left.jpg');
   background-size: cover;
-  background-position: center center;
+  background-position: 30% center;
   background-repeat: no-repeat;
 }
 #phone-layer {
   background-image: url('../assets/fixed-phone.png');
   background-size: cover;
-  background-position: center center;
+  background-position: 30% center;
   background-repeat: no-repeat;
 }
 #big-phone {
@@ -215,6 +235,17 @@
   cursor: pointer;
 }
 
+@media screen and (min-width: 600px) {
+  .flush-button {
+    top: 43vh;
+    left: 40vw !important;
+  }
+}
+.flush-button {
+  top: 43vh;
+  left: 28vw;
+}
+
 .neon {
   font-weight: 600;
   font-family: Verdana;
@@ -225,13 +256,21 @@
   animation: neon .08s ease-in-out infinite alternate;
 }
 
+@media screen and (min-width: 600px) {
+  #chatbox {
+    top: 30vh !important;
+    left: 35vw !important;
+    width: 380px !important;
+    height: 400px !important;
+  }
+}
 #chatbox {
-  width: 280px;
-  height: 300px;
-  position: absolute;
+  position: relative;
+  width: 65vw;
+  height: 55vh;
   background: rgba(300,300,300,0.93);
-  top: 35vh;
-  left: 40vw;
+  top: 25vh;
+  left: 18vw;
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
