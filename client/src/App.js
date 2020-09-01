@@ -19,6 +19,8 @@ import bgStallDown from './assets/bg-stall-down.gif';
 import bgStallBack from './assets/bg-stall-back.jpg';
 import bgStallFront from './assets/bg-stall-front.jpg';
 import mirrorsGif from './assets/running-faucet-compressed.gif';
+import phoneImg from './assets/fixed-phone.png';
+import bigPhone from './assets/closeup-phone.gif';
 
 dotenv.config({ path: '.env' });
 const LOGGING = null;
@@ -49,7 +51,7 @@ class App extends Component {
       inLine: 0,
       message: '',
     };
-    this.images = [bgStallFront, bgStallBack, bgStallDown, bgStallUp, bgStallLeft, bgStallRight, mirrorsGif];
+    this.images = [bgStallFront, bgStallBack, bgStallDown, bgStallUp, bgStallLeft, bgStallRight, mirrorsGif, phoneImg, bigPhone];
     this.max_occupancy = 3; // ADJUST AS NEEDED
     this.num_rooms = 2; // ADJUST AS NEEDED
     this.countMembers = this.countMembers.bind(this);
@@ -183,11 +185,13 @@ class App extends Component {
     if (this.timeoutId !== null) {
       window.clearTimeout(this.timeoutId);
     }
+    if (this.state.currentView === 'room') {
+      this.startInactivityCheck();
+    }
     if (this.pusher.connection.state === 'disconnected') {
       alert(`You've been ushered out of the bathroom for taking so long! Please line up again to re-enter the bathroom.`);
       window.location.reload();
     }
-    this.startInactivityCheck();
   }
 
   /* BEGIN: View transition functions 
