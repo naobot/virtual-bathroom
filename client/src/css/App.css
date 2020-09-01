@@ -87,10 +87,11 @@
   min-width: 280px;
 }
 .mirrors-content > div {
-  padding: 0 10px;
-  font-family: "Tahoma", sans-serif;
+  padding: 0 15px;
+  font-family: "Helvetica", Arial sans-serif;
   font-weight: 600;
-  color: #c7f3ff;
+  color: #e2feff;
+  text-shadow: 0 0 9px rgb(0 17 68 / 0.8);
 }
 .mirrors-content .col-1 {
   /*flex-grow: 3;*/
@@ -98,6 +99,7 @@
 }
 .mirrors-content .col-2 {
   min-width: 300px;
+  width: 35%;
 }
 .mirrors-content h1, .mirrors-content h2 {
   line-height: 0.8;
@@ -105,7 +107,15 @@
   font-family: "Verdana", sans-serif;
   font-style: italic;
   color: #c6e2ff;
-  /*animation: neon .08s ease-in-out infinite alternate;*/
+  animation: neon .08s ease-in-out infinite alternate;
+  transform: translateZ(0);
+}
+.mirrors-content a:link, .mirrors-content a:visited, .mirrors-content a:hover {
+  color: #e2feff;
+}
+.cca-logo {
+  padding: 15px 0;
+  max-width: 300px;
 }
 
 #hallway {
@@ -121,14 +131,14 @@
   background-repeat: no-repeat;
 }
 #bathroom {
-  background-image: url('../assets/running-faucet-compressed.gif');
+  background-image: url('../assets/bg-mirrors.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 @media screen and (min-width: 600px) {
   #stall-up {
-    background-image: url('../assets/bg-stall-up.gif');
+    background-image: url('../assets/spider-view-3.png');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -147,7 +157,7 @@
   }
 }
 #stall-up {
-  background-image: url('../assets/bg-stall-up.gif');
+  background-image: url('../assets/spider-view-3.png');
   background-size: cover;
   background-position: 30% 50%;
   background-repeat: no-repeat;

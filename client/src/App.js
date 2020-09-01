@@ -12,7 +12,7 @@ import 'animate.css/animate.min.css';
 import './css/normalize.css';
 import './css/App.css';
 
-import bgStallUp from './assets/bg-stall-up.gif';
+import bgStallUp from './assets/spider-view-3.png';
 import bgStallLeft from './assets/bg-stall-left.jpg';
 import bgStallRight from './assets/bg-stall-right.jpg';
 import bgStallDown from './assets/bg-stall-down.gif';

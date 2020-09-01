@@ -16,7 +16,7 @@ class Audio extends PureComponent {
       }
     }
     return (
-      <audio id={this.props.id} className="audio" style={style}>
+      <audio id={this.props.id} className="audio" style={style} loop={this.props.loop}>
         <source src={this.props.audioSrc}></source>
       </audio>
     );

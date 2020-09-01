@@ -13,7 +13,7 @@ class WaitingRoom extends Component {
     this.state = {
       me: 0,
       occupants: { count: 0 },
-      ahead: 0,
+      waitedInLine: false,
     }
     this.countOccupants = this.countOccupants.bind(this);
     this.sortByEntryTime = this.sortByEntryTime.bind(this);
@@ -108,7 +108,7 @@ class WaitingRoom extends Component {
     }
     console.log('In line:');
     console.log(`\t${this.countOccupants(this.state.occupants)}`);
-    const backgroundAudio = <Audio id="background-audio" audioSrc={audioSrc} hidden="true" autoplay="true" />;
+    const backgroundAudio = <Audio id="background-audio" audioSrc={audioSrc} hidden="true" autoplay="true" loop="true" />;
     return (
       <div className="view layer" data-depth="0.1">
       

@@ -25,22 +25,27 @@ class Mirrors extends PureComponent {
                 <h1>MAKE-BELIEVE BATHROOM</h1>
                 <p>
                   Created by Amy Lam<br/>
-                  Curator: Jenn Jackson<br/>
                   Web developer: Naomi Cui<br/>
-                  3D renderings: Emerson Maxwell<br/>
+                  3D renderings & animations: Emerson Maxwell<br/>
                   Soundscape: Vic Cheong<br/>
                   Graffiti: Haeahn Kwon, Caley Feeney<br/>
-                  Audio descriptive guide: Aliya Pabani<br/>
+                  Audio descriptive guide: Aliya Pabani
+                </p>
+                <p>
+                  Curator: Jenn Jackson<br/>
                   With contributions from Jon McCurley
                 </p>
                 <p>
                   We acknowledge the support of the Canada Council for the Arts<br/>
-                  <img src={CCALogo} alt="Canada Council for the Arts" />
+                  <img className="cca-logo" src={CCALogo} alt="Canada Council for the Arts" />
                 </p>
               </div>
               <div className="col-2">
                 <h2>TOILETS FOR ALL</h2>
-                <p>Download and share window stickers created by the Toronto Bathroom Codes project. These stickers advocate for businesses and other organizations to allow their bathrooms to be used by anyone. Pee for free, free to pee.</p>
+                <p>Download and share window stickers created by the Toronto Bathroom Codes project. These stickers advocate for businesses and other organizations to allow their bathrooms to be used by anyone.</p>
+                <p><a href="/freeourpee">Pee for free, free to pee.</a></p>
+                <h2>SUBMIT A POSTER</h2>
+                <p>To post a poster or public notice to the Make-Believe Bathroom, please send a PNG file to <strong>xxemail@gmail.com</strong></p>
               </div>
             </>
     return (
