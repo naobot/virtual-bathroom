@@ -78,10 +78,22 @@ class App extends Component {
       img.src = imageSrc;
     }
 
-    this.spyOn('presence-bathroom', 'waiting');
+    // initiate all rooms
+    let roomsCopy = [];
     for (var i = 0; i < this.num_rooms; i++) {
-      this.spyOn(`presence-room-${i}`, 'room');
+      roomsCopy.push({ id: i, occupants: 0 });
     }
+    this.setState({
+      rooms: roomsCopy,
+    }, () => {
+      // send spy to update room vacancies
+      this.spyOn('presence-bathroom', 'waiting');
+      for (var i = 0; i < this.num_rooms; i++) {
+        this.spyOn(`presence-room-${i}`, 'room');
+      }
+    }
+    );
+
     // main app channel
     this.presenceChannel = this.pusher.subscribe('presence-app');
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
@@ -257,9 +269,12 @@ class App extends Component {
     if (LOGGING) { console.log('render() rooms:') }
     if (LOGGING) { console.log(this.state.rooms); hide = null }
     console.log(`running in ${process.env.NODE_ENV} mode`);
-    const rooms = this.state.rooms.map((room) =>
-      <li key={room.id.toString()}><strong>Room {room.id}:</strong> {room.occupants}/{this.max_occupancy}</li>
-    );
+    var rooms = 'Initiating rooms...';
+    if (this.state.rooms.length === this.num_rooms) {
+      rooms = this.state.rooms.map((room) =>
+        <li key={room.id.toString()}><strong>Room {room.id}:</strong> {room.occupants}/{this.max_occupancy}</li>
+      );
+    }
 
     // let visitorsList = [];
     // if (this.state.pusher_app_members.count > 0) {
