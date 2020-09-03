@@ -16,13 +16,18 @@ export default class Phone extends Component {
   componentDidMount() {
     this.phoneVibe = setInterval(() => {
       this.animatePhone('#phone-layer', 'shakeX');
-    }, 4.5 * 1000);
+    }, 3.5 * 1000);
   }
 
   componentDidUpdate() {
     this.restartParallax();
     if (this.state.showPhone) {
       this.animatePhone('#big-phone', 'rotateInUpLeft');
+    }
+    else {
+      this.phoneVibe = setInterval(() => {
+        this.animatePhone('#phone-layer', 'shakeX');
+      }, 3.5 * 1000);
     }
   }
 

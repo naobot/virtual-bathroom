@@ -12,6 +12,6 @@ export function restartParallax(selector) {
   });
 }
 
-export const MAX_OCCUPANCY = 4;
+export const MAX_OCCUPANCY = 3;
 export const NUM_ROOMS = 5;
 export const IMAGES = importAll(require.context('./assets/images/', false, /\.(png|jpe?g|svg)$/));
