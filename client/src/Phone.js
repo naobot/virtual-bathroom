@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Button from './Button';
 import Parallax from 'parallax-js';
 
-export default class Phone extends Component {
+export default class Phone extends PureComponent {
   constructor(props) { 
     super(props);
     this.classes = "bg-layer";
