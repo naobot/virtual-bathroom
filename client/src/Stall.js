@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Button from './Button';
+// import Button from './Button';
 
 export default class Stall extends PureComponent {
   constructor(props) {

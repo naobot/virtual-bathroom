@@ -7,7 +7,6 @@ import WaitingRoom from './WaitingRoom';
 import Room from './Room';
 import Mirrors from './Mirrors';
 
-import Parallax from 'parallax-js';
 import 'animate.css/animate.min.css';
 import './css/normalize.css';
 import './css/App.css';

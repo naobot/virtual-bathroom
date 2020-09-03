@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 
 export default class Hotspots extends PureComponent {
-  constructor(props) { 
-    super(props);
-  }
+  // constructor(props) { 
+  //   super(props);
+  // }
 
   componentDidMount() {
   }

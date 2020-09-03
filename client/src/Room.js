@@ -14,7 +14,6 @@ import navLeftButton from './assets/actions/flat-arrow-left.png';
 import navRightButton from './assets/actions/flat-arrow-right.png';
 import navBackButton from './assets/actions/flat-arrow-back.png';
 import chatNotification from './assets/chat-notification.svg';
-import phoneImg from './assets/images/fixed-phone.png';
 import bgAudioSrc from './assets/sounds/inside.mp3';
 
 const PSEUDONYMS = [

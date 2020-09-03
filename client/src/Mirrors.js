@@ -1,13 +1,12 @@
 import React, { PureComponent } from 'react';
-import Button from './Button';
+// import Button from './Button';
 import CCALogo from './assets/CCA_RGB_colour_e.svg';
-import Parallax from 'parallax-js';
 
 class Mirrors extends PureComponent {
-  constructor(props) {
-    super(props);
-    // this.handleNavigationClick = this.handleNavigationClick.bind(this);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   // this.handleNavigationClick = this.handleNavigationClick.bind(this);
+  // }
 
   // handleNavigationClick(target) {
   //   if (target === 'waiting') {

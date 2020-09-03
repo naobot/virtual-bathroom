@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Button from './Button';
+// import Button from './Button';
 import Parallax from 'parallax-js';
 
 export default class Phone extends PureComponent {
@@ -66,7 +66,6 @@ export default class Phone extends PureComponent {
   }
 
   render() {
-    var phoneView = <div></div>;
     var zoomOutPhone = <div id="phone-layer" className={this.classes} onClick={this.handleClick}></div>;
     var zoomInPhone = 
       <div id="big-phone" className="bg-layer layer" data-depth="0.3" onClick={this.handleClick}>
