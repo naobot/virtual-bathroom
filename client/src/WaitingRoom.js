@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import Background from './Background';
 import Button from './Button';
 import enterStallButton from './assets/actions/perspective-round-arrow-up.png';
 // import enterStallButton from './assets/actions/3_enter-stall.png';
 import Audio from './Audio';
 import audioSrc from './assets/sounds/outside.mp3';
+import backgroundImgSrc from './assets/images/bg-waiting.jpg';
 import vacancyAudioSrc from './assets/sounds/eventually.mp3';
 
 class WaitingRoom extends Component {
@@ -16,6 +18,7 @@ class WaitingRoom extends Component {
       waitedInLine: false,
     }
     this.countOccupants = this.countOccupants.bind(this);
+    this.updateOccupants = this.updateOccupants.bind(this);
     this.sortByEntryTime = this.sortByEntryTime.bind(this);
     this.handleEnterRoomClick = this.handleEnterRoomClick.bind(this);
   }
@@ -110,15 +113,12 @@ class WaitingRoom extends Component {
     console.log(`\t${this.countOccupants(this.state.occupants)}`);
     const backgroundAudio = <Audio id="background-audio" audioSrc={audioSrc} hidden="true" autoplay="true" loop="true" />;
     return (
-      <div className="view layer" data-depth="0.1">
-      
-        <div id="waiting" className="content">
-          {backgroundAudio}
-          <div className="hotspots">
-            {enterMessage}
-          </div>
+      <Background id="waiting" imgSrc={backgroundImgSrc}>
+        {backgroundAudio}
+        <div className="hotspots">
+          {enterMessage}
         </div>
-      </div>
+      </Background>
     );
   }
 

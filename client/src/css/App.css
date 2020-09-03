@@ -119,69 +119,69 @@
 }
 
 #hallway {
-  background-image: url('../assets/bg-hallway.jpg');
+  background-image: url('../assets/images/bg-hallway.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #waiting {
-  background-image: url('../assets/bg-waiting.jpg');
+  background-image: url('../assets/images/bg-waiting.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #bathroom {
-  background-image: url('../assets/bg-mirrors.jpg');
+  background-image: url('../assets/images/bg-mirrors.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 @media screen and (min-width: 600px) {
   #stall-up {
-    background-image: url('../assets/spider-view-3.png');
+    background-image: url('../assets/images/bg-stall-up.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
   }
   #stall-left {
-    background-image: url('../assets/bg-stall-left.jpg');
+    background-image: url('../assets/images/bg-stall-left.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
   }
   #phone-layer {
-    background-image: url('../assets/fixed-phone.png');
+    background-image: url('../assets/images/fixed-phone.png');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
   }
 }
 #stall-up {
-  background-image: url('../assets/spider-view-3.png');
+  background-image: url('../assets/images/bg-stall-up.jpg');
   background-size: cover;
   background-position: 30% 50%;
   background-repeat: no-repeat;
 }
 #stall-front {
-  background-image: url('../assets/bg-stall-front.jpg');
+  background-image: url('../assets/images/bg-stall-front.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #stall-left {
-  background-image: url('../assets/bg-stall-left.jpg');
+  background-image: url('../assets/images/bg-stall-left.jpg');
   background-size: cover;
   background-position: 30% center;
   background-repeat: no-repeat;
 }
 #phone-layer {
-  background-image: url('../assets/fixed-phone.png');
+  background-image: url('../assets/images/fixed-phone.png');
   background-size: cover;
   background-position: 30% center;
   background-repeat: no-repeat;
 }
 #big-phone {
-  background-image: url('../assets/closeup-phone.gif');
+  background-image: url('../assets/images/closeup-phone.gif');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -191,19 +191,19 @@
   cursor: pointer;
 }
 #stall-right {
-  background-image: url('../assets/bg-stall-right.jpg');
+  background-image: url('../assets/images/bg-stall-right.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #stall-down {
-  background-image: url('../assets/bg-stall-down.gif');
+  background-image: url('../assets/images/bg-stall-down.gif');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #stall-back {
-  background-image: url('../assets/bg-stall-back.jpg');
+  background-image: url('../assets/images/bg-stall-back.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
