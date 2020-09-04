@@ -19,7 +19,7 @@ class WaitingRoom extends PureComponent {
     let enterMessage;
     if (this.props.queuePosition > 0 || this.props.queuePosition === 0) {
       console.log(`Currently ${this.props.queuePosition}/${this.props.inLineTotal}`);
-      if (this.props.queuePosition > 0) {
+      if (this.props.queuePosition > 2) {
         enterMessage = <div className="please-wait neon" style={positioningCss}>PLEASE WAIT...<br/>&nbsp;&nbsp;&nbsp;&nbsp;{this.props.queuePosition} / {this.props.inLineTotal}</div>;
       }
       else { // == 0
