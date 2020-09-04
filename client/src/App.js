@@ -226,14 +226,20 @@ class App extends Component {
   }
 
   userActivityDetected() {
+    // timeout can be cleared from anywhere
     if (this.timeoutId !== null) {
       window.clearTimeout(this.timeoutId);
     }
+    // can be timed out of stall
     if (this.state.currentView.type === 'room') {
       this.startInactivityCheck();
     }
+    // can be timed out at head (first 3) of queue
+    if (this.state.currentView.type === 'waiting' && this.state.ahead < 3) {
+      this.startInactivityCheck();
+    }
     if (this.pusher.connection.state === 'disconnected') {
-      alert(`You've been ushered out of the bathroom for taking so long! Please line up again to re-enter the bathroom.`);
+      alert(`You've been ushered out for taking too long! Please line up again to re-enter the bathroom.`);
       window.location.reload();
     }
   }
