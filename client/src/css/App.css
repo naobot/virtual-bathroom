@@ -315,6 +315,22 @@
 .arrow--enter-stall {
   transform: skewX(23deg);
 }
+@media screen and (min-width: 600px) {
+  .please-wait {
+    position: absolute;
+    top: 83vh !important;
+    left: 48vw !important;
+    max-width: 400px !important;
+    line-height: 0.8 !important;
+  }
+}
+.please-wait {
+  position: absolute;
+  top: 85vh;
+  left: 22vw;
+  width: 80vw;
+  line-height: 0.9;
+}
 .blue-glow {
   opacity: 1;
   animation: blueglow .65s ease-in-out infinite alternate;
