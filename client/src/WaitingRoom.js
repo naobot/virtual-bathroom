@@ -25,7 +25,7 @@ class WaitingRoom extends PureComponent {
       else { // == 0
         enterMessage = <>
             <Audio id="enter-sound" audioSrc={vacancyAudioSrc} hidden="true" autoplay="true" />
-            <Button className="arrow--enter-stall blue-glow" onClick={this.handleEnterRoomClick} altText="Enter Stall" imgSrc={enterStallButton} top={positioningCss.top} left={positioningCss.left}  />
+            <Button className="arrow--enter-stall blue-glow" onClick={this.props.handleEnterRoomClick} altText="Enter Stall" imgSrc={enterStallButton} top={positioningCss.top} left={positioningCss.left}  />
           </>;
       }
     }
