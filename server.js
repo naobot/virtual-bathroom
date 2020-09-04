@@ -6,6 +6,8 @@ const cors = require('cors');
 const Pusher = require('pusher');
 const path = require('path');
 
+import words from ''
+
 const app = express();
 
 const pusher = new Pusher({

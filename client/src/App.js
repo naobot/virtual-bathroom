@@ -14,8 +14,8 @@ import './css/App.css';
 import * as constants from './constants';
 
 dotenv.config({ path: '.env' });
-const LOGGING = null;
-// const LOGGING = process.env.NODE_ENV === 'development';
+// const LOGGING = null;
+const LOGGING = process.env.NODE_ENV === 'development';
 
 class App extends Component {
   constructor(props) {
@@ -36,12 +36,12 @@ class App extends Component {
         }
       }
     });
-    this.me = null;
     this.timeoutId = null;
     this.state = {
       currentView: { type: 'hallway', id: null },
       rooms: [], // array of Room components
       pusher_app_members: { count: 0 }, // pusher members object
+      ahead: null,
       inLine: 0,
       message: '',
       loaded: false,
@@ -56,6 +56,7 @@ class App extends Component {
     this.handleEnterRoom = this.handleEnterRoom.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.updateMemberCount = this.updateMemberCount.bind(this);
+    this.updateQueuePosition = this.updateQueuePosition.bind(this);
   }
 
   componentDidMount() {
@@ -75,22 +76,21 @@ class App extends Component {
       rooms: roomsCopy,
     }, () => {
       // send spy to update room vacancies
-      this.spyOn('presence-bathroom', 'waiting');
+      this.spyOn('presence-queue', 'waiting');
       for (var i = 0; i < constants.NUM_ROOMS; i++) {
         this.spyOn(`presence-room-${i}`, 'room');
       }
       // main app channel
       this.presenceChannel = this.pusher.subscribe('presence-app');
-      this.presenceChannel.bind('pusher:subscription_succeeded', () => {
-        this.me = this.presenceChannel.members.me.id;
+      this.presenceChannel.bind('pusher:subscription_succeeded', (member) => {
+        console.log(member);
         this.updateAppMembers(this.presenceChannel.members);
-        if (LOGGING) { console.log(this.presenceChannel.members.me.id + ' subscribed to WaitingRoom'); }
+        if (LOGGING) { console.log('Subscribed to WaitingRoom'); }
       });
-      this.presenceChannel.bind('pusher:member_added', () => {
+      this.presenceChannel.bind('pusher:member_added', (member) => {
         this.updateAppMembers(this.presenceChannel.members);
         if (LOGGING) {
-          console.log(`currentView: ${this.state.currentView}`);
-          console.log('someone joined Bathroom App');
+          console.log(`${member.id} joined Bathroom App`);
         }
       });
       // someone left App
@@ -101,20 +101,21 @@ class App extends Component {
     });
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.currentView !== nextState.currentView || 
-      this.state.rooms !== nextState.rooms
-      ) {
-      return true
-    }
-    return false
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.state.currentView !== nextState.currentView || 
+  //     this.state.rooms !== nextState.rooms
+
+  //     ) {
+  //     return true
+  //   }
+  //   return false
+  // }
 
   componentWillUnmount() {
     this.pusher.unsubscribe('presence-app');
   }
 
-  // returns a the number of members connected to channel
+  // returns the number of members connected to channel
   // excluding spies
   countMembers(channel) {
     var count = 0;
@@ -126,6 +127,10 @@ class App extends Component {
   };
 
   // generic 'true' member count (excludes spies)
+  // num      :  number of true members
+  // location :  location (by view name)
+  // roomId   :  presence-room id (if in stall)
+  // RETURNS  :  null
   updateMemberCount(num, location, roomId) {
     if (location === 'room') {
       var roomsCopy = Array.from(this.state.rooms);
@@ -180,6 +185,35 @@ class App extends Component {
     }, 3 * 60 * 1000); // SET TIMEOUT: time out after 5 minutes
   }
 
+  updateQueuePosition(presenceChannel) {
+    let me = presenceChannel.members.me.id;
+    let trueOccupants = [];
+    if (presenceChannel.members.count > 0) {
+      presenceChannel.members.each((visitor) => {
+        if (!visitor.info.isSpy) {
+          trueOccupants.push(visitor);
+        }
+      });
+      trueOccupants = this.sortByEntryTime(trueOccupants);
+    }
+    console.log(`trueOccupants:`);
+    console.log(trueOccupants);
+    let ahead = trueOccupants.map((e) => { return e.id.toString() }).indexOf(me.toString());
+    this.setState({ ahead: ahead });
+  }
+
+  sortByEntryTime(occupants) {
+    let sorted = []
+    occupants.forEach((member) => {
+      sorted.push(member);
+    });
+    return sorted.sort((a,b) => {
+      if (parseInt(a.info.entry_time) < parseInt(b.info.entry_time)) { return -1 }
+      if (parseInt(a.info.entry_time) > parseInt(b.info.entry_time)) { return 1 }
+      return 0
+    });
+  }
+
   userActivityDetected() {
     if (this.timeoutId !== null) {
       window.clearTimeout(this.timeoutId);
@@ -214,7 +248,24 @@ class App extends Component {
         currentView: { type: 'waiting', id: null },
       }
     },
-    () => { constants.restartParallax('.layer'); });
+    () => { 
+      constants.restartParallax('.layer'); 
+      this.presenceChannel = this.pusher.subscribe(`presence-queue`);
+      this.presenceChannel.bind('pusher:subscription_succeeded', () => {
+        console.log('Joined Waiting Room');
+        this.updateMemberCount(this.countMembers(this.presenceChannel), 'waiting');
+        this.updateQueuePosition(this.presenceChannel);
+      });
+      this.presenceChannel.bind('pusher:member_added', () => {
+        this.updateMemberCount(this.countMembers(this.presenceChannel), 'waiting');
+      });
+      this.presenceChannel.bind('pusher:member_removed', () => {
+        this.updateMemberCount(this.countMembers(this.presenceChannel), 'waiting');
+        this.updateQueuePosition(this.presenceChannel);
+        console.log(`WaitingRoom.js: someone left the queue`);
+      });
+
+    });
   }
 
   // waiting -> stall
@@ -289,7 +340,7 @@ class App extends Component {
       currentView = <Mirrors onEnterWaiting={this.handleEnterWaiting} />
     }
     else if (this.state.currentView.type === 'waiting') { 
-      currentView = <WaitingRoom onEnterRoom={this.handleEnterRoom} pusher={this.pusher} onOccupancyChange={this.updateMemberCount} inactivityCheck={this.startInactivityCheck} />; 
+      currentView = <WaitingRoom queuePosition={this.state.ahead} inLineTotal={this.state.inLine} />; 
     }
     if (this.state.currentView.type === 'room') {
       currentView = <Room id={this.state.currentView.id} pusher={this.pusher} max={constants.MAX_OCCUPANCY} onOccupancyChange={this.updateMemberCount} onExit={this.handleExitStall} />;
