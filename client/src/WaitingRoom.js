@@ -23,10 +23,15 @@ class WaitingRoom extends PureComponent {
         enterMessage = <div className="please-wait neon" style={positioningCss}>PLEASE WAIT...<br/>&nbsp;&nbsp;&nbsp;&nbsp;{this.props.queuePosition} / {this.props.inLineTotal}</div>;
       }
       else { // == 0
-        enterMessage = <>
-            <Audio id="enter-sound" audioSrc={vacancyAudioSrc} hidden="true" autoplay="true" />
-            <Button className="arrow--enter-stall blue-glow" onClick={this.props.handleEnterRoomClick} altText="Enter Stall" imgSrc={enterStallButton} top={positioningCss.top} left={positioningCss.left}  />
-          </>;
+        if (this.props.currentVacancies > 0) {
+          enterMessage = <>
+              <Audio id="enter-sound" audioSrc={vacancyAudioSrc} hidden="true" autoplay="true" />
+              <Button className="arrow--enter-stall blue-glow" onClick={this.props.handleEnterRoomClick} altText="Enter Stall" imgSrc={enterStallButton} top={positioningCss.top} left={positioningCss.left}  />
+            </>;
+        }
+        else {
+          enterMessage = <div className="please-wait neon" style={positioningCss}>PLEASE WAIT...<br/>&nbsp;&nbsp;&nbsp;&nbsp;all stalls currently occupied</div>;
+        }
       }
     }
     else {

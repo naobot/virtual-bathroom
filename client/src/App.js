@@ -338,13 +338,15 @@ class App extends Component {
       );
     }
 
+    const vacancies = constants.MAX_OCCUPANCY * constants.NUM_ROOMS - this.state.rooms.map((room) => room.occupants ).reduce((a, b) => a + b, 0);
+
     // default view is hallway
     let currentView = <Hallway onEnterBathroom={this.handleEnterWaiting} />
     if (this.state.currentView.type === 'mirrors') {
       currentView = <Mirrors onEnterWaiting={this.handleEnterWaiting} />
     }
     else if (this.state.currentView.type === 'waiting') { 
-      currentView = <WaitingRoom queuePosition={this.state.ahead} inLineTotal={this.state.inLine} handleEnterRoomClick={this.handleEnterRoom} />; 
+      currentView = <WaitingRoom queuePosition={this.state.ahead} inLineTotal={this.state.inLine} currentVacancies={vacancies} handleEnterRoomClick={this.handleEnterRoom} />; 
     }
     if (this.state.currentView.type === 'room') {
       currentView = <Room id={this.state.currentView.id} pusher={this.pusher} max={constants.MAX_OCCUPANCY} onOccupancyChange={this.updateMemberCount} onExit={this.handleExitStall} />;
@@ -360,6 +362,7 @@ class App extends Component {
             <div>Number of Rooms: {constants.NUM_ROOMS}</div>
             <div><strong>Current Users:</strong> {this.state.pusher_app_members.count}</div>
             <div><strong>In line:</strong> {this.state.inLine}</div>
+            <div><strong>Vacancies:</strong> {vacancies}</div>
           </div>
           <div>
             <strong>Rooms:</strong>

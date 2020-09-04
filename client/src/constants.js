@@ -12,16 +12,6 @@ export function restartParallax(selector) {
   });
 }
 
-export function makeId(length) {
-   var result           = '';
-   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-   var charactersLength = characters.length;
-   for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-   }
-   return result;
-}
-
 export const MAX_OCCUPANCY = 3;
-export const NUM_ROOMS = 5;
+export const NUM_ROOMS = 1;
 export const IMAGES = importAll(require.context('./assets/images/', false, /\.(png|jpe?g|svg)$/));
