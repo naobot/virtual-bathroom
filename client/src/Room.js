@@ -69,7 +69,7 @@ class Room extends Component {
     });
     this.presenceChannel.bind('message', (data) => {
       if (data.userId !== this.presenceChannel.members.me.id) {
-        const audioElement = document.getElementsByClassName("audio")[0];
+        const audioElement = document.getElementById("notification-sound");
         audioElement.play();
         if (this.state.currentView !== 'stall-right') {
           this.setState({ newAlert: true });

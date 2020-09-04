@@ -32,7 +32,7 @@ export default class Phone extends PureComponent {
   }
 
   componentWillUnmount() {
-    console.log('unmounting Phone.js');
+    // console.log('unmounting Phone.js');
     clearInterval(this.phoneVibe);
   }
 
