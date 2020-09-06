@@ -15,6 +15,7 @@ import navRightButton from './assets/actions/flat-arrow-right.png';
 import navBackButton from './assets/actions/flat-arrow-back.png';
 import navExitButton from './assets/actions/exit.png';
 import chatNotification from './assets/chat-notification.svg';
+import flushAudio from './assets/sounds/short-flush.mp3';
 import bgAudioSrc from './assets/sounds/inside.mp3';
 
 const PSEUDONYMS = [
@@ -46,6 +47,7 @@ class Room extends Component {
     this.updateOccupants = this.updateOccupants.bind(this);
     this.countOccupants = this.countOccupants.bind(this);
     this.handleNavigationClick = this.handleNavigationClick.bind(this);
+    this.handleFlush = this.handleFlush.bind(this);
     this.restartParallax = this.restartParallax.bind(this);
   }
 
@@ -104,6 +106,11 @@ class Room extends Component {
     this.setState({
       occupants: members,
     }, () => this.props.onOccupancyChange(this.countOccupants(members), 'room', this.id));
+  }
+
+  handleFlush() {
+    const audioElement = document.getElementById("flush-audio");
+    audioElement.play();
   }
 
   handleNavigationClick(target) {
@@ -289,7 +296,7 @@ class Room extends Component {
                 left="76vw"
                  />
               <Button 
-                onClick={this.props.onExit} 
+                onClick={() => this.handleFlush()} 
                 altText="Flush/Exit"
                 className="flush-button neon"
                 >
@@ -350,6 +357,7 @@ class Room extends Component {
           <h2>Room {this.id}: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}</h2>
         </div>
         <Audio id="background-audio" audioSrc={bgAudioSrc} hidden="true" autoplay="true" />
+        <Audio id="flush-audio" audioSrc={flushAudio} hidden="true" />
         {currentView}
         {chatroomStall}
         {exit}
