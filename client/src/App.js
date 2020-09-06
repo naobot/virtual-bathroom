@@ -249,13 +249,15 @@ class App extends Component {
   */
   // stall -> mirrors
   handleExitStall(e) {
-    this.setState(currentState => {
-      return {
-        currentView: { type: 'mirrors', id: null },
-      }
-    },
-    () => { constants.restartParallax('.layer');
-    });
+    if (window.confirm("Ready to leave the bathroom?")) {
+      this.setState(currentState => {
+        return {
+          currentView: { type: 'mirrors', id: null },
+        }
+      },
+      () => { constants.restartParallax('.layer');
+      });
+    }
   }
 
   // hallway -> wait for stall

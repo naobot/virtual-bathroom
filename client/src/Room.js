@@ -13,6 +13,7 @@ import navDownButton from './assets/actions/flat-arrow-down.png';
 import navLeftButton from './assets/actions/flat-arrow-left.png';
 import navRightButton from './assets/actions/flat-arrow-right.png';
 import navBackButton from './assets/actions/flat-arrow-back.png';
+import navExitButton from './assets/actions/exit.png';
 import chatNotification from './assets/chat-notification.svg';
 import bgAudioSrc from './assets/sounds/inside.mp3';
 
@@ -155,6 +156,14 @@ class Room extends Component {
                  />
             </Hotspots>
           </Stall>;
+    const exit = <Button 
+      className="nav-image"
+      onClick={this.props.onExit}
+      top="12vh"
+      left="84vw"
+      width="80px"
+      imgSrc={navExitButton} 
+      />;
     const newMsg = <Button 
       className={this.state.newAlert ? "blue-glow msg-alert" : "hide"}
       onClick={() => this.handleNavigationClick('stall-right')}
@@ -343,6 +352,7 @@ class Room extends Component {
         <Audio id="background-audio" audioSrc={bgAudioSrc} hidden="true" autoplay="true" />
         {currentView}
         {chatroomStall}
+        {exit}
         {newMsg}
       </div>
     );
