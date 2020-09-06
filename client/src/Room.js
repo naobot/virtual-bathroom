@@ -223,9 +223,9 @@ class Room extends Component {
                  />
               <Button 
                 onClick={() => this.handleNavigationClick('stall-back')} 
-                altText="Flush/Exit"
-                imgSrc={navBackButton}
-                top="93vh"
+                altText="Flush"
+                imgSrc={navLeftButton}
+                top="53vh"
                 left="10vw"
                  />
             </Hotspots>
@@ -233,40 +233,6 @@ class Room extends Component {
         this.restartParallax();
         break;
       case 'stall-right': // contains chatbox
-        // currentView = 
-        //   <Stall direction="right" handleNavigationClick={this.handleNavigationClick}>
-        //     <Hotspots>
-        //       <Button 
-        //         onClick={() => this.handleNavigationClick('stall-up')} 
-        //         altText="Stare At Ceiling"
-        //         imgSrc={navUpButton}
-        //         top="7vh"
-        //         left="50vw"
-        //          />
-        //       <Button 
-        //         onClick={() => this.handleNavigationClick('stall-down')} 
-        //         altText="Cry"
-        //         imgSrc={navDownButton}
-        //         top="88vh"
-        //         left="50vw"
-        //          />
-        //       <Button 
-        //         onClick={() => this.handleNavigationClick('stall-front')} 
-        //         altText="Gaze at Stall"
-        //         imgSrc={navLeftButton}
-        //         top="53vh"
-        //         left="10vw"
-        //          />
-        //       <Button 
-        //         onClick={() => this.handleNavigationClick('stall-back')} 
-        //         altText="Flush/Exit"
-        //         imgSrc={navBackButton}
-        //         top="93vh"
-        //         left="83vw"
-        //          />
-        //       <Chatbox userName={this.state.userName} userHex={this.state.userHex} occupantsByStall={this.state.occupantsByStall} channel={this.presenceChannel} />
-        //     </Hotspots>
-        //   </Stall>;
         this.restartParallax();
         break;
       case 'stall-down':
@@ -296,8 +262,22 @@ class Room extends Component {
                 left="76vw"
                  />
               <Button 
+                onClick={() => this.handleNavigationClick('stall-right')} 
+                altText="Talk to Stranger"
+                imgSrc={navLeftButton}
+                top="53vh"
+                left="10vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-left')} 
+                altText="Check Phone"
+                imgSrc={navRightButton}
+                top="53vh"
+                left="90vw"
+                 />
+              <Button 
                 onClick={() => this.handleFlush()} 
-                altText="Flush/Exit"
+                altText="Flush"
                 className="flush-button neon"
                 >
                 Flush
@@ -342,10 +322,10 @@ class Room extends Component {
                  />
               <Button 
                 onClick={() => this.handleNavigationClick('stall-back')} 
-                altText="Flush/Exit"
-                imgSrc={navBackButton}
-                top="93vh"
-                left="83vw"
+                altText="Flush"
+                imgSrc={navRightButton}
+                top="53vh"
+                left="90vw"
                  />
               <Chatbox userName={this.state.userName} userHex={this.state.userHex} channel={this.presenceChannel} />
             </Hotspots>
