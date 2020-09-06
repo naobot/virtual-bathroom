@@ -5,6 +5,8 @@ import notificationSound from './assets/sounds/clearly.mp3';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
+import * as constants from './constants';
+
 dotenv.config({ path: '.env' });
 
 export default class Chatbox extends Component {
@@ -15,7 +17,6 @@ export default class Chatbox extends Component {
     this.userHex = props.userHex;
     this.userName = props.userName;
     this.handleTextChange = this.handleTextChange.bind(this);
-    this.scrollToBottom = this.scrollToBottom.bind(this);
     this.state = {
       text: '',
       chats: [],
@@ -29,11 +30,7 @@ export default class Chatbox extends Component {
   }
 
   componentDidUpdate() {
-    this.scrollToBottom();
-  }
-
-  scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    constants.scrollToBottom(this.messagesEnd);
   }
 
   handleTextChange(e) {
@@ -54,7 +51,7 @@ export default class Chatbox extends Component {
       }
       axios.post(ENDPOINT + 'message', payload);
       this.setState({ text: '' });
-      this.scrollToBottom();
+      constants.scrollToBottom(this.messagesEnd);
     }
     else {
       this.setState({ text: e.target.value });

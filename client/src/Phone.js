@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
-// import Button from './Button';
+import BigPhone from './BigPhone';
 import Parallax from 'parallax-js';
+
 
 export default class Phone extends PureComponent {
   constructor(props) { 
@@ -68,13 +69,13 @@ export default class Phone extends PureComponent {
   render() {
     var zoomOutPhone = <div id="phone-layer" className={this.classes} onClick={this.handleClick}></div>;
     var zoomInPhone = 
-      <div id="big-phone" className="bg-layer layer" data-depth="0.3" onClick={this.handleClick}>
-      </div>;
+      <BigPhone onClick={this.handleClick} className="bg-layer layer" dataDepth="0.3" onClick={this.handleClick} />;
     if (this.state.showPhone) {
       zoomOutPhone = <div id="phone-layer" className='hide' onClick={this.handleClick}></div>;
     }
     else {
-      zoomInPhone = <div id="big-phone" className='hide' onClick={this.handleClick}></div>;
+      zoomInPhone = 
+        <BigPhone className="hide" onClick={this.handleClick} />;
     }
     return (
       <>

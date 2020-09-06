@@ -28,7 +28,6 @@ export default class Chatlist extends Component {
         </div>
       );
 
-    console.log(this.props.chats);
     return (
       <div id="chatlist">
         <ul>
