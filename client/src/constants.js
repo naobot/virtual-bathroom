@@ -12,6 +12,28 @@ export function restartParallax(selector) {
   });
 }
 
+export function sortByEntryTime(occupants) {
+  let sorted = []
+  occupants.forEach((member) => {
+    sorted.push(member);
+  });
+  return sorted.sort((a,b) => {
+    if (parseInt(a.info.entry_time) < parseInt(b.info.entry_time)) { return -1 }
+    if (parseInt(a.info.entry_time) > parseInt(b.info.entry_time)) { return 1 }
+    return 0
+  });
+}
+
+export const PSEUDONYMS = [
+  'someone',
+  'somebody',
+  'a stallmate',
+  'a person',
+  'another person',
+  'person in next stall',
+  'some person',
+];
+
 export const MAX_OCCUPANCY = 3;
 export const NUM_ROOMS = 2;
 export const IMAGES = importAll(require.context('./assets/images/', false, /\.(png|jpe?g|svg)$/));

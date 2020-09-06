@@ -12,8 +12,8 @@ export default class Chatbox extends Component {
     super(props);
     this.channel = props.channel;
     this.myId = props.channel.members.me.id;
-    this.userName = props.userName;
     this.userHex = props.userHex;
+    this.userName = props.userName;
     this.handleTextChange = this.handleTextChange.bind(this);
     this.scrollToBottom = this.scrollToBottom.bind(this);
     this.state = {

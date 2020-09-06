@@ -8,6 +8,8 @@ import Phone from './Phone';
 import Parallax from 'parallax-js';
 import Audio from './Audio';
 
+import * as constants from './constants';
+
 import navUpButton from './assets/actions/flat-arrow-up.png';
 import navDownButton from './assets/actions/flat-arrow-down.png';
 import navLeftButton from './assets/actions/flat-arrow-left.png';
@@ -18,16 +20,6 @@ import chatNotification from './assets/chat-notification.svg';
 import flushAudio from './assets/sounds/short-flush.mp3';
 import bgAudioSrc from './assets/sounds/inside.mp3';
 
-const PSEUDONYMS = [
-  'someone',
-  'somebody',
-  'a stallmate',
-  'a person',
-  'another person',
-  'person in next stall',
-  'some person',
-];
-
 class Room extends Component {
   constructor(props) {
     super(props);
@@ -37,11 +29,11 @@ class Room extends Component {
     this.me = null;
     this.state = {
       newAlert: false,
-      occupants: {count: 0},
+      occupants: {members: [],count: 0},
       userHex: '#ffffff',
       currentView: 'stall-front',
-      userName: 'someone',
       showPhone: false,
+      userName: 'a stallmate',
     };
     this.max_occupancy = props.max;
     this.updateOccupants = this.updateOccupants.bind(this);
@@ -57,10 +49,10 @@ class Room extends Component {
       this.me = this.presenceChannel.members.me.id;
       this.setState(currentState => {
         return {
-          userName: PSEUDONYMS[parseInt(this.me) % PSEUDONYMS.length],
+          userName: constants.PSEUDONYMS[parseInt(this.me) % constants.PSEUDONYMS.length],
           userHex: '#' + Math.floor(parseInt(this.presenceChannel.members.me.id)*16777215).toString(16).slice(-6)
         }
-      }, console.log(`my username: ${this.state.userName}`));
+      });
       this.updateOccupants(this.presenceChannel.members);
     });
     this.presenceChannel.bind('pusher:member_added', (member) => {
@@ -80,6 +72,11 @@ class Room extends Component {
       }
     });
   }
+
+  // componentDidUpdate() {
+  //   console.log(`occupants in stall`);
+  //   console.log(this.state.occupants);
+  // }
 
   // returns true count of occupants (excluding spies)
   countOccupants(members) {
@@ -327,7 +324,7 @@ class Room extends Component {
                 top="53vh"
                 left="90vw"
                  />
-              <Chatbox userName={this.state.userName} userHex={this.state.userHex} channel={this.presenceChannel} />
+              <Chatbox userName={this.state.userName} occupants={this.state.occupants} userHex={this.state.userHex} channel={this.presenceChannel} />
             </Hotspots>
         </Stall>;
     }

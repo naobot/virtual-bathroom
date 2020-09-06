@@ -205,24 +205,12 @@ class App extends Component {
           trueOccupants.push(visitor);
         }
       });
-      trueOccupants = this.sortByEntryTime(trueOccupants);
+      trueOccupants = constants.sortByEntryTime(trueOccupants);
     }
     console.log(`trueOccupants:`);
     console.log(trueOccupants);
     let ahead = trueOccupants.map((e) => { return e.id.toString() }).indexOf(me.toString());
     this.setState({ ahead: ahead });
-  }
-
-  sortByEntryTime(occupants) {
-    let sorted = []
-    occupants.forEach((member) => {
-      sorted.push(member);
-    });
-    return sorted.sort((a,b) => {
-      if (parseInt(a.info.entry_time) < parseInt(b.info.entry_time)) { return -1 }
-      if (parseInt(a.info.entry_time) > parseInt(b.info.entry_time)) { return 1 }
-      return 0
-    });
   }
 
   userActivityDetected() {
