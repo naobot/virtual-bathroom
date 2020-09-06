@@ -121,7 +121,7 @@ class Room extends Component {
 
   render() {
     var currentView = 
-          <Stall direction="front" handleNavigationClick={this.handleNavigationClick}>
+          <Stall direction="front" handleNavigationClick={this.handleNavigationClick} className="bg-div">
             <Hotspots>
               <Button 
                 onClick={() => this.handleNavigationClick('stall-up')} 
@@ -179,7 +179,7 @@ class Room extends Component {
     switch (this.state.currentView) {
       case 'stall-up':
         currentView = 
-          <Stall direction="up" handleNavigationClick={this.handleNavigationClick}>
+          <Stall direction="up" handleNavigationClick={this.handleNavigationClick} className="bg-div--responsive">
             <Hotspots>
               <Button 
                 onClick={() => this.handleNavigationClick('stall-front')} 
@@ -194,7 +194,7 @@ class Room extends Component {
         break;
       case 'stall-left':
         currentView = 
-          <Stall direction="left" handleNavigationClick={this.handleNavigationClick}>
+          <Stall direction="left" handleNavigationClick={this.handleNavigationClick} className="bg-div--responsive">
             <Phone />
             <Hotspots>
               <Button 
@@ -234,7 +234,7 @@ class Room extends Component {
         break;
       case 'stall-down':
         currentView = 
-          <Stall direction="down" handleNavigationClick={this.handleNavigationClick}>
+          <Stall direction="down" handleNavigationClick={this.handleNavigationClick} className="bg-div">
             <Hotspots>
               <Button 
                 onClick={() => this.handleNavigationClick('stall-front')} 
@@ -249,7 +249,7 @@ class Room extends Component {
         break;
       case 'stall-back':
         currentView = 
-          <Stall direction="back" handleNavigationClick={this.handleNavigationClick}>
+          <Stall direction="back" handleNavigationClick={this.handleNavigationClick} className="bg-div">
             <Hotspots>
               <Button 
                 onClick={() => this.handleNavigationClick('stall-front')} 
@@ -294,7 +294,7 @@ class Room extends Component {
     }
     var chatroomStall;
     if (this.presenceChannel && this.me) {
-      chatroomStall = <Stall className={this.state.currentView === 'stall-right' ? '' : 'hide' } direction="right" handleNavigationClick={this.handleNavigationClick}>
+      chatroomStall = <Stall className={this.state.currentView === 'stall-right' ? 'bg-div' : 'hide' } direction="right" handleNavigationClick={this.handleNavigationClick}>
             <Hotspots>
               <Button 
                 onClick={() => this.handleNavigationClick('stall-up')} 

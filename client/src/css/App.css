@@ -92,6 +92,12 @@
   font-weight: 600;
   color: #e2feff;
   text-shadow: 0 0 9px rgb(0 17 68 / 0.8);
+  font-size: 0.8em;
+}
+@media screen and (min-width: 600px) {
+  .mirrors-content > div {
+    font-size: 1em;
+  }
 }
 .mirrors-content .col-1 {
   /*flex-grow: 3;*/
@@ -118,7 +124,12 @@
   max-width: 300px;
 }
 
-#hallway {
+.bg-div {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+/*#hallway {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -132,8 +143,13 @@
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-}
+}*/
 @media screen and (min-width: 600px) {
+  .bg-div--responsive {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
   #stall-up {
     background-image: url('../assets/images/bg-stall-up.jpg');
     background-size: cover;
@@ -154,9 +170,8 @@
   }
 }
 #stall-up {
-  background-image: url('../assets/images/bg-stall-up.jpg');
   background-size: cover;
-  background-position: 30% 50%;
+  background-position: 30% 50% !important;
   background-repeat: no-repeat;
 }
 #stall-front {
@@ -174,7 +189,7 @@
 #phone-layer {
   background-image: url('../assets/images/fixed-phone.png');
   background-size: cover;
-  background-position: 30% center;
+  background-position: 30% center !important;
   background-repeat: no-repeat;
 }
 #big-phone {

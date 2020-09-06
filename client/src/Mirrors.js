@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
-// import Button from './Button';
+import Background from './Background';
 import CCALogo from './assets/CCA_RGB_colour_e.svg';
+
+import backgroundImgSrc from './assets/images/bg-mirrors.jpg';
 
 class Mirrors extends PureComponent {
   // constructor(props) {
@@ -46,17 +48,18 @@ class Mirrors extends PureComponent {
                 <h2>SUBMIT A POSTER</h2>
                 <p>To post a poster or public notice to the Make-Believe Bathroom, please send a PNG file to <strong>xxemail@gmail.com</strong></p>
               </div>
+              <div>
+                <a href="/" className="neon">Try the Make-Believe Bathroom Experience Again?</a>
+              </div>
             </>
     return (
-      <div className="view layer" data-depth="0.1">
-        <div id="bathroom" className="content">
-          <div className="layer" data-depth="0.4">
-            <div className="mirrors-content">
-            {credits}
-            </div>
+      <Background id="mirrors" imgSrc={backgroundImgSrc}>
+        <div className="layer" data-depth="0.4">
+          <div className="mirrors-content">
+          {credits}
           </div>
         </div>
-      </div>
+      </Background>
     );
   }
 
