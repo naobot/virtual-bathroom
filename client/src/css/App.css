@@ -202,6 +202,16 @@
 #phone-layer:hover, #big-phone:hover {
   cursor: pointer;
 }
+.phone-convo {
+  position: absolute;
+  left: calc(50% - 130px);
+  top: calc(50% - 250px);
+  width: 271px;
+  margin: 0;
+  height: 491px;
+  background: rgba(255,255,255,0.9);
+  overflow-y: hidden;
+}
 #stall-right {
   background-image: url('../assets/images/bg-stall-right.jpg');
   background-size: cover;

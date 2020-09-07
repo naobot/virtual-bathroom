@@ -5,8 +5,9 @@ import enterStallButton from './assets/actions/perspective-round-arrow-up.png';
 // import enterStallButton from './assets/actions/3_enter-stall.png';
 import Audio from './Audio';
 import audioSrc from './assets/sounds/outside.mp3';
-import backgroundImgSrc from './assets/images/bg-waiting.jpg';
+import backgroundImgSrc from './assets/images/bg-waiting-closed.jpg';
 import vacancyAudioSrc from './assets/sounds/eventually.mp3';
+import animatedBackground from './assets/images/bg-waiting-opening.gif';
 
 class WaitingRoom extends PureComponent {
   render() {
@@ -17,6 +18,7 @@ class WaitingRoom extends PureComponent {
     };
 
     let enterMessage;
+    let backgroundImg = backgroundImgSrc;
     if (this.props.queuePosition > 0 || this.props.queuePosition === 0) {
       console.log(`Currently ${this.props.queuePosition}/${this.props.inLineTotal}`);
       if (this.props.queuePosition > 2) {
@@ -24,6 +26,7 @@ class WaitingRoom extends PureComponent {
       }
       else { // == 0
         if (this.props.currentVacancies > 0) {
+          backgroundImg = animatedBackground;
           enterMessage = <>
               <Audio id="enter-sound" audioSrc={vacancyAudioSrc} hidden="true" autoplay="true" />
               <Button className="arrow--enter-stall blue-glow" onClick={this.props.handleEnterRoomClick} altText="Enter Stall" imgSrc={enterStallButton} top={positioningCss.top} left={positioningCss.left}  />
@@ -40,7 +43,7 @@ class WaitingRoom extends PureComponent {
     
     const backgroundAudio = <Audio id="background-audio" audioSrc={audioSrc} hidden="true" autoplay="true" loop="true" />;
     return (
-      <Background id="waiting" imgSrc={backgroundImgSrc}>
+      <Background id="waiting" imgSrc={backgroundImg}>
         {backgroundAudio}
         <div className="hotspots">
           {enterMessage}
