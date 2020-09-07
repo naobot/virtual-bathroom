@@ -54,6 +54,7 @@ export default class Phone extends PureComponent {
   }
 
   handleClick() {
+    console.log('toggling phone');
     clearInterval(this.phoneVibe);
     this.setState({ showPhone: !this.state.showPhone });
   }

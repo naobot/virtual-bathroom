@@ -193,24 +193,35 @@
   background-repeat: no-repeat;
 }
 #big-phone {
-  background-image: url('../assets/images/closeup-phone.gif');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
   backdrop-filter: blur(3px);
+}
+.phone-img {
+  position: relative;
+  left: calc(50% - 200px);
+  top: calc(50% - 350px);
+  width: 80%;
+  max-width: 370px;
 }
 #phone-layer:hover, #big-phone:hover {
   cursor: pointer;
 }
 .phone-convo {
   position: absolute;
-  left: calc(50% - 130px);
+  left: calc(50% - 154px);
   top: calc(50% - 250px);
-  width: 271px;
+  width: 267px;
   margin: 0;
   height: 491px;
   background: rgba(255,255,255,0.9);
   overflow-y: hidden;
+  transform: perspective(800px) rotateZ(-2.3deg) rotateY(5.4deg) translateZ(100px);
+}
+.phone-messages {
+  position: relative;
+  margin: 0;
+  top: -16px;
+  height: 400px;
+  overflow-y: scroll;
 }
 #stall-right {
   background-image: url('../assets/images/bg-stall-right.jpg');
