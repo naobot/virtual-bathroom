@@ -70,7 +70,7 @@ export default class Phone extends PureComponent {
   render() {
     var zoomOutPhone = <div id="phone-layer" className={this.classes} onClick={this.handleClick}></div>;
     var zoomInPhone = 
-      <BigPhone onClick={this.handleClick} className="bg-layer layer" dataDepth="0.3" onClick={this.handleClick} />;
+      <BigPhone onClick={this.handleClick} className="bg-layer layer" dataDepth="0.3"/>;
     if (this.state.showPhone) {
       zoomOutPhone = <div id="phone-layer" className='hide' onClick={this.handleClick}></div>;
     }

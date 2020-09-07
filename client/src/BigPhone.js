@@ -14,11 +14,12 @@ export default class BigPhone extends PureComponent {
     this.handleTextChange = this.handleTextChange.bind(this);
     this.state = {
       text: '',
-      sentMessage: null,
+      sentMessages: [],
     }
   }
 
   componentDidMount() {
+    constants.scrollToBottom(this.messagesEnd);
   }
 
   componentDidUpdate() {
@@ -53,9 +54,11 @@ export default class BigPhone extends PureComponent {
   handleTextChange(e) {
     if (e.keyCode === 13) { // hit enter on keyboard
       if (this.state.text !== '') {
+        let newMessages = Array.from(this.state.sentMessages);
+        newMessages.push(this.state.text);
         this.setState((prevState) => {
           return { 
-            ...prevState, sentMessage: prevState.text, text: '' 
+            ...prevState, sentMessages: newMessages, text: '', 
           }
         }, () => { 
           constants.scrollToBottom(this.messagesEnd);
@@ -65,6 +68,10 @@ export default class BigPhone extends PureComponent {
     else {
       this.setState({ text: e.target.value });
     }
+  }
+
+  toggleClick() {
+    console.log('hi');
   }
 
   render() {
@@ -83,22 +90,26 @@ export default class BigPhone extends PureComponent {
         </div>
       </div>
       );
-    const sent =
-      <div className="phone-msg">
-        <div className="box">
-          <p className="time">
-            just now
-          </p>
-          <p className="user">
-            <strong>Me</strong>
-          </p>
-          <p className="message">
-            {this.state.sentMessage}
-          </p>
+    let sent = null;
+    if (this.state.sentMessages.length > 0) {
+      sent = this.state.sentMessages.map((sentMessage) =>  
+        <div className="phone-msg">
+          <div className="box">
+            <p className="time">
+              just now
+            </p>
+            <p className="user">
+              <strong>Me</strong>
+            </p>
+            <p className="message">
+              {sentMessage}
+            </p>
+          </div>
         </div>
-      </div>;
+      );
+    }
     return (
-      <div id="big-phone" className={this.props.className} data-depth={this.props.dataDepth} onClick={this.props.handleClick}>
+      <div id="big-phone" className={this.props.className} data-depth={this.props.dataDepth} onClick={this.props.onClick}>
         <img className="phone-img" src={bigPhoneImg} />
         <div className="phone-convo">
           <div className="phone-messages">
@@ -111,9 +122,10 @@ export default class BigPhone extends PureComponent {
         <input
           type="text"
           value={this.state.text}
-          placeholder="chat here..."
+          placeholder=""
           onChange={this.handleTextChange}
           onKeyDown={this.handleTextChange}
+          onClick={(e) => {e.stopPropagation(); e.nativeEvent.stopImmediatePropagation();}}
           />
         </div>
       </div>
