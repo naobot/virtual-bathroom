@@ -193,40 +193,6 @@ class Room extends Component {
         this.restartParallax();
         break;
       case 'stall-left':
-        currentView = 
-          <Stall direction="left" handleNavigationClick={this.handleNavigationClick} className="bg-div--responsive">
-            <Phone />
-            <Hotspots>
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-up')} 
-                altText="Stare At Ceiling"
-                imgSrc={navUpButton}
-                top="7vh"
-                left="50vw"
-                 />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-down')} 
-                altText="Cry"
-                imgSrc={navDownButton}
-                top="88vh"
-                left="50vw"
-                 />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-front')} 
-                altText="Gaze at Stall"
-                imgSrc={navRightButton}
-                top="53vh"
-                left="90vw"
-                 />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-back')} 
-                altText="Flush"
-                imgSrc={navLeftButton}
-                top="53vh"
-                left="10vw"
-                 />
-            </Hotspots>
-          </Stall>;
         this.restartParallax();
         break;
       case 'stall-right': // contains chatbox
@@ -292,7 +258,7 @@ class Room extends Component {
         this.restartParallax();
         break;
     }
-    var chatroomStall;
+    var chatroomStall, phoneView;
     if (this.presenceChannel && this.me) {
       chatroomStall = <Stall className={this.state.currentView === 'stall-right' ? 'bg-div' : 'hide' } direction="right" handleNavigationClick={this.handleNavigationClick}>
             <Hotspots>
@@ -327,6 +293,40 @@ class Room extends Component {
               <Chatbox userName={this.state.userName} occupants={this.state.occupants} userHex={this.state.userHex} channel={this.presenceChannel} />
             </Hotspots>
         </Stall>;
+      phoneView = 
+          <Stall direction="left" handleNavigationClick={this.handleNavigationClick} className={this.state.currentView === 'stall-left' ? 'bg-div--responsive' : 'hide' }>
+            <Phone />
+            <Hotspots>
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-up')} 
+                altText="Stare At Ceiling"
+                imgSrc={navUpButton}
+                top="7vh"
+                left="50vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-down')} 
+                altText="Cry"
+                imgSrc={navDownButton}
+                top="88vh"
+                left="50vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-front')} 
+                altText="Gaze at Stall"
+                imgSrc={navRightButton}
+                top="53vh"
+                left="90vw"
+                 />
+              <Button 
+                onClick={() => this.handleNavigationClick('stall-back')} 
+                altText="Flush"
+                imgSrc={navLeftButton}
+                top="53vh"
+                left="10vw"
+                 />
+            </Hotspots>
+          </Stall>;
     }
     return (
       <div className="view">
@@ -336,6 +336,7 @@ class Room extends Component {
         <Audio id="background-audio" audioSrc={bgAudioSrc} hidden="true" autoplay="true" />
         <Audio id="flush-audio" audioSrc={flushAudio} hidden="true" />
         {currentView}
+        {phoneView}
         {chatroomStall}
         {exit}
         {newMsg}
