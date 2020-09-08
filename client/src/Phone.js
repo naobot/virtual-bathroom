@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import BigPhone from './BigPhone';
 import Parallax from 'parallax-js';
 
+import * as constants from './constants';
 
 export default class Phone extends PureComponent {
   constructor(props) { 
@@ -55,8 +56,9 @@ export default class Phone extends PureComponent {
 
   handleClick() {
     console.log('toggling phone');
+    var phoneBottom = document.getElementsByClassName("phone-messages-bottom")[0];
     clearInterval(this.phoneVibe);
-    this.setState({ showPhone: !this.state.showPhone });
+    this.setState({ showPhone: !this.state.showPhone }, () => {constants.scrollToBottom(phoneBottom)});
   }
 
   restartParallax() {

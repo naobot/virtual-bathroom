@@ -219,9 +219,48 @@
 .phone-messages {
   position: relative;
   margin: 0;
-  top: -16px;
-  height: 400px;
+  top: 0;
+  height: 459px;
   overflow-y: scroll;
+  font-family: 'Helvetica', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.phone-msg {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 8px 15px;
+  align-items: flex-start;
+  width: 237px;
+}
+.phone-msg .box {
+  background: #eee;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+.phone-msg.self .box {
+  background: #1e84f294;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+.phone-msg .user {
+  font-size: 0.75rem;
+  padding: 3px;
+}
+.phone-msg.self .user {
+  text-align: right;
+}
+.phone-msg .user > strong {
+  margin-right: 5px;
+}
+.enter-message {
+  padding: 3px;
+}
+.enter-message > input {
+  width: 253px;
 }
 #stall-right {
   background-image: url('../assets/images/bg-stall-right.jpg');
