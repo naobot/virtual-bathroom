@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.98cd0e4b.chunk.css",
-    "main.js": "/static/js/main.01213aee.chunk.js",
-    "main.js.map": "/static/js/main.01213aee.chunk.js.map",
+    "main.css": "/static/css/main.760efd1d.chunk.css",
+    "main.js": "/static/js/main.517d9e66.chunk.js",
+    "main.js.map": "/static/js/main.517d9e66.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.7c9d7d74.js",
     "runtime-main.js.map": "/static/js/runtime-main.7c9d7d74.js.map",
     "static/css/2.f01c5455.chunk.css": "/static/css/2.f01c5455.chunk.css",
-    "static/js/2.665365b2.chunk.js": "/static/js/2.665365b2.chunk.js",
-    "static/js/2.665365b2.chunk.js.map": "/static/js/2.665365b2.chunk.js.map",
+    "static/js/2.2d88b119.chunk.js": "/static/js/2.2d88b119.chunk.js",
+    "static/js/2.2d88b119.chunk.js.map": "/static/js/2.2d88b119.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.5832288ea400366ef88f88a17e15729f.js": "/precache-manifest.5832288ea400366ef88f88a17e15729f.js",
+    "precache-manifest.cb472117aa136d49e256161ef54e3da6.js": "/precache-manifest.cb472117aa136d49e256161ef54e3da6.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.f01c5455.chunk.css.map": "/static/css/2.f01c5455.chunk.css.map",
-    "static/css/main.98cd0e4b.chunk.css.map": "/static/css/main.98cd0e4b.chunk.css.map",
-    "static/js/2.665365b2.chunk.js.LICENSE.txt": "/static/js/2.665365b2.chunk.js.LICENSE.txt",
+    "static/css/main.760efd1d.chunk.css.map": "/static/css/main.760efd1d.chunk.css.map",
+    "static/js/2.2d88b119.chunk.js.LICENSE.txt": "/static/js/2.2d88b119.chunk.js.LICENSE.txt",
     "static/media/2_audio-guide.png": "/static/media/2_audio-guide.3e47e291.png",
     "static/media/CCA_RGB_colour_e.svg": "/static/media/CCA_RGB_colour_e.3c468e95.svg",
     "static/media/bg-hallway.jpg": "/static/media/bg-hallway.a5e18973.jpg",
@@ -24,6 +24,7 @@
     "static/media/bg-waiting.jpg": "/static/media/bg-waiting.c49669f4.jpg",
     "static/media/chat-notification.svg": "/static/media/chat-notification.e016da0a.svg",
     "static/media/clearly.mp3": "/static/media/clearly.a431eaad.mp3",
+    "static/media/closeup-note.png": "/static/media/closeup-note.8c8cfc1d.png",
     "static/media/closeup-phone.png": "/static/media/closeup-phone.38131cb6.png",
     "static/media/eventually.mp3": "/static/media/eventually.b5e7acad.mp3",
     "static/media/inside.mp3": "/static/media/inside.90ed5ffe.mp3",
@@ -33,8 +34,8 @@
   "entrypoints": [
     "static/js/runtime-main.7c9d7d74.js",
     "static/css/2.f01c5455.chunk.css",
-    "static/js/2.665365b2.chunk.js",
-    "static/css/main.98cd0e4b.chunk.css",
-    "static/js/main.01213aee.chunk.js"
+    "static/js/2.2d88b119.chunk.js",
+    "static/css/main.760efd1d.chunk.css",
+    "static/js/main.517d9e66.chunk.js"
   ]
 }
