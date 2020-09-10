@@ -257,10 +257,28 @@
   margin-right: 5px;
 }
 .enter-message {
+  width: 246px;
+  margin-left: 6px;
   padding: 3px;
+  border-radius: 6px;
+  border: 1px solid #999;
+  display: flex;
 }
 .enter-message > input {
-  width: 253px;
+  border: none;
+  background: none;
+  width: 215px;
+  outline: none;
+  color: black;
+}
+.enter-message > .send-button {
+  width: 32px;
+  background: rgba(30,132,242,0.88);
+  border-radius: 10px;
+  background-image: url('../assets/send-msg.png');
+  background-size: 45%;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 #stall-right {
   background-image: url('../assets/images/bg-stall-right.jpg');

@@ -10,6 +10,7 @@ export default class BigPhone extends PureComponent {
     super(props);
     this.conversation = constants.CONVOS[Math.floor(Math.random() * Math.floor(constants.CONVOS.length))];
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
     this.state = {
       text: '',
       sentMessages: [],
@@ -26,21 +27,25 @@ export default class BigPhone extends PureComponent {
 
   handleTextChange(e) {
     if (e.keyCode === 13) { // hit enter on keyboard
-      if (this.state.text !== '') {
-        let newMessages = Array.from(this.state.sentMessages);
-        newMessages.push(this.state.text);
-        this.setState((prevState) => {
-          return { 
-            ...prevState, sentMessages: newMessages, text: '', 
-          }
-        }, () => { 
-          constants.scrollToBottom(this.messagesEnd);
-        });
-      }      
+      this.sendMessage();   
     }
     else {
       this.setState({ text: e.target.value });
     }
+  }
+
+  sendMessage() {
+    if (this.state.text !== '') {
+      let newMessages = Array.from(this.state.sentMessages);
+      newMessages.push(this.state.text);
+      this.setState((prevState) => {
+        return { 
+          ...prevState, sentMessages: newMessages, text: '', 
+        }
+      }, () => { 
+        constants.scrollToBottom(this.messagesEnd);
+      });
+    }   
   }
 
   render() {
@@ -84,15 +89,15 @@ export default class BigPhone extends PureComponent {
                ref={(el) => { this.messagesEnd = el; }}>
             </div>
           </div>
-        <div className="enter-message">
+        <div className="enter-message" onClick={(e) => {e.stopPropagation(); e.nativeEvent.stopImmediatePropagation();}}>
           <input
             type="text"
             value={this.state.text}
             placeholder=""
             onChange={this.handleTextChange}
             onKeyDown={this.handleTextChange}
-            onClick={(e) => {e.stopPropagation(); e.nativeEvent.stopImmediatePropagation();}}
             />
+          <div className="send-button" onClick={this.sendMessage}></div>
         </div>
         </div>
       </div>
