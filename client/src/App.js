@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Pusher from 'pusher-js';
 import dotenv from 'dotenv';
 
+import Loading from './Loading';
 import Hallway from './Hallway';
 import WaitingRoom from './WaitingRoom';
 import Room from './Room';
@@ -38,13 +39,12 @@ class App extends Component {
     });
     this.timeoutId = null;
     this.state = {
-      currentView: { type: 'hallway', id: null },
+      currentView: { type: 'loading', id: null },
       rooms: [], // array of Room components
       pusher_app_members: { count: 0 }, // pusher members object
       ahead: null,
       inLine: 0,
       message: '',
-      loaded: false,
     };
 
     this.appChannel = null;
@@ -55,6 +55,7 @@ class App extends Component {
     this.startInactivityCheck = this.startInactivityCheck.bind(this);
     this.userActivityDetected = this.userActivityDetected.bind(this);
     this.handleExitStall = this.handleExitStall.bind(this);
+    this.handleEnterHallway = this.handleEnterHallway.bind(this);
     this.handleEnterWaiting = this.handleEnterWaiting.bind(this);
     this.handleEnterRoom = this.handleEnterRoom.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -64,11 +65,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // parallax effect for background
-    constants.restartParallax('.layer');
-
-    console.log('Loading complete');
-
     // initiate all rooms
     let roomsCopy = [];
     for (var i = 0; i < constants.NUM_ROOMS; i++) {
@@ -76,7 +72,6 @@ class App extends Component {
     }
     // update rooms state
     this.setState({
-      loaded: true, // images already rendered in first pass of render()
       rooms: roomsCopy,
     }, () => {
       // send spy to update room vacancies
@@ -248,6 +243,15 @@ class App extends Component {
     }
   }
 
+  handleEnterHallway(e) {
+    this.setState(currentState => {
+      return {
+        currentView: { type: 'hallway', id: null },
+      }
+    },
+    () => {constants.restartParallax('.layer');});
+  }
+
   // hallway -> wait for stall
   handleEnterWaiting(e) {
     this.setState(currentState => {
@@ -312,16 +316,6 @@ class App extends Component {
     if (process.env.NODE_ENV === 'production') {
       hide = 'hide';
     }
-    
-    if (!this.state.loaded) {
-      console.log('Loading...');
-      // preload most images
-      for (var i = 0; i < constants.IMAGES.length; i++) {
-        let imageSrc = constants.IMAGES[i];
-        const img = new Image();
-        img.src = imageSrc;
-      }
-    }
 
     // if (LOGGING) { console.log('rendering App.js'); }
     // if (LOGGING) { console.log(this.state.rooms); hide = null }
@@ -335,11 +329,12 @@ class App extends Component {
     }
 
     const vacancies = constants.MAX_OCCUPANCY * constants.NUM_ROOMS - this.state.rooms.map((room) => room.occupants ).reduce((a, b) => a + b, 0);
-
-    // default view is hallway
-    let currentView = <Hallway onEnterBathroom={this.handleEnterWaiting} />
-    if (this.state.currentView.type === 'mirrors') {
-      currentView = <Mirrors onEnterWaiting={this.handleEnterWaiting} />
+    let currentView = <Loading onLoad={this.handleEnterHallway} />;
+    if (this.state.currentView.type === 'hallway') {
+      currentView = <Hallway onEnterBathroom={this.handleEnterWaiting} />;
+    } 
+    else if (this.state.currentView.type === 'mirrors') {
+      currentView = <Mirrors />;
     }
     else if (this.state.currentView.type === 'waiting') { 
       currentView = <WaitingRoom queuePosition={this.state.ahead} inLineTotal={this.state.inLine} currentVacancies={vacancies} handleEnterRoomClick={this.handleEnterRoom} />; 

@@ -35,6 +35,42 @@
   }
 }
 
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  -ms-animation: rotating 2s linear infinite;
+  -o-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
+}
+
 .hide {
   display: none !important;
 }
@@ -64,6 +100,16 @@
   height: 100%;
   background-color: #e4e4ee;
 }
+.loading {
+  background-color: #131313;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+}
 .content {
   width: 110vw !important;
   height: 110vh !important;
@@ -81,7 +127,7 @@
   flex-flow: row wrap;
   margin: 0 auto;
   position: relative;
-  top: 17vh;
+  top: 10vh;
   left: 11vw;
   width: 85vw;
   min-width: 280px;
@@ -95,6 +141,9 @@
   font-size: 0.8em;
 }
 @media screen and (min-width: 600px) {
+  .mirrors-content {
+    top: 15vh !important;
+  }
   .mirrors-content > div {
     font-size: 1em;
   }
@@ -176,8 +225,15 @@
   }
 }
 #stall-up {
+  background-image: url('../assets/images/bg-stall-up.jpg');
   background-size: cover;
-  background-position: 30% 50% !important;
+  background-position: 45% 50% !important;
+  background-repeat: no-repeat;
+}
+#hanging-spider {
+  background-image: url('../assets/images/spider-isolated.gif');
+  background-size: cover;
+  background-position: 45% center !important;
   background-repeat: no-repeat;
 }
 #stall-front {
@@ -204,12 +260,6 @@
   background-position: 30% center !important;
   background-repeat: no-repeat;
 }
-#hanging-spider {
-  background-image: url('../assets/images/spider-isolated.gif');
-  background-size: cover;
-  background-position: 30% center !important;
-  background-repeat: no-repeat;
-}
 #big-phone {
   backdrop-filter: blur(3px);
 }
@@ -217,7 +267,6 @@
   position: relative;
   left: calc(50% - 200px);
   top: calc(50% - 350px);
-  width: 80%;
   max-width: 370px;
 }
 #phone-layer:hover, #big-phone:hover, #note-layer:hover, #big-note:hover {

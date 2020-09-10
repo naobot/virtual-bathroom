@@ -188,9 +188,9 @@ class Room extends Component {
               <Button 
                 onClick={() => this.handleNavigationClick('stall-front')} 
                 altText="Flush/Exit"
-                imgSrc={navBackButton}
+                imgSrc={navDownButton}
                 top="87vh"
-                left="77vw"
+                left="57vw"
                  />
             </Hotspots>
           </Stall>;

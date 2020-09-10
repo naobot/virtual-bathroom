@@ -41,7 +41,7 @@ class WaitingRoom extends PureComponent {
       enterMessage = <div className="please-wait neon" style={positioningCss}>please wait...</div>;
     }
     
-    const backgroundAudio = <Audio id="background-audio" audioSrc={audioSrc} hidden="true" autoplay="true" loop="true" volume="0.6" />;
+    const backgroundAudio = <Audio id="background-audio" audioSrc={audioSrc} hidden="true" autoplay="true" loop={true} />;
     return (
       <Background id="waiting" imgSrc={backgroundImg}>
         {backgroundAudio}

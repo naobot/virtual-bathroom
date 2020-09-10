@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/static/css/main.fcd251d3.chunk.css",
+    "main.js": "/static/js/main.53b5355a.chunk.js",
+    "main.js.map": "/static/js/main.53b5355a.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.7c9d7d74.js",
+    "runtime-main.js.map": "/static/js/runtime-main.7c9d7d74.js.map",
+    "static/css/2.f01c5455.chunk.css": "/static/css/2.f01c5455.chunk.css",
+    "static/js/2.2d88b119.chunk.js": "/static/js/2.2d88b119.chunk.js",
+    "static/js/2.2d88b119.chunk.js.map": "/static/js/2.2d88b119.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.745b3769730a8074301ade2a791088ef.js": "/precache-manifest.745b3769730a8074301ade2a791088ef.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.f01c5455.chunk.css.map": "/static/css/2.f01c5455.chunk.css.map",
+    "static/css/main.fcd251d3.chunk.css.map": "/static/css/main.fcd251d3.chunk.css.map",
+    "static/js/2.2d88b119.chunk.js.LICENSE.txt": "/static/js/2.2d88b119.chunk.js.LICENSE.txt",
+    "static/media/2_audio-guide.png": "/static/media/2_audio-guide.3e47e291.png",
+    "static/media/CCA_RGB_colour_e.svg": "/static/media/CCA_RGB_colour_e.3c468e95.svg",
+    "static/media/bg-hallway.jpg": "/static/media/bg-hallway.a5e18973.jpg",
+    "static/media/bg-mirrors.jpg": "/static/media/bg-mirrors.de0f610b.jpg",
+    "static/media/App.css": "/static/media/spider-isolated.03dd3dec.gif",
+    "static/media/bg-waiting-closed.jpg": "/static/media/bg-waiting-closed.4a26064f.jpg",
+    "static/media/bg-waiting-opening.gif": "/static/media/bg-waiting-opening.9f7f226b.gif",
+    "static/media/bg-waiting.jpg": "/static/media/bg-waiting.c49669f4.jpg",
+    "static/media/chat-notification.svg": "/static/media/chat-notification.e016da0a.svg",
+    "static/media/clearly.mp3": "/static/media/clearly.a431eaad.mp3",
+    "static/media/closeup-note.png": "/static/media/closeup-note.8c8cfc1d.png",
+    "static/media/closeup-phone.png": "/static/media/closeup-phone.38131cb6.png",
+    "static/media/eventually.mp3": "/static/media/eventually.dc4c713e.mp3",
+    "static/media/inside.mp3": "/static/media/inside.eb6fc0ba.mp3",
+    "static/media/outside.mp3": "/static/media/outside.fd7e3989.mp3",
+    "static/media/short-flush.mp3": "/static/media/short-flush.f590e4f1.mp3"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7c9d7d74.js",
+    "static/css/2.f01c5455.chunk.css",
+    "static/js/2.2d88b119.chunk.js",
+    "static/css/main.fcd251d3.chunk.css",
+    "static/js/main.53b5355a.chunk.js"
+  ]
+}
