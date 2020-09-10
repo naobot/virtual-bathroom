@@ -115,6 +115,6 @@ export const CONVOS = [
 ];
 
 export const MAX_OCCUPANCY = 3;
-export const NUM_ROOMS = 2;
+export const NUM_ROOMS = 5;
 export const IMAGES = importAll(require.context('./assets/images/', false, /\.(png|jpe?g|svg)$/));
 export const TIMEOUT = 4 * 60 * 1000;
