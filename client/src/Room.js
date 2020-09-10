@@ -5,6 +5,7 @@ import Mirrors from './Mirrors';
 import Hotspots from './Hotspots';
 import Chatbox from './Chatbox';
 import Phone from './Phone';
+import Note from './Note';
 import Parallax from 'parallax-js';
 import Audio from './Audio';
 
@@ -122,6 +123,7 @@ class Room extends Component {
   render() {
     var currentView = 
           <Stall direction="front" handleNavigationClick={this.handleNavigationClick} className="bg-div">
+            <Note />
             <Hotspots>
               <Button 
                 onClick={() => this.handleNavigationClick('stall-up')} 

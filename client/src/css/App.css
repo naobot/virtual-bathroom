@@ -180,6 +180,12 @@
   background-position: center center;
   background-repeat: no-repeat;
 }
+#note-layer {
+  background-image: url('../assets/images/fixed-paper.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 #stall-left {
   background-image: url('../assets/images/bg-stall-left.jpg');
   background-size: cover;
@@ -202,7 +208,7 @@
   width: 80%;
   max-width: 370px;
 }
-#phone-layer:hover, #big-phone:hover {
+#phone-layer:hover, #big-phone:hover, #note-layer:hover, #big-note:hover {
   cursor: pointer;
 }
 .phone-convo {

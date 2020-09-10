@@ -193,7 +193,7 @@ class App extends Component {
     // console.log('starting timer for inactivity');
     this.timeoutId = window.setTimeout(() => {
       this.pusher.disconnect();
-    }, 3 * 60 * 1000); // SET TIMEOUT: time out after 5 minutes
+    }, constants.TIMEOUT); // SET TIMEOUT: time out after 5 minutes
   }
 
   updateQueuePosition(presenceChannel) {

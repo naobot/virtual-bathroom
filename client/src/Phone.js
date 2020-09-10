@@ -12,7 +12,6 @@ export default class Phone extends PureComponent {
     this.handleClick = this.handleClick.bind(this);
     this.phoneVibe = null;
     this.state = { showPhone: false, };
-    this.restartParallax = this.restartParallax.bind(this);
   }
 
   componentDidMount() {
@@ -22,7 +21,7 @@ export default class Phone extends PureComponent {
   }
 
   componentDidUpdate() {
-    this.restartParallax();
+    constants.restartParallax('.layer');
     if (this.state.showPhone) {
       this.animatePhone('#big-phone', 'rotateInUpLeft');
     }
@@ -59,14 +58,6 @@ export default class Phone extends PureComponent {
     var phoneBottom = document.getElementsByClassName("phone-messages-bottom")[0];
     clearInterval(this.phoneVibe);
     this.setState({ showPhone: !this.state.showPhone }, () => {constants.scrollToBottom(phoneBottom)});
-  }
-
-  restartParallax() {
-    var container = document.getElementById('app');
-    var parallaxInstance = new Parallax(container, {
-      selector: '.layer',
-      pointerEvents: true,
-    });
   }
 
   render() {
