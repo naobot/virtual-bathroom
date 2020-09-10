@@ -168,6 +168,12 @@
     background-position: center center;
     background-repeat: no-repeat;
   }
+  #hanging-spider {
+    background-image: url('../assets/images/spider-isolated.gif');
+    background-size: cover;
+    background-position: center center !important;
+    background-repeat: no-repeat;
+  }
 }
 #stall-up {
   background-size: cover;
@@ -194,6 +200,12 @@
 }
 #phone-layer {
   background-image: url('../assets/images/fixed-phone.png');
+  background-size: cover;
+  background-position: 30% center !important;
+  background-repeat: no-repeat;
+}
+#hanging-spider {
+  background-image: url('../assets/images/spider-isolated.gif');
   background-size: cover;
   background-position: 30% center !important;
   background-repeat: no-repeat;
@@ -350,8 +362,10 @@
   }
 }
 .flush-button {
+  opacity: 0.9 !important;
   top: 43vh;
-  left: 28vw;
+  left: 17vw;
+  font-size: 3em !important;
 }
 
 .neon {

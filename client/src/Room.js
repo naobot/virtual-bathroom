@@ -180,8 +180,10 @@ class Room extends Component {
       />;
     switch (this.state.currentView) {
       case 'stall-up':
+        let seeSpider = this.me % 2 === 0 ? 'bg-layer' : 'hide';
         currentView = 
           <Stall direction="up" handleNavigationClick={this.handleNavigationClick} className="bg-div--responsive">
+            <div id="hanging-spider" className={seeSpider}></div>
             <Hotspots>
               <Button 
                 onClick={() => this.handleNavigationClick('stall-front')} 
@@ -335,7 +337,7 @@ class Room extends Component {
         <div className="hide">
           <h2>Room {this.id}: {this.countOccupants(this.state.occupants)} / {this.max_occupancy}</h2>
         </div>
-        <Audio id="background-audio" audioSrc={bgAudioSrc} hidden="true" autoplay="true" />
+        <Audio id="background-audio" audioSrc={bgAudioSrc} hidden="true" autoplay="true" loop="true" />
         <Audio id="flush-audio" audioSrc={flushAudio} hidden="true" />
         {currentView}
         {phoneView}
