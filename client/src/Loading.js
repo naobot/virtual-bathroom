@@ -18,6 +18,12 @@ class Loading extends PureComponent {
     });
   }
 
+  componentDidUpdate() {
+    if (this.state.loaded) {
+      this.props.onLoad();
+    }
+  }
+
   render() {
     let images = [];
     if (!this.state.loaded) {
@@ -25,12 +31,9 @@ class Loading extends PureComponent {
       // preload most images
       for (var i = 0; i < constants.IMAGES.length; i++) {
         let imageSrc = constants.IMAGES[i];
-        const img = <img src={imageSrc} className='hide' />;
+        const img = <img src={imageSrc} className='hide' key={i} />;
         images.push(img);
       }
-    }
-    else {
-      this.props.onLoad();
     }
     return (
       <div className="loading">

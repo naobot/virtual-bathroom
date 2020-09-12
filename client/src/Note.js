@@ -76,7 +76,6 @@ export default class Note extends PureComponent {
       <>
         {zoomInNote}
         {zoomOutNote}
-        }
       </>
     );
   }

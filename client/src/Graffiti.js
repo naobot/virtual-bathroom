@@ -43,6 +43,7 @@ export default class Graffiti extends PureComponent {
     var loadedCanvas;
     axios.get(`${ENDPOINT}graffiti`)
       .then((res) => {
+        console.log(res);
         if (res.data.length > 0) {
           loadedCanvas = res.data[Math.floor(Math.random() * res.data.length)].canvasImage;
           this.setState({ 
@@ -58,6 +59,7 @@ export default class Graffiti extends PureComponent {
 
     window.addEventListener('resize', this._resizeCanvas);
 
+    console.log(this.canvas);
     if (this.canvas.getContext) {
       this.ctx = this.canvas.getContext('2d');
 
