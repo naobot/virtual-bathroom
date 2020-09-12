@@ -24,12 +24,12 @@ export default class Graffiti extends PureComponent {
     this.noteImg = null;
     this.ctx = null;
     this.newGraffiti = this.newGraffiti.bind(this);
-    this._downHandler = this._downHandler.bind(this);
-    this._upHandler = this._upHandler.bind(this);
-    this._moveHandler = this._moveHandler.bind(this);
-    this._getPosition = this._getPosition.bind(this);
-    this._resizeCanvas = this._resizeCanvas.bind(this);
-    this._isCanvasBlank = this._isCanvasBlank.bind(this);
+    this.downHandler = this.downHandler.bind(this);
+    this.upHandler = this.upHandler.bind(this);
+    this.moveHandler = this.moveHandler.bind(this);
+    this.getPosition = this.getPosition.bind(this);
+    this.resizeCanvas = this.resizeCanvas.bind(this);
+    this.isCanvasBlank = this.isCanvasBlank.bind(this);
     this.state = {
       noteImg: null,
       loaded: false,
@@ -45,12 +45,12 @@ export default class Graffiti extends PureComponent {
     if (this.canvas.getContext) {
       this.ctx = this.canvas.getContext('2d');
 
-      this.canvas.addEventListener('mousedown', this._downHandler);
-      this.canvas.addEventListener('mousemove', this._moveHandler);
-      this.canvas.addEventListener('mouseup', this._upHandler);
+      this.canvas.addEventListener('mousedown', this.downHandler);
+      this.canvas.addEventListener('mousemove', this.moveHandler);
+      this.canvas.addEventListener('mouseup', this.upHandler);
     }
 
-    window.addEventListener('resize', this._resizeCanvas);
+    window.addEventListener('resize', this.resizeCanvas);
 
     var loadedCanvas;
     axios.get(`${ENDPOINT}graffiti`)
@@ -58,12 +58,12 @@ export default class Graffiti extends PureComponent {
         console.log(res);
         if (res.data.length > 0) {
           loadedCanvas = res.data[Math.floor(Math.random() * res.data.length)].canvasImage;
-          this.setState({ 
-            noteImg: document.querySelector('img.note-img'), 
-            loaded: true, 
-            loadedCanvas: loadedCanvas,
-          }, () => {this._resizeCanvas();});
         }
+        this.setState({ 
+          noteImg: document.querySelector('img.note-img'), 
+          loaded: true, 
+          loadedCanvas: loadedCanvas,
+        }, () => {this.resizeCanvas();});
       })
       .catch((err) => { 
         console.log(err); 
@@ -71,12 +71,12 @@ export default class Graffiti extends PureComponent {
   }
 
   componentDidUpdate() {
-    this._resizeCanvas();
+    this.resizeCanvas();
   }
 
   componentWillUnmount() {
     console.log('unmounting canvas');
-    if (this._isCanvasBlank(this.canvas)) {
+    if (this.isCanvasBlank(this.canvas)) {
       var canvasImage = this.canvas.toDataURL();
 
       axios.post(`${ENDPOINT}draw`, {
@@ -91,7 +91,7 @@ export default class Graffiti extends PureComponent {
     }
   }
 
-  _resizeCanvas() {
+  resizeCanvas() {
     if (this.canvas && this.state.noteImg) {
       var size = { width: this.state.noteImg.width * 0.8 , height: this.state.noteImg.height * 0.9 }
       this.canvas.setAttribute('width', size.width );
@@ -104,7 +104,7 @@ export default class Graffiti extends PureComponent {
     }
   }
 
-  _getPosition(e) {
+  getPosition(e) {
     if (this.canvas) {
       var rect = this.canvas.getBoundingClientRect();
 
@@ -117,18 +117,18 @@ export default class Graffiti extends PureComponent {
     }
   }
 
-  _downHandler(e) {
+  downHandler(e) {
     this.painting = true;
-    this._getPosition(e);
+    this.getPosition(e);
     e.preventDefault();
   }
 
-  _upHandler(e) {
+  upHandler(e) {
     this.painting = false;
     e.preventDefault();
   }
 
-  _moveHandler(e) {
+  moveHandler(e) {
     if (this.painting && this.ctx) {
       this.ctx.beginPath();
       this.ctx.lineWidth = 2;
@@ -145,7 +145,7 @@ export default class Graffiti extends PureComponent {
       // The position of the cursor 
       // gets updated as we move the 
       // mouse around. 
-      this._getPosition(e); 
+      this.getPosition(e); 
        
       // A line is traced from start 
       // coordinate to this coordinate 
@@ -156,7 +156,7 @@ export default class Graffiti extends PureComponent {
     }
   }
 
-  _isCanvasBlank(canvas) {
+  isCanvasBlank(canvas) {
     const context = canvas.getContext('2d');
     const pixelBuffer = new Uint32Array(
       context.getImageData(0, 0, canvas.width, canvas.height).data.buffer
@@ -167,7 +167,7 @@ export default class Graffiti extends PureComponent {
 
   newGraffiti(e) {
     e.stopPropagation(); e.nativeEvent.stopImmediatePropagation();
-    this.setState({ newGraffiti: true, }, () => { this._resizeCanvas(); });
+    this.setState({ newGraffiti: true, }, () => { this.resizeCanvas(); });
   }
 
   render() {
