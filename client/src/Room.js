@@ -74,10 +74,11 @@ class Room extends Component {
     });
   }
 
-  // componentDidUpdate() {
-  //   console.log(`occupants in stall`);
-  //   console.log(this.state.occupants);
-  // }
+  componentDidUpdate() {
+    // console.log(`occupants in stall`);
+    // console.log(this.state.occupants);
+    constants.restartParallax('.layer');
+  }
 
   // returns true count of occupants (excluding spies)
   countOccupants(members) {
@@ -97,6 +98,7 @@ class Room extends Component {
       selector: '.layer',
       pointerEvents: true,
     });
+    console.log('restarting parallax');
   }
 
   updateOccupants(members) {
