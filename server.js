@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const Pusher = require('pusher');
 const Datastore = require('nedb');
+const mysql = require('mysql');
 const path = require('path');
 
 const app = express();
@@ -18,6 +19,36 @@ const pusher = new Pusher({
   cluster: process.env.PUSHER_APP_CLUSTER,
   useTLS: true,
 });
+
+var dbHost, dbUser, dbPass;
+
+if (process.env.NODE_ENV === 'development') {
+  dbHost = 'localhost';
+  dbUser = 'root';
+  dbPass = process.env.LOCALDB_PASSWORD;
+  dbName = 'bathroom';
+}
+else {
+  dbHost = process.env.DB_HOST;
+  dbUser = process.env.DB_USER;
+  dbPass = process.env.DB_PASS;
+  dbPort = process.env.DB_PORT;
+  dbName = process.env.DB_NAME;
+}
+
+let connection = mysql.createConnection({
+  host: dbHost,
+  user: dbUser,
+  password: dbPass,
+  database: dbName
+})
+
+connection.connect((err) => {
+  if (err) {
+    return console.error(`error: ${err}`);
+  }
+  console.log('Connected to MySQL server.');
+})
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -40,7 +71,7 @@ app.post('/draw', (req, res) => {
   db.insert(Object.assign({}, req.body), (err, newCanvas) => {
     if (err) { return res.status(500).send(err); }
     res.status(200).send('OK');
-  })
+  });
 })
 
 app.get('/freeourpee', (req, res) => {

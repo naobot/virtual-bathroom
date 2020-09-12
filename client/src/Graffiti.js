@@ -41,7 +41,6 @@ export default class Graffiti extends PureComponent {
   componentDidMount() {
     this.canvas = document.getElementById(this.props.id);
 
-    console.log(this.canvas);
     if (this.canvas.getContext) {
       this.ctx = this.canvas.getContext('2d');
 
@@ -76,14 +75,17 @@ export default class Graffiti extends PureComponent {
 
   componentWillUnmount() {
     console.log('unmounting canvas');
-    if (this.isCanvasBlank(this.canvas)) {
+    console.log(this.canvas);
+    console.log(this.isCanvasBlank(this.canvas));
+    if (!this.isCanvasBlank(this.canvas)) {
       var canvasImage = this.canvas.toDataURL();
+      console.log(canvasImage.length);
 
       axios.post(`${ENDPOINT}draw`, {
         canvasImage: canvasImage,
       })
       .then((res) => {
-        console.log('/draw: OK');
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
