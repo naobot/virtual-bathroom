@@ -10,7 +10,7 @@ export default class Note extends PureComponent {
     this.classes = "bg-layer";
     this.animateNote = this.animateNote.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.noteVibe = props.noteAnimation;
+    this.noteVibe = null;
     this.state = { showNote: false, };
   }
 

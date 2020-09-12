@@ -121,8 +121,8 @@ class Room extends Component {
   }
 
   render() {
-    var currentView = 
-          <Stall direction="front" handleNavigationClick={this.handleNavigationClick} className="bg-div">
+    const stallFront = 
+          <Stall direction="front" handleNavigationClick={this.handleNavigationClick} className={this.state.currentView === 'stall-front' ? 'bg-div' : 'hide'}>
             <Note />
             <Hotspots>
               <Button 
@@ -162,6 +162,7 @@ class Room extends Component {
                  />
             </Hotspots>
           </Stall>;
+    var currentView = null;
     const exit = <Button 
       className="nav-image"
       onClick={this.props.onExit}
@@ -340,6 +341,7 @@ class Room extends Component {
         <Audio id="background-audio" audioSrc={bgAudioSrc} hidden="true" autoplay="true" loop={true} />
         <Audio id="flush-audio" audioSrc={flushAudio} hidden="true" />
         {currentView}
+        {stallFront}
         {phoneView}
         {chatroomStall}
         {exit}
