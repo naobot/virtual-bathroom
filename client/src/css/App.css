@@ -319,6 +319,7 @@ canvas#note-canvas {
   margin: 0;
   top: 0;
   height: 459px;
+  overflow-x: hidden;
   overflow-y: scroll;
   font-family: 'Helvetica', Arial, sans-serif;
   display: flex;
@@ -483,7 +484,8 @@ canvas#note-canvas {
 }
 .chatlist-container {
   height: 200px;
-  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
   flex-grow: 8;
   padding: 8px 0;
 }
