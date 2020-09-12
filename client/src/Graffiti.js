@@ -40,6 +40,18 @@ export default class Graffiti extends PureComponent {
 
   componentDidMount() {
     this.canvas = document.getElementById(this.props.id);
+
+    console.log(this.canvas);
+    if (this.canvas.getContext) {
+      this.ctx = this.canvas.getContext('2d');
+
+      this.canvas.addEventListener('mousedown', this._downHandler);
+      this.canvas.addEventListener('mousemove', this._moveHandler);
+      this.canvas.addEventListener('mouseup', this._upHandler);
+    }
+
+    window.addEventListener('resize', this._resizeCanvas);
+
     var loadedCanvas;
     axios.get(`${ENDPOINT}graffiti`)
       .then((res) => {
@@ -56,17 +68,6 @@ export default class Graffiti extends PureComponent {
       .catch((err) => { 
         console.log(err); 
       });
-
-    window.addEventListener('resize', this._resizeCanvas);
-
-    console.log(this.canvas);
-    if (this.canvas.getContext) {
-      this.ctx = this.canvas.getContext('2d');
-
-      this.canvas.addEventListener('mousedown', this._downHandler);
-      this.canvas.addEventListener('mousemove', this._moveHandler);
-      this.canvas.addEventListener('mouseup', this._upHandler);
-    }
   }
 
   componentDidUpdate() {
