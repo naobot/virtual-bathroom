@@ -26,8 +26,8 @@ export default class Note extends PureComponent {
       this.animateNote('#big-note', 'fadeInUp');
     }
     else {
-      this.phoneVibe = setInterval(() => {
-        this.animateNote('#note-layer', 'shakeX');
+      this.noteVibe = setInterval(() => {
+        this.animateNote('#note-layer', 'pulse');
       }, 3.5 * 1000);
     }
   }

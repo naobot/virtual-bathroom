@@ -97,7 +97,6 @@ export default class Graffiti extends PureComponent {
       this.canvas.setAttribute('width', size.width );
       this.canvas.setAttribute('height', size.height );
       let loadedGraffiti = document.querySelector('img.loaded-graffiti');
-      console.log(loadedGraffiti);
       if (loadedGraffiti) {
         loadedGraffiti.style.cssText = `width:${size.width}px;height:${size.height}px`;
       }
