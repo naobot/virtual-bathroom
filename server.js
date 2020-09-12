@@ -7,6 +7,10 @@ const Pusher = require('pusher');
 const Datastore = require('nedb');
 const mysql = require('mysql');
 const path = require('path');
+const FormData = require('form-data');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
 
 const app = express();
 
@@ -19,6 +23,21 @@ const pusher = new Pusher({
   cluster: process.env.PUSHER_APP_CLUSTER,
   useTLS: true,
 });
+
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+aws.config.update({
+  secretAccessKey: process.env.AWSSecretKey,
+  accessKeyId: process.env.AWSAccessKeyId,
+  region: 'us-east-2',
+  useAccelerateEndpoint: false,
+});
+
+var s3 = new aws.S3();
 
 var dbHost, dbUser, dbPass;
 
@@ -50,29 +69,32 @@ connection.connect((err) => {
   console.log('Connected to MySQL server.');
 })
 
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-app.use(express.static(path.join(__dirname, 'build')));
+var upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'virtual-bathroom-assets',
+    key: function(req, file, cb) {
+      console.log(file);
+      cb(null, Date.now());
+    }
+  })
+});
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.get('/graffiti', (req, res) => {
-  db.find({}, (err, data) => {
-    if (err) return res.status(500).send(err);
-    res.json(data);
-  });
+  // db.find({}, (err, data) => {
+  //   if (err) return res.status(500).send(err);
+  //   res.json(data);
+  // });
 });
 
-app.post('/draw', (req, res) => {
-  db.insert(Object.assign({}, req.body), (err, newCanvas) => {
-    if (err) { return res.status(500).send(err); }
-    res.status(200).send('OK');
-  });
-})
+app.post('/upload', upload.array('upl',1), (req, res, next) => {
+  console.log(res);
+  res.send('OK');
+});
 
 app.get('/freeourpee', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'freeourpee.html'));
@@ -95,6 +117,37 @@ app.post('/pusher/auth', (req, res) => {
   };
   var auth = pusher.authenticate(socketId, channel, presenceData);
   res.send(auth);
+});
+
+const awsParams = {
+  Bucket: "virtual-bathroom-assets",
+  Key: 'canvas-uploads',
+  Expires: 60*60, // expiry time
+  ACL: "bucket-owner-full-control",
+  ContentType: "image/png" 
+};
+
+// api endpoint to get signed url
+app.get("/get-signed-url", (req, res) => {
+  const fileurls = [];
+  s3.getSignedUrl("putObject", awsParams, function(err, url) {
+    if (err) {
+      console.log("Error getting presigned url from AWS S3");
+      res.json({
+        success: false,
+        message: "Pre-Signed URL error",
+        urls: fileurls
+      });
+    } else {
+      fileurls[0] = url;
+      console.log("Presigned URL: ", fileurls[0]);
+      res.json({
+        success: true,
+        message: "AWS SDK S3 Pre-signed urls generated successfully.",
+        urls: fileurls
+      });
+    }
+  });
 });
 
 app.post('/message', (req, res) => {

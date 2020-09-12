@@ -3,6 +3,7 @@ import Button from './Button';
 
 import * as constants from './constants';
 
+// import FormData from 'form-data';
 import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env' });
@@ -14,6 +15,19 @@ if (process.env.NODE_ENV === 'development' ) {
 else {
   ENDPOINT = 'https://virtual-bathroom.herokuapp.com/'
 }
+
+const getSignedURL = () => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(ENDPOINT + "get-signed-url")
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
 
 export default class Graffiti extends PureComponent {
   constructor(props) { 
@@ -50,23 +64,6 @@ export default class Graffiti extends PureComponent {
     }
 
     window.addEventListener('resize', this.resizeCanvas);
-
-    var loadedCanvas;
-    axios.get(`${ENDPOINT}graffiti`)
-      .then((res) => {
-        console.log(res);
-        if (res.data.length > 0) {
-          loadedCanvas = res.data[Math.floor(Math.random() * res.data.length)].canvasImage;
-        }
-        this.setState({ 
-          noteImg: document.querySelector('img.note-img'), 
-          loaded: true, 
-          loadedCanvas: loadedCanvas,
-        }, () => {this.resizeCanvas();});
-      })
-      .catch((err) => { 
-        console.log(err); 
-      });
   }
 
   componentDidUpdate() {
@@ -75,20 +72,31 @@ export default class Graffiti extends PureComponent {
 
   componentWillUnmount() {
     console.log('unmounting canvas');
-    console.log(this.canvas);
-    console.log(this.isCanvasBlank(this.canvas));
     if (!this.isCanvasBlank(this.canvas)) {
-      var canvasImage = this.canvas.toDataURL();
-      console.log(canvasImage.length);
+      const config = {
+        onUploadProgress: function(progressEvent) {
+          var percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          console.log(percentCompleted);
+        }
+      };
 
-      axios.post(`${ENDPOINT}draw`, {
-        canvasImage: canvasImage,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
+      var form = new FormData();
+      var blob = this.canvas.toBlob(() => {
+        form.append('file', blob);
+        getSignedURL().then(data => {
+          console.log(data);
+          axios
+          .put(data.data.urls[0], form, config)
+          .then((res) => {
+            console.log(`Upload Completed:`);
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        });
       });
     }
   }
