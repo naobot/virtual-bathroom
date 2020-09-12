@@ -10,7 +10,7 @@ export default class Note extends PureComponent {
     this.classes = "bg-layer";
     this.animateNote = this.animateNote.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.noteVibe = null;
+    this.noteVibe = props.noteAnimation;
     this.state = { showNote: false, };
   }
 
@@ -38,31 +38,33 @@ export default class Note extends PureComponent {
   }
 
   animateNote(element, animationName) {
-    new Promise((resolve, reject) => {
-      const node = document.querySelector(element);
-      node.classList.add('animate__animated', `animate__${animationName}`);
+    const node = document.querySelector(element);
+    if (node) {
+      new Promise((resolve, reject) => {
+        node.classList.add('animate__animated', `animate__${animationName}`);
 
-      function handleAnimationEnd() {
-        node.classList.remove('animate__animated', `animate__${animationName}`);
-        node.removeEventListener('animationend', handleAnimationEnd);
+        function handleAnimationEnd() {
+          node.classList.remove('animate__animated', `animate__${animationName}`);
+          node.removeEventListener('animationend', handleAnimationEnd);
 
-        resolve('Animation ended');
-      }
+          resolve('Animation ended');
+        }
 
-      node.addEventListener('animationend', handleAnimationEnd);
-    })
+        node.addEventListener('animationend', handleAnimationEnd);
+      });
+    }
   }
 
   handleClick() {
     console.log('toggling note');
-    // clearInterval(this.noteVibe);
-    // this.setState({ showNote: !this.state.showNote });
+    clearInterval(this.noteVibe);
+    this.setState({ showNote: !this.state.showNote });
   }
 
   render() {
     var zoomOutNote = <div id="note-layer" className={this.classes} onClick={this.handleClick}></div>;
     var zoomInNote = 
-      <BigNote onClick={this.handleClick} className="bg-layer layer" dataDepth="0.3"/>;
+      <BigNote onClick={this.handleClick} className="bg-layer" dataDepth="0.3"/>;
     if (this.state.showNote) {
       zoomOutNote = <div id="note-layer" className='hide' onClick={this.handleClick}></div>;
     }

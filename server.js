@@ -4,9 +4,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Pusher = require('pusher');
+const Datastore = require('nedb');
 const path = require('path');
 
 const app = express();
+
+const db = new Datastore();
 
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID,
@@ -25,6 +28,20 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
+app.get('/graffiti', (req, res) => {
+  db.find({}, (err, data) => {
+    if (err) return res.status(500).send(err);
+    res.json(data);
+  });
+});
+
+app.post('/draw', (req, res) => {
+  db.insert(Object.assign({}, req.body), (err, newCanvas) => {
+    if (err) { return res.status(500).send(err); }
+    res.status(200).send('OK');
+  })
+})
 
 app.get('/freeourpee', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'freeourpee.html'));

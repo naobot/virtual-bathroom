@@ -344,7 +344,7 @@ class App extends Component {
     }
     return (
       <div id="app" onMouseMove={this.handleMouseMove}>
-        <div id="debug-console" className={hide}>
+        <div id="debug-console" className={hide ? 'hide' : undefined}>
           <div>
             THE APP IS RUNNING IN <strong>{process.env.NODE_ENV}</strong> MODE<br/>
             this box is for development purposes only

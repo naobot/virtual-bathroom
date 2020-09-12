@@ -248,6 +248,35 @@
   background-position: center center;
   background-repeat: no-repeat;
 }
+.note-img {
+  position: absolute;
+  left: calc(50% - 240px);
+  top: calc(50% - 330px);
+}
+img.loaded-graffiti {
+  position: absolute;
+  left: calc(50% - 170px);
+  top: calc(50% - 308px);
+  z-index: 35;
+}
+img.note-img {
+  width: 90vw;
+  min-width: 400px;
+  max-width: 550px;
+}
+.note-img:hover {
+  cursor: crosshair;
+}
+canvas#note-canvas {
+  z-index: 30;
+  left: calc(50% - 170px);
+  top: calc(50% - 308px);
+}
+.new-graffiti {
+  position: absolute;
+  left: 43vw;
+  top: 22vh;
+}
 #stall-left {
   background-image: url('../assets/images/bg-stall-left.jpg');
   background-size: cover;
