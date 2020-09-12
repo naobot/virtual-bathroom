@@ -43,12 +43,14 @@ export default class Graffiti extends PureComponent {
     var loadedCanvas;
     axios.get(`${ENDPOINT}graffiti`)
       .then((res) => {
-        loadedCanvas = res.data[Math.floor(Math.random() * res.data.length)].canvasImage;
-        this.setState({ 
-          noteImg: document.querySelector('img.note-img'), 
-          loaded: true, 
-          loadedCanvas: loadedCanvas,
-        }, () => {this._resizeCanvas();});
+        if (res.data.length > 0) {
+          loadedCanvas = res.data[Math.floor(Math.random() * res.data.length)].canvasImage;
+          this.setState({ 
+            noteImg: document.querySelector('img.note-img'), 
+            loaded: true, 
+            loadedCanvas: loadedCanvas,
+          }, () => {this._resizeCanvas();});
+        }
       })
       .catch((err) => { 
         console.log(err); 
