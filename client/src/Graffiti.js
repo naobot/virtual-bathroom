@@ -181,8 +181,8 @@ export default class Graffiti extends PureComponent {
       {loadedCanvasImage}
       <canvas id={this.props.id} className={this.props.className} onClick={(e) => {e.stopPropagation(); e.nativeEvent.stopImmediatePropagation();}}>
       </canvas>
-      <Button className="new-graffiti" onClick={this.newGraffiti}>
-        leave new graffiti
+      <Button className="new-graffiti neon" onClick={this.newGraffiti}>
+        clear graffiti
       </Button>
       </>
     );

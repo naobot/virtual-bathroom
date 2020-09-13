@@ -274,8 +274,9 @@ canvas#note-canvas {
 }
 .new-graffiti {
   position: absolute;
-  left: 43vw;
-  top: 22vh;
+  left: 80vw;
+  top: 88vh;
+  opacity: 0.9 !important;
 }
 #stall-left {
   background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-left.jpg');
