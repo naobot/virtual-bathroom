@@ -24,6 +24,22 @@ export function sortByEntryTime(occupants) {
   });
 }
 
+export function animate(element, animationName) {
+  new Promise((resolve, reject) => {
+    const node = document.querySelector(element);
+    node.classList.add('animate__animated', `animate__${animationName}`);
+
+    function handleAnimationEnd() {
+      node.classList.remove('animate__animated', `animate__${animationName}`);
+      node.removeEventListener('animationend', handleAnimationEnd);
+
+      resolve('Animation ended');
+    }
+
+    node.addEventListener('animationend', handleAnimationEnd);
+  })
+}
+
 export const PSEUDONYMS = [
   'someone',
   'somebody',

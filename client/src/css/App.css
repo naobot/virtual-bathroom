@@ -414,7 +414,12 @@ canvas#note-canvas {
   background-position: center center;
   background-repeat: no-repeat;
 }
-
+#flushed {
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-back-clean.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 .check-phone {
   position: absolute;
   z-index: 9;

@@ -8,6 +8,7 @@ import Phone from './Phone';
 import Note from './Note';
 import Parallax from 'parallax-js';
 import Audio from './Audio';
+import Flush from './Flush';
 
 import * as constants from './constants';
 
@@ -44,7 +45,6 @@ class Room extends Component {
     this.updateOccupants = this.updateOccupants.bind(this);
     this.countOccupants = this.countOccupants.bind(this);
     this.handleNavigationClick = this.handleNavigationClick.bind(this);
-    this.handleFlush = this.handleFlush.bind(this);
     this.restartParallax = this.restartParallax.bind(this);
   }
 
@@ -110,11 +110,6 @@ class Room extends Component {
     this.setState({
       occupants: members,
     }, () => this.props.onOccupancyChange(this.countOccupants(members), 'room', this.id));
-  }
-
-  handleFlush() {
-    const audioElement = document.getElementById("flush-audio");
-    audioElement.play();
   }
 
   handleNavigationClick(target) {
@@ -245,13 +240,7 @@ class Room extends Component {
                 top="53vh"
                 left="90vw"
                  />
-              <Button 
-                onClick={() => this.handleFlush()} 
-                altText="Flush"
-                className="flush-button neon"
-                >
-                Flush
-              </Button>
+              <Flush />
             </Hotspots>
           </Stall>;
         break;

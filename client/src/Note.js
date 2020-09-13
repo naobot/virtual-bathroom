@@ -8,7 +8,6 @@ export default class Note extends PureComponent {
   constructor(props) { 
     super(props);
     this.classes = "bg-layer";
-    this.animateNote = this.animateNote.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.noteVibe = null;
     this.state = { showNote: false, };
@@ -16,18 +15,18 @@ export default class Note extends PureComponent {
 
   componentDidMount() {
     this.noteVibe = setInterval(() => {
-      this.animateNote('#note-layer', 'pulse');
+      constants.animate('#note-layer', 'pulse');
     }, 3.5 * 1000);
   }
 
   componentDidUpdate() {
     constants.restartParallax('.layer');
     if (!this.state.showNote) {
-      this.animateNote('#big-note', 'fadeInUp');
+      constants.animate('#big-note', 'fadeInUp');
     }
     else {
       this.noteVibe = setInterval(() => {
-        this.animateNote('#note-layer', 'pulse');
+        constants.animate('#note-layer', 'pulse');
       }, 3.5 * 1000);
     }
   }
@@ -35,24 +34,6 @@ export default class Note extends PureComponent {
   componentWillUnmount() {
     // console.log('unmounting Note.js');
     clearInterval(this.noteVibe);
-  }
-
-  animateNote(element, animationName) {
-    const node = document.querySelector(element);
-    if (node) {
-      new Promise((resolve, reject) => {
-        node.classList.add('animate__animated', `animate__${animationName}`);
-
-        function handleAnimationEnd() {
-          node.classList.remove('animate__animated', `animate__${animationName}`);
-          node.removeEventListener('animationend', handleAnimationEnd);
-
-          resolve('Animation ended');
-        }
-
-        node.addEventListener('animationend', handleAnimationEnd);
-      });
-    }
   }
 
   handleClick() {
