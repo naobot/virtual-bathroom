@@ -59,7 +59,9 @@ export default class Graffiti extends PureComponent {
           loadedCanvas = res.data[Math.floor(Math.random() * res.data.length)].canvasImage;
         }
         else {
+          console.log(constants.GRAFFITI);
           loadedCanvas = constants.GRAFFITI[Math.floor(Math.random() * constants.GRAFFITI.length)];
+          console.log(loadedCanvas);
         }
         this.setState({ 
           noteImg: document.querySelector('img.note-img'), 
