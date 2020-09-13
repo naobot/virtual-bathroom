@@ -100,7 +100,7 @@
   width: 100vw;
   opacity: 0.4;
   transition: opacity 1s ease;
-  z-index: 5;
+  z-index: 50;
 }
 #debug-console:hover {
   opacity: 1;
@@ -551,4 +551,46 @@ canvas#note-canvas {
 .blue-glow {
   opacity: 1;
   animation: blueglow .65s ease-in-out infinite alternate;
+}
+.alert-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 45;
+  background: rgb(0 0 0 / 25%);
+  backdrop-filter: blur(3px);
+}
+.alert {
+  position: relative;
+  top: 40%;
+  margin: 0 auto;
+  z-index: 500;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 200px;
+  max-width: 450px;
+  padding: 20px;
+  background: rgba(249,244,255,0.9);
+  border-radius: 4px;
+}
+.alert-msg {
+  padding: 3px;
+  margin: 5px 0 10px 0;
+}
+.alert-button {
+  max-width: 40px;
+  padding: 8px;
+  border-radius: 3px;
+  border: 1px solid #8e8e8e;
+  background: #8e8e8e;
+  color: #fff;
+}
+.alert-button:hover {
+  cursor: pointer;
+  background: #9f9f9f;
+  transition: background 0.3s ease;
 }

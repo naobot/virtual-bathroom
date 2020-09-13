@@ -80,8 +80,6 @@ export default class Graffiti extends PureComponent {
 
   componentWillUnmount() {
     console.log('unmounting canvas');
-    console.log(this.canvas);
-    console.log(this.isCanvasBlank(this.canvas));
     if (!this.isCanvasBlank(this.canvas)) {
       var canvasImage = this.canvas.toDataURL();
       console.log(canvasImage.length);

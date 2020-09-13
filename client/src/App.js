@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Pusher from 'pusher-js';
 import dotenv from 'dotenv';
 
+import Alert from './Alert';
+import Button from './Button';
 import Loading from './Loading';
 import Hallway from './Hallway';
 import WaitingRoom from './WaitingRoom';
@@ -45,6 +47,7 @@ class App extends Component {
       ahead: null,
       inLine: 0,
       message: '',
+      connected: true,
     };
 
     this.appChannel = null;
@@ -202,8 +205,10 @@ class App extends Component {
       });
       trueOccupants = constants.sortByEntryTime(trueOccupants);
     }
-    console.log(`trueOccupants:`);
-    console.log(trueOccupants);
+    if (LOGGING) {
+      console.log(`trueOccupants:`);
+      console.log(trueOccupants);
+    }
     let ahead = trueOccupants.map((e) => { return e.id.toString() }).indexOf(me.toString());
     this.setState({ ahead: ahead });
   }
@@ -222,8 +227,9 @@ class App extends Component {
       this.startInactivityCheck();
     }
     if (this.pusher.connection.state === 'disconnected') {
-      alert(`You've been ushered out for taking too long! Please line up again to re-enter the bathroom.`);
-      window.location.reload();
+      this.setState({ connected: false });
+      // alert(`You've been ushered out for taking too long! Please line up again to re-enter the bathroom.`);
+      // window.location.reload();
     }
   }
 
@@ -328,6 +334,18 @@ class App extends Component {
       );
     }
 
+    // disconnected alert
+    var disconnected;
+    if (this.state.connected) {
+      disconnected = null
+    }
+    else {
+      disconnected = 
+        <Alert id="disconnected" onOK={() => {window.location.reload();}}>
+          You've been ushered out for taking too long!<br />Please line up again to re-enter the bathroom.
+        </Alert>;
+    }
+
     const vacancies = constants.MAX_OCCUPANCY * constants.NUM_ROOMS - this.state.rooms.map((room) => room.occupants ).reduce((a, b) => a + b, 0);
     let currentView = <Loading onLoad={this.handleEnterHallway} />;
     if (this.state.currentView.type === 'hallway') {
@@ -360,6 +378,7 @@ class App extends Component {
             {rooms}
           </div>
         </div>
+        {disconnected}
         {currentView}
       </div>
     );
