@@ -582,14 +582,20 @@ canvas#note-canvas {
   margin: 5px 0 10px 0;
 }
 .alert-button {
-  max-width: 40px;
-  padding: 8px;
-  border-radius: 3px;
-  border: 1px solid #8e8e8e;
   background: #8e8e8e;
   color: #fff;
 }
-.alert-button:hover {
+.alert-buttons {
+  display: flex;
+}
+.alert-buttons > div {
+  margin: 0 4px;
+  width: auto;
+  padding: 8px;
+  border-radius: 3px;
+  border: 1px solid #8e8e8e;
+}
+.alert-buttons > div:hover {
   cursor: pointer;
   background: #9f9f9f;
   transition: background 0.3s ease;

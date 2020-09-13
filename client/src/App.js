@@ -48,6 +48,7 @@ class App extends Component {
       inLine: 0,
       message: '',
       connected: true,
+      exitAlert: false,
     };
 
     this.appChannel = null;
@@ -62,6 +63,7 @@ class App extends Component {
     this.handleEnterWaiting = this.handleEnterWaiting.bind(this);
     this.handleEnterRoom = this.handleEnterRoom.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.toggleExitAlert = this.toggleExitAlert.bind(this);
     this.updateAppMembers = this.updateAppMembers.bind(this);
     this.updateMemberCount = this.updateMemberCount.bind(this);
     this.updateQueuePosition = this.updateQueuePosition.bind(this);
@@ -233,20 +235,26 @@ class App extends Component {
     }
   }
 
+  toggleExitAlert() {
+    this.setState(currentState => {
+      return {
+        exitAlert: !currentState.exitAlert,
+      }
+    });
+  }
+
   /* BEGIN: View transition functions 
     -----------------------------------
   */
   // stall -> mirrors
   handleExitStall(e) {
-    if (window.confirm("Ready to leave the bathroom?")) {
-      this.setState(currentState => {
-        return {
-          currentView: { type: 'mirrors', id: null },
-        }
-      },
-      () => { constants.restartParallax('.layer');
-      });
-    }
+    this.setState(currentState => {
+      return {
+        currentView: { type: 'mirrors', id: null },
+      }
+    },
+    () => { constants.restartParallax('.layer');
+    });
   }
 
   handleEnterHallway(e) {
@@ -336,13 +344,19 @@ class App extends Component {
 
     // disconnected alert
     var disconnected;
-    if (this.state.connected) {
-      disconnected = null
-    }
-    else {
+    if (!this.state.connected) {
       disconnected = 
         <Alert id="disconnected" onOK={() => {window.location.reload();}}>
           You've been ushered out for taking too long!<br />Please line up again to re-enter the bathroom.
+        </Alert>;
+    }
+
+    // exit alert
+    var exitAlert;
+    if (this.state.exitAlert) {
+      exitAlert = 
+        <Alert id="exit-alert" cancellable={true} onOK={this.handleExitStall} onCancel={this.toggleExitAlert}>
+          Ready to leave the bathroom?
         </Alert>;
     }
 
@@ -358,7 +372,7 @@ class App extends Component {
       currentView = <WaitingRoom queuePosition={this.state.ahead} inLineTotal={this.state.inLine} currentVacancies={vacancies} handleEnterRoomClick={this.handleEnterRoom} />; 
     }
     if (this.state.currentView.type === 'room') {
-      currentView = <Room id={this.state.currentView.id} pusher={this.pusher} max={constants.MAX_OCCUPANCY} onOccupancyChange={this.updateMemberCount} onExit={this.handleExitStall} />;
+      currentView = <Room id={this.state.currentView.id} pusher={this.pusher} max={constants.MAX_OCCUPANCY} onOccupancyChange={this.updateMemberCount} onExit={this.toggleExitAlert} />;
     }
     return (
       <div id="app" onMouseMove={this.handleMouseMove}>
@@ -378,6 +392,7 @@ class App extends Component {
             {rooms}
           </div>
         </div>
+        {exitAlert}
         {disconnected}
         {currentView}
       </div>
