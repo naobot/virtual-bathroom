@@ -54,7 +54,7 @@ export const CONVOS = [
     {
       time: '11:35 AM',
       from: 'Mom',
-      message: 'Love, Mom',
+      message: 'Love, Mom 🐶',
     },
   ],
   [
@@ -71,14 +71,14 @@ export const CONVOS = [
     {
       time: '1:58 PM',
       from: 'Landlord',
-      message: 'The fridge is new so there shouldn’t be any problem with it. Have you tried changing it to the coldest setting?',
+      message: 'THE FRIDGE IS NEW SO THERE SHOULDN’T BE ANY ISSUE WITH IT. HAVE YOU TRIED CHANGING IT TO THE COLDEST SETTING?',
     },
   ],
   [
     {
       time: '10:24 AM',
       from: 'Me', 
-      message: "I had a really nice time with u !"
+      message: "I had a really nice time with you!"
     },
     {
       time: '10:45 AM',
@@ -95,7 +95,7 @@ export const CONVOS = [
     {
       time: '11:30 PM',
       from: 'Lily',
-      message: "hey is 6pm still good to work on the thing tonight?",
+      message: "Hello! Is 6pm still good to meet tonight?",
     },
     {
       time: '12:01 PM',
@@ -105,7 +105,7 @@ export const CONVOS = [
     {
       time: '12:40 PM',
       from: 'Lily',
-      message: "oh no im sorry to hear! I’m busy tomorrow and the rest of this week tho, tonight is the only time I have free :(",
+      message: "Oh no, I’m sorry to hear! I’m busy tomorrow and the rest of this week though, tonight is the only time I have free 😥",
     },
   ],
 ];
