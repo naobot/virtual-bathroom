@@ -85,6 +85,10 @@ class Room extends Component {
     console.log('restarting parallax');
   }
 
+  componentWillUnmount() {
+    this.pusher.unsubscribe(`presence-room-${this.id}`);
+  }
+
   // returns true count of occupants (excluding spies)
   countOccupants(members) {
     var count = 0;
