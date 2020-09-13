@@ -1,13 +1,19 @@
 import React, { PureComponent } from 'react';
 import Background from './Background';
 import Button from './Button';
-import enterStallButton from './assets/actions/perspective-round-arrow-up.png';
-// import enterStallButton from './assets/actions/3_enter-stall.png';
 import Audio from './Audio';
-import audioSrc from './assets/sounds/outside.mp3';
-import backgroundImgSrc from './assets/images/bg-waiting-closed.jpg';
-import vacancyAudioSrc from './assets/sounds/eventually.mp3';
-import animatedBackground from './assets/images/bg-waiting-opening.gif';
+
+import * as constants from './constants';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
+
+const enterStallButton = `${constants.STATICURL}/actions/perspective-round-arrow-up.png`;
+// const enterStallButton = `${constants.STATICURL}/actions/3_enter-stall.png`;
+const audioSrc = `${constants.STATICURL}/sounds/outside.mp3`;
+const backgroundImgSrc = `${constants.STATICURL}/images/bg-waiting-closed.jpg`;
+const vacancyAudioSrc = `${constants.STATICURL}/sounds/eventually.mp3`;
+const animatedBackground = `${constants.STATICURL}/images/bg-waiting-opening.gif`;
 
 class WaitingRoom extends PureComponent {
   render() {

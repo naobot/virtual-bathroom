@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react';
 import Graffiti from './Graffiti';
 import Parallax from 'parallax-js';
-import bigNoteImg from './assets/images/closeup-note.png';
-
 import * as constants from './constants';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
+
+const bigNoteImg = `${constants.STATICURL}/images/closeup-note.png`;
 
 export default class BigNote extends PureComponent {
   constructor(props) { 

@@ -200,50 +200,50 @@
     background-repeat: no-repeat;
   }
   #stall-up {
-    background-image: url('../assets/images/bg-stall-up.jpg');
+    background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-up.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
   }
   #stall-left {
-    background-image: url('../assets/images/bg-stall-left.jpg');
+    background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-left.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
   }
   #phone-layer {
-    background-image: url('../assets/images/fixed-phone.png');
+    background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/fixed-phone.png');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
   }
   #hanging-spider {
-    background-image: url('../assets/images/spider-isolated.gif');
+    background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/spider-isolated.gif');
     background-size: cover;
     background-position: center center !important;
     background-repeat: no-repeat;
   }
 }
 #stall-up {
-  background-image: url('../assets/images/bg-stall-up.jpg');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-up.jpg');
   background-size: cover;
   background-position: 45% 50% !important;
   background-repeat: no-repeat;
 }
 #hanging-spider {
-  background-image: url('../assets/images/spider-isolated.gif');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/spider-isolated.gif');
   background-size: cover;
   background-position: 45% center !important;
   background-repeat: no-repeat;
 }
 #stall-front {
-  background-image: url('../assets/images/bg-stall-front.jpg');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-front.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #note-layer {
-  background-image: url('../assets/images/fixed-paper.png');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/fixed-paper.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -278,13 +278,13 @@ canvas#note-canvas {
   top: 22vh;
 }
 #stall-left {
-  background-image: url('../assets/images/bg-stall-left.jpg');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-left.jpg');
   background-size: cover;
   background-position: 30% center;
   background-repeat: no-repeat;
 }
 #phone-layer {
-  background-image: url('../assets/images/fixed-phone.png');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/fixed-phone.png');
   background-size: cover;
   background-position: 30% center !important;
   background-repeat: no-repeat;
@@ -374,25 +374,25 @@ canvas#note-canvas {
   width: 32px;
   background: rgba(30,132,242,0.88);
   border-radius: 10px;
-  background-image: url('../assets/send-msg.png');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/send-msg.png');
   background-size: 45%;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #stall-right {
-  background-image: url('../assets/images/bg-stall-right.jpg');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-right.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #stall-down {
-  background-image: url('../assets/images/bg-stall-down.gif');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-down.gif');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #stall-back {
-  background-image: url('../assets/images/bg-stall-back.jpg');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-back.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;

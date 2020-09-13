@@ -1,9 +1,13 @@
 import React, { PureComponent } from 'react';
 // import Button from './Button';
 import Parallax from 'parallax-js';
-import bigPhoneImg from './assets/images/closeup-phone.png';
 
 import * as constants from './constants';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
+
+const bigPhoneImg = `${constants.STATICURL}/images/closeup-phone.png`;
 
 export default class BigPhone extends PureComponent {
   constructor(props) { 

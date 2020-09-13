@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Chatlist from './Chatlist';
 import Audio from './Audio';
-import notificationSound from './assets/sounds/clearly.mp3';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
 import * as constants from './constants';
 
 dotenv.config({ path: '.env' });
+
+const notificationSound = `${constants.STATICURL}/sounds/clearly.mp3`;
 
 export default class Chatbox extends Component {
   constructor(props) {

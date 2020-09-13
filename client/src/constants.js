@@ -1,9 +1,5 @@
 import Parallax from 'parallax-js';
 
-export function importAll(r) {
-  return r.keys().map(r);
-}
-
 export function restartParallax(selector) {
   var container = document.getElementById('app');
   var parallaxInstance = new Parallax(container, {
@@ -15,36 +11,6 @@ export function restartParallax(selector) {
 export function scrollToBottom(element) {
     element.scrollIntoView({ behavior: "smooth" });
   }
-
-export function dataURIToBlob(dataURI) {
-  // convert base64 to raw binary data held in a string
-  var byteString = atob(dataURI.split(',')[1]);
-
-  // separate out the mime component
-  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-  // write the bytes of the string to an ArrayBuffer
-  var arrayBuffer = new ArrayBuffer(byteString.length);
-  var _ia = new Uint8Array(arrayBuffer);
-  for (var i = 0; i < byteString.length; i++) {
-      _ia[i] = byteString.charCodeAt(i);
-  }
-
-  var dataView = new DataView(arrayBuffer);
-  var blob = new Blob([dataView], { type: mimeString });
-  console.log(blob);
-  return blob;
-}
-
-export function loadBlobAsDataURI(blob) {
-  const reader = new FileReader();
-  reader.addEventListener('loadend', (e) => {
-    const dataText = e.srcElement.result;
-    console.log(dataText);
-    return dataText;
-  });
-  reader.readAsText(blob);
-}
 
 export function sortByEntryTime(occupants) {
   let sorted = []
@@ -146,5 +112,5 @@ export const CONVOS = [
 
 export const MAX_OCCUPANCY = 3;
 export const NUM_ROOMS = 5;
-export const IMAGES = importAll(require.context('./assets/images/', false, /\.(png|jpe?g|svg|gif)$/));
 export const TIMEOUT = 4 * 60 * 1000;
+export const STATICURL='https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com'

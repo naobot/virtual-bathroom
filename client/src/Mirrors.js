@@ -1,8 +1,14 @@
 import React, { PureComponent } from 'react';
 import Background from './Background';
-import CCALogo from './assets/CCA_RGB_colour_e.svg';
 
-import backgroundImgSrc from './assets/images/bg-mirrors.jpg';
+import * as constants from './constants';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
+
+const CCALogo = `${constants.STATICURL}/CCA_RGB_colour_e.svg`;
+
+const backgroundImgSrc = `${constants.STATICURL}/images/bg-mirrors.jpg`;
 
 class Mirrors extends PureComponent {
   // constructor(props) {

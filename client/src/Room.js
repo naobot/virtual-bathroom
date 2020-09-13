@@ -11,15 +11,19 @@ import Audio from './Audio';
 
 import * as constants from './constants';
 
-import navUpButton from './assets/actions/flat-arrow-up.png';
-import navDownButton from './assets/actions/flat-arrow-down.png';
-import navLeftButton from './assets/actions/flat-arrow-left.png';
-import navRightButton from './assets/actions/flat-arrow-right.png';
-import navBackButton from './assets/actions/flat-arrow-back.png';
-import navExitButton from './assets/actions/exit.png';
-import chatNotification from './assets/chat-notification.svg';
-import flushAudio from './assets/sounds/short-flush.mp3';
-import bgAudioSrc from './assets/sounds/inside.mp3';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
+
+const navUpButton = `${constants.STATICURL}/actions/flat-arrow-up.png`;
+const navDownButton = `${constants.STATICURL}/actions/flat-arrow-down.png`;
+const navLeftButton = `${constants.STATICURL}/actions/flat-arrow-left.png`;
+const navRightButton = `${constants.STATICURL}/actions/flat-arrow-right.png`;
+const navBackButton = `${constants.STATICURL}/actions/flat-arrow-back.png`;
+const navExitButton = `${constants.STATICURL}/actions/exit.png`;
+const chatNotification = `${constants.STATICURL}/chat-notification.svg`;
+const flushAudio = `${constants.STATICURL}/sounds/short-flush.mp3`;
+const bgAudioSrc = `${constants.STATICURL}/sounds/inside.mp3`;
 
 class Room extends Component {
   constructor(props) {

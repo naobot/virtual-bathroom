@@ -1,9 +1,14 @@
 import React, { PureComponent } from 'react';
 import Background from './Background';
 import Button from './Button';
-import enterButton from './assets/actions/perspective-round-arrow-up.png';
-import audioGuideButton from './assets/actions/2_audio-guide.png';
-import backgroundImgSrc from './assets/images/bg-hallway.jpg';
+import * as constants from './constants';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
+
+const enterButton = `${constants.STATICURL}/actions/perspective-round-arrow-up.png`;
+const audioGuideButton = `${constants.STATICURL}/actions/2_audio-guide.png`;
+const backgroundImgSrc = `${constants.STATICURL}/images/bg-hallway.jpg`;
 
 class Hallway extends PureComponent {
   constructor(props) {
