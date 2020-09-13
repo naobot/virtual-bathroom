@@ -113,4 +113,13 @@ export const CONVOS = [
 export const MAX_OCCUPANCY = 3;
 export const NUM_ROOMS = 5;
 export const TIMEOUT = 4 * 60 * 1000;
-export const STATICURL='https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com'
+export const STATICURL='https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com';
+
+export const GRAFFITI = [
+  `${STATICURL}/canvas-uploads/brain.png`,
+  `${STATICURL}/canvas-uploads/tomatoes.png`,
+  `${STATICURL}/canvas-uploads/listening.png`,
+  `${STATICURL}/canvas-uploads/looking.png`,
+  `${STATICURL}/canvas-uploads/nowme.png`,
+  `${STATICURL}/canvas-uploads/toiletpaper.png`,
+];
