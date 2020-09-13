@@ -378,7 +378,7 @@ canvas#note-canvas {
   border-radius: 6px;
   border: 1px solid #999;
   display: flex;
-  animation: divglow .8s ease-in-out infinite alternate;
+  animation: divglow 2s ease-in-out infinite alternate;
 }
 .enter-message > input {
   border: none;
