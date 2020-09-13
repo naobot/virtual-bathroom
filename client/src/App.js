@@ -49,6 +49,7 @@ class App extends Component {
       message: '',
       connected: true,
       exitAlert: false,
+      vacancyAlert: false,
     };
 
     this.appChannel = null;
@@ -64,6 +65,7 @@ class App extends Component {
     this.handleEnterRoom = this.handleEnterRoom.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.toggleExitAlert = this.toggleExitAlert.bind(this);
+    this.toggleVacancyAlert = this.toggleVacancyAlert.bind(this);
     this.updateAppMembers = this.updateAppMembers.bind(this);
     this.updateMemberCount = this.updateMemberCount.bind(this);
     this.updateQueuePosition = this.updateQueuePosition.bind(this);
@@ -243,6 +245,14 @@ class App extends Component {
     });
   }
 
+  toggleVacancyAlert() {
+    this.setState(currentState => {
+      return {
+        vacancyAlert: !currentState.vacancyAlert,
+      }
+    });
+  }
+
   /* BEGIN: View transition functions 
     -----------------------------------
   */
@@ -251,6 +261,7 @@ class App extends Component {
     this.setState(currentState => {
       return {
         currentView: { type: 'mirrors', id: null },
+        exitAlert: false,
       }
     },
     () => { constants.restartParallax('.layer');
@@ -317,7 +328,7 @@ class App extends Component {
     }
 
     if (!roomEntered) {
-      alert('Sorry, no vacant stalls currently available!');
+      this.toggleVacancyAlert();
     }
   }
 
@@ -349,6 +360,16 @@ class App extends Component {
         <Alert id="disconnected" onOK={() => {window.location.reload();}}>
           You've been ushered out for taking too long!<br />Please line up again to re-enter the bathroom.
         </Alert>;
+    }
+
+    // vacancy alert
+    var noVacancies;
+    if (this.state.vacancyAlert) {
+      noVacancies = 
+      <Alert onOK={this.toggleVacancyAlert}>
+        Sorry! No vacant stalls available.<br/>
+        Please wait.
+      </Alert>;
     }
 
     // exit alert
