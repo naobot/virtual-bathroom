@@ -82,6 +82,7 @@ class Room extends Component {
     // console.log(`occupants in stall`);
     // console.log(this.state.occupants);
     constants.restartParallax('.layer');
+    console.log('restarting parallax');
   }
 
   // returns true count of occupants (excluding spies)
@@ -102,7 +103,6 @@ class Room extends Component {
       selector: '.layer',
       pointerEvents: true,
     });
-    console.log('restarting parallax');
   }
 
   updateOccupants(members) {
@@ -201,13 +201,10 @@ class Room extends Component {
                  />
             </Hotspots>
           </Stall>;
-        this.restartParallax();
         break;
       case 'stall-left':
-        this.restartParallax();
         break;
-      case 'stall-right': // contains chatbox
-        this.restartParallax();
+      case 'stall-right': // contains chatbo
         break;
       case 'stall-down':
         currentView = 
@@ -222,7 +219,6 @@ class Room extends Component {
                  />
             </Hotspots>
           </Stall>;
-        this.restartParallax();
         break;
       case 'stall-back':
         currentView = 
@@ -258,15 +254,12 @@ class Room extends Component {
               </Button>
             </Hotspots>
           </Stall>;
-        this.restartParallax();
         break;
       case 'mirrors':
         currentView =
           <Mirrors />;
-          this.restartParallax();
       case 'stall-front':
       default:
-        this.restartParallax();
         break;
     }
     var chatroomStall, phoneView;
