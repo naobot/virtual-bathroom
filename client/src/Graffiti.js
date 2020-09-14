@@ -45,8 +45,11 @@ export default class Graffiti extends PureComponent {
       this.ctx = this.canvas.getContext('2d');
 
       this.canvas.addEventListener('mousedown', this.downHandler);
+      this.canvas.addEventListener('touchstart', this.downHandler);
       this.canvas.addEventListener('mousemove', this.moveHandler);
+      this.canvas.addEventListener('touchmove', this.moveHandler);
       this.canvas.addEventListener('mouseup', this.upHandler);
+      this.canvas.addEventListener('touchend', this.upHandler);
     }
 
     window.addEventListener('resize', this.resizeCanvas);
