@@ -66,9 +66,9 @@ class Mirrors extends PureComponent {
                     </p>
                   </div>
                   <div className="col-2">
-                    <h2><a href="freeourpee">TOILETS FOR ALL</a></h2>
-                    <a href="freeourpee"><img src="https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/freeourpee/washfinals-small.png" /></a>
-                    <p>A sticker project in collaboration with TO Toilet Codes. Read more and download the stickers <a href="freeourpee">here</a>.</p>
+                    <h2><a href="http://freeourpee.publicbathroom.online/">TOILETS FOR ALL</a></h2>
+                    <a href="http://freeourpee.publicbathroom.online/"><img src="https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/freeourpee/washfinals-small.png" /></a>
+                    <p>A sticker project in collaboration with TO Toilet Codes. Read more and download the stickers <a href="http://freeourpee.publicbathroom.online/">here</a>.</p>
                     <h2>SUBMIT A POSTER</h2>
                     <p>To post a poster or public notice to the <em>Make-Believe Bathroom</em>, please send a PNG file to <strong>amyclam@gmail.com</strong>.</p>
                   </div>
