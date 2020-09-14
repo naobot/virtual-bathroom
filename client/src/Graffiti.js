@@ -135,7 +135,7 @@ export default class Graffiti extends PureComponent {
   moveHandler(e) {
     if (this.painting && this.ctx) {
       this.ctx.beginPath();
-      this.ctx.lineWidth = 2;
+      this.ctx.lineWidth = 3;
       // Sets the end of the lines drawn 
       // to a round shape. 
       this.ctx.lineCap = 'round'; 
@@ -185,7 +185,7 @@ export default class Graffiti extends PureComponent {
       <canvas id={this.props.id} className={this.props.className} onClick={(e) => {e.stopPropagation(); e.nativeEvent.stopImmediatePropagation();}}>
       </canvas>
       <Button className="new-graffiti neon" onClick={this.newGraffiti}>
-        clear graffiti
+        clear drawing
       </Button>
       </>
     );

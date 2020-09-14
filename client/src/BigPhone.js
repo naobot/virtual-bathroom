@@ -75,8 +75,7 @@ export default class BigPhone extends PureComponent {
             <span className="time">just now</span>
           </div>
           <div className="box">
-            <p className="message">
-              {sentMessage}
+            <p className="message" dangerouslySetInnerHTML={constants.createMarkup(sentMessage)}>
             </p>
           </div>
         </div>
@@ -97,7 +96,7 @@ export default class BigPhone extends PureComponent {
           <input
             type="text"
             value={this.state.text}
-            placeholder=""
+            placeholder="Reply..."
             onChange={this.handleTextChange}
             onKeyDown={this.handleTextChange}
             />

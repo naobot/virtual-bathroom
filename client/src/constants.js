@@ -40,6 +40,23 @@ export function animate(element, animationName) {
   })
 }
 
+export function createMarkup(msgString) {
+  return {__html: processMsgLinks(msgString)}
+}
+
+export function processMsgLinks(msgString) {
+  msgString = msgString.replaceAll(/((https?:\/\/)?(www)?\.?[A-Za-z0-9\-]+\.[A-Za-z]+)/gi, (match) => {
+    console.log(`matched ${match}`);
+    console.log(!match.includes('http'));
+    if (!match.includes('http')) {
+      match = 'http://' + match;
+    }
+    return `<a href="${match}" target="_blank">${match}</a>`
+  });
+  console.log(msgString);
+  return msgString
+}
+
 export const PSEUDONYMS = [
   'someone',
   'somebody',

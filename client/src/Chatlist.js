@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as constants from './constants';
 
 export default class Chatlist extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class Chatlist extends Component {
               <p className="user">
                 <strong style={this.getColorStyle(chat.userhex)}>{ chat.userhex === this.myHex ? 'you' : chat.userName }</strong>
               </p>
-              <p className="message">{chat.message}</p>
+              <p className="message" dangerouslySetInnerHTML={constants.createMarkup(chat.message)}></p>
             </div>
           </div>
           </div>
