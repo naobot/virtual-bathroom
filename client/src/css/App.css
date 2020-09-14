@@ -174,6 +174,10 @@
   padding: 8px 12px;
   color: #333e4a;
 }
+.credits-content img {
+  max-width: 240px;
+  padding: 5px;
+}
 .credits-content dd, .credits-content strong {
   font-weight: 800;
 }

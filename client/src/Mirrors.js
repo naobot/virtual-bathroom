@@ -62,7 +62,8 @@ class Mirrors extends PureComponent {
                       <img className="cca-logo" src={CCALogo} alt="Canada Council for the Arts" />
                     </p>
                     <p>
-                      <em>Make-Believe Bathroom</em> was produced with the support of <a href="https://www.sfu.ca/galleries.html" target="_blank"><strong>SFU Galleries</strong></a>.
+                      <em>Make-Believe Bathroom</em> was produced with the support of <a href="https://www.sfu.ca/galleries.html" target="_blank"><strong>SFU Galleries</strong></a>.<br/>
+                      <img src="https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/SFUGalleries_logo.png" />
                     </p>
                   </div>
                   <div className="col-2">
