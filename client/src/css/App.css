@@ -137,30 +137,63 @@
   flex-direction: column;
   justify-content: center;
 }
+#mirrors .bg-layer {
+  background-color: rgba(0,0,0,0.3);
+}
 .mirrors-content {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column;
   margin: 0 auto;
   position: relative;
-  top: 5vh;
-  left: 11vw;
+  top: 0;
+  left: 0;
   width: 85vw;
   min-width: 280px;
 }
-.mirrors-content > div {
+.mirrors-content .row {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+.mirrors-content > .row > div {
   padding: 0 15px;
   font-family: "Helvetica", Arial sans-serif;
   font-weight: 600;
-  color: #e2feff;
-  text-shadow: 0 0 9px rgb(0 17 68 / 0.8);
+  /*text-shadow: 0 0 9px rgb(0 17 68 / 0.8);*/
   font-size: 0.8em;
 }
+.credits-content {
+  background: rgba(255,255,255,0.7);
+  max-height: 70vh;
+  overflow-y: scroll;
+  border-radius: 5px;
+  backdrop-filter: blur(15px);
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  color: #333e4a;
+}
+.credits-content dd, .credits-content strong {
+  font-weight: 800;
+}
 @media screen and (min-width: 800px) {
-  .mirrors-content {
-    top: 15vh !important;
+  .mirrors-content h1, #try-again {
+    font-size: 2em;
   }
-  .mirrors-content > div {
+  .mirrors-content {
+    top: 13vh !important;
+    left: 11vw !important;
+    position: absolute;
+  }
+  .mirrors-content .row > div {
     font-size: 1em;
+  }
+  .mirrors-content .row .col-1 {
+    width: 50% !important;
+  }
+  .mirrors-content .row .col-2 {
+    width: 45% !important;
   }
 }
 .mirrors-content .col-1 {
@@ -169,23 +202,31 @@
 }
 .mirrors-content .col-2 {
   min-width: 300px;
-  width: 35%;
+  width: 80%;
+  max-width: 900px;
 }
 .mirrors-content h1, .mirrors-content h2 {
   line-height: 0.8;
   font-weight: 600;
   font-family: "Verdana", sans-serif;
   font-style: italic;
-  color: #c6e2ff;
+}
+.mirrors-content h1, #try-again {
+  font-size: 1.4em;
   animation: neon .08s ease-in-out infinite alternate;
   transform: translateZ(0);
+  color: #c6e2ff;
 }
-.mirrors-content a:link, .mirrors-content a:visited, .mirrors-content a:hover {
-  color: #e2feff;
+.credits-content a:link, .credits-content a:visited, .credits-content a:hover {
+  color: #1e84f2;
 }
 .cca-logo {
   padding: 15px 0;
   max-width: 300px;
+}
+#try-again {
+  width: 100%;
+  text-align: center;
 }
 
 .bg-div {
@@ -458,15 +499,16 @@ canvas#note-canvas {
 
 @media screen and (min-width: 600px) {
   .flush-button {
-    top: 43vh;
+    top: 43vh !important;
     left: 40vw !important;
+    font-size: 2em !important;
   }
 }
-.flush-button {
+.flush-button.neon {
   opacity: 0.9 !important;
-  top: 43vh;
+  top: 40vh;
   left: 17vw;
-  font-size: 3em !important;
+  font-size: 2.4em;
 }
 
 .neon {

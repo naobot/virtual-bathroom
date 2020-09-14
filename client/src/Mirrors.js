@@ -28,41 +28,59 @@ class Mirrors extends PureComponent {
 
   render() {
     var credits = <>
-              <div className="col-1">
+              <div className="row">
                 <h1>MAKE-BELIEVE BATHROOM</h1>
-                <p>
-                  Created by Amy Lam<br/>
-                  Web developer: Naomi Cui<br/>
-                  3D renderings & animations: Emerson Maxwell<br/>
-                  Soundscape: Vic Cheong<br/>
-                  Graffiti: Haeahn Kwon, Caley Feeney<br/>
-                  Audio descriptive guide: Aliya Pabani
-                </p>
-                <p>
-                  Curator: Jenn Jackson<br/>
-                  With contributions from Jon McCurley
-                </p>
-                <p>
-                  We acknowledge the support of the Canada Council for the Arts<br/>
-                  <img className="cca-logo" src={CCALogo} alt="Canada Council for the Arts" />
-                </p>
               </div>
-              <div className="col-2">
-                <h2>TOILETS FOR ALL</h2>
-                <p>Download and share window stickers created by the Toronto Bathroom Codes project. These stickers advocate for businesses and other organizations to allow their bathrooms to be used by anyone.</p>
-                <p><a href="freeourpee" alt="Pee for free, free to pee.">
-                <img src="https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/freeourpee/washfinals-small.png" /></a></p>
-                <p>Pee for free, free to pee.</p>
-                <h2>SUBMIT A POSTER</h2>
-                <p>To post a poster or public notice to the Make-Believe Bathroom, please send a PNG file to <strong>xxemail@gmail.com</strong></p>
+              <div className="credits-content">
+                <div className="row">
+                  <div className="col-1">
+                    <dl>
+                      <dt>
+                        Created by <strong>Amy Lam</strong>
+                      </dt>
+                    </dl>
+                    <dl>
+                      <dt>Web developer:</dt> 
+                      <dd><a href="http://nowme.ca" target="_blank">Naomi Cui</a></dd>
+                      <dt>3D renderings & animations:</dt>
+                      <dd><a href="http://www.emersonmaxwell.com" target="_blank">Emerson Maxwell</a></dd>
+                      <dt>Soundscape:</dt>
+                      <dd><a href="www.newchance.biz" target="_blank">Vic Cheong</a></dd>
+                      <dt>Graffiti:</dt>
+                      <dd><a href="www.haeahnkwon.com" target="_blank">Haeahn Kwon</a></dd>
+                      <dd><a href="https://caleysweetnsour.productions" target="_blank">Caley Feeney</a></dd>
+                      <dt>Audio descriptive guide:</dt>
+                      <dd>Aliya Pabani</dd>    
+                    </dl>
+                    <dl>
+                      <dt>Curator:</dt>
+                      <dd>Jenn Jackson</dd>
+                      <div>With contributions from <strong>Jon McCurley</strong></div>
+                    </dl>
+                    <p>
+                      We acknowledge the support of the <strong>Canada Council for the Arts</strong><br/>
+                      <img className="cca-logo" src={CCALogo} alt="Canada Council for the Arts" />
+                    </p>
+                    <p>
+                      <em>Make-Believe Bathroom</em> was produced with the support of <a href="https://www.sfu.ca/galleries.html" target="_blank"><strong>SFU Galleries</strong></a>.
+                    </p>
+                  </div>
+                  <div className="col-2">
+                    <h2><a href="freeourpee">TOILETS FOR ALL</a></h2>
+                    <a href="freeourpee"><img src="https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/freeourpee/washfinals-small.png" /></a>
+                    <p>A sticker project in collaboration with TO Toilet Codes. Read more and download the stickers <a href="freeourpee">here</a>.</p>
+                    <h2>SUBMIT A POSTER</h2>
+                    <p>To post a poster or public notice to the <em>Make-Believe Bathroom</em>, please send a PNG file to <strong>amyclam@gmail.com</strong>.</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <a href="/" className="neon">Try the Make-Believe Bathroom Experience Again?</a>
+              <div className="row">
+                <div id="try-again"><a href="/" className="neon">Try the Make-Believe Bathroom Again?</a></div>
               </div>
             </>
     return (
       <Background id="mirrors" imgSrc={backgroundImgSrc}>
-        <div className="layer" data-depth="0.4">
+        <div className="bg-layer">
           <div className="mirrors-content">
           {credits}
           </div>

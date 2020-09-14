@@ -80,19 +80,21 @@ export default class Graffiti extends PureComponent {
 
   componentWillUnmount() {
     console.log('unmounting canvas');
-    if (!this.isCanvasBlank(this.canvas)) {
-      var canvasImage = this.canvas.toDataURL();
-      console.log(canvasImage.length);
+    if (this.canvas) {
+      if (!this.isCanvasBlank(this.canvas)) {
+        var canvasImage = this.canvas.toDataURL();
+        console.log(canvasImage.length);
 
-      axios.post(`${ENDPOINT}draw`, {
-        canvasImage: canvasImage,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        axios.post(`${ENDPOINT}draw`, {
+          canvasImage: canvasImage,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
     }
   }
 
