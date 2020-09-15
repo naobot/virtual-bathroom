@@ -164,7 +164,7 @@
   font-size: 0.8em;
 }
 .credits-content {
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.6);
   max-height: 70vh;
   overflow-y: scroll;
   border-radius: 5px;
@@ -175,8 +175,8 @@
   color: #333e4a;
 }
 .credits-content img {
-  max-width: 240px;
-  padding: 5px;
+  max-width: 200px;
+  padding: 15px;
 }
 .credits-content dd, .credits-content strong {
   font-weight: 800;
@@ -195,9 +195,14 @@
   }
   .mirrors-content .row .col-1 {
     width: 50% !important;
+    text-align: center;
   }
   .mirrors-content .row .col-2 {
     width: 45% !important;
+    text-align: center;
+  }
+  dd {
+    margin: 0;
   }
 }
 .mirrors-content .col-1 {
@@ -215,6 +220,9 @@
   font-family: "Verdana", sans-serif;
   font-style: italic;
 }
+.mirrors-content h2 {
+  font-size: 1.2em;
+}
 .mirrors-content h1, #try-again {
   font-size: 1.4em;
   animation: neon .08s ease-in-out infinite alternate;
@@ -224,8 +232,7 @@
 .credits-content a:link, .credits-content a:visited, .credits-content a:hover {
   color: #1e84f2;
 }
-.cca-logo {
-  padding: 15px 0;
+#free-our-pee-logo {
   max-width: 300px;
 }
 #try-again {
