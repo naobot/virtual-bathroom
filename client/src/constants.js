@@ -145,7 +145,7 @@ export const CONVOS = [
 
 export const MAX_OCCUPANCY = 3;
 export const NUM_ROOMS = 3;
-export const TIMEOUT = 4 * 60 * 1000;
+export const TIMEOUT = 3 * 60 * 1000;
 export const STATICURL='https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com';
 
 export const GRAFFITI = [

@@ -45,9 +45,9 @@ class Mirrors extends PureComponent {
                       <dt>3D renderings & animations:</dt>
                       <dd><a href="http://www.emersonmaxwell.com" target="_blank">Emerson Maxwell</a></dd>
                       <dt>Soundscape:</dt>
-                      <dd><a href="www.newchance.biz" target="_blank">Vic Cheong</a></dd>
+                      <dd><a href="http://www.newchance.biz" target="_blank">Vic Cheong</a></dd>
                       <dt>Graffiti:</dt>
-                      <dd><a href="www.haeahnkwon.com" target="_blank">Haeahn Kwon</a></dd>
+                      <dd><a href="http://www.haeahnkwon.com" target="_blank">Haeahn Kwon</a></dd>
                       <dd><a href="https://caleysweetnsour.productions" target="_blank">Caley Feeney</a></dd>
                       <dt>Audio description:</dt>
                       <dd><a href="https://twitter.com/aliyapabani" target="_blank">Aliya Pabani</a></dd>    
@@ -65,7 +65,7 @@ class Mirrors extends PureComponent {
                     </p>
                   </div>
                   <div className="col-2">
-                    <h2><a href="http://freeourpee.publicbathroom.online/">TOILETS FOR ALL</a></h2>
+                    <h2><a href="http://freeourpee.publicbathroom.online/">WASHROOMS FOR ALL</a></h2>
                     <a href="http://freeourpee.publicbathroom.online/"><img id="free-our-pee-logo" src="https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/freeourpee/washfinals-small.png" /></a>
                     <p>A sticker project in collaboration with TO Toilet Codes. Read more and download the stickers <a href="http://freeourpee.publicbathroom.online/">here</a>.</p>
                     <h2><a href="mailto:amyclam@gmail.com">SUBMIT A POSTER</a></h2>

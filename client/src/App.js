@@ -192,7 +192,7 @@ class App extends Component {
   };
 
   startInactivityCheck() {
-    // console.log('starting timer for inactivity');
+    console.log('starting timer for inactivity');
     this.timeoutId = window.setTimeout(() => {
       this.pusher.disconnect();
     }, constants.TIMEOUT); // SET TIMEOUT: time out after 5 minutes
@@ -355,12 +355,6 @@ class App extends Component {
 
     // disconnected alert
     var disconnected;
-    if (!this.state.connected) {
-      disconnected = 
-        <Alert id="disconnected" onOK={this.handleExitStall}>
-          You've been ushered out for taking too long!<br />Please line up again to re-enter the bathroom.
-        </Alert>;
-    }
 
     // vacancy alert
     var noVacancies;
@@ -390,9 +384,21 @@ class App extends Component {
       currentView = <Mirrors />;
     }
     else if (this.state.currentView.type === 'waiting') { 
+      if (!this.state.connected) {
+        disconnected = 
+          <Alert id="disconnected" onOK={this.handleExitStall}>
+            You've been ushered out for taking too long!<br />Please line up again to re-enter the bathroom.
+          </Alert>;
+      }
       currentView = <WaitingRoom queuePosition={this.state.ahead} inLineTotal={this.state.inLine} currentVacancies={vacancies} handleEnterRoomClick={this.handleEnterRoom} />; 
     }
     if (this.state.currentView.type === 'room') {
+      if (!this.state.connected) {
+        disconnected = 
+          <Alert id="disconnected" onOK={this.handleExitStall}>
+            You've been ushered out for taking too long!<br />Please line up again to re-enter the bathroom.
+          </Alert>;
+      }
       currentView = <Room id={this.state.currentView.id} pusher={this.pusher} max={constants.MAX_OCCUPANCY} onOccupancyChange={this.updateMemberCount} onExit={this.toggleExitAlert} />;
     }
     return (
