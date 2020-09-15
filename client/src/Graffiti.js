@@ -59,9 +59,11 @@ export default class Graffiti extends PureComponent {
       .then((res) => {
         console.log(res);
         if (res.data.length > 0) {
+          // load drawing from database
           loadedCanvas = res.data[Math.floor(Math.random() * res.data.length)].canvasImage;
         }
         else {
+          // load from backup drawings
           console.log(constants.GRAFFITI);
           loadedCanvas = constants.GRAFFITI[Math.floor(Math.random() * constants.GRAFFITI.length)];
           console.log(loadedCanvas);
@@ -103,6 +105,7 @@ export default class Graffiti extends PureComponent {
 
   resizeCanvas() {
     if (this.canvas && this.state.noteImg) {
+      console.log('reloading canvas');
       var size = { width: this.state.noteImg.width * 0.8 , height: this.state.noteImg.height * 0.9 }
       this.canvas.setAttribute('width', size.width );
       this.canvas.setAttribute('height', size.height );
@@ -176,13 +179,17 @@ export default class Graffiti extends PureComponent {
 
   newGraffiti(e) {
     e.stopPropagation(); e.nativeEvent.stopImmediatePropagation();
-    this.setState({ newGraffiti: true, }, () => { this.resizeCanvas(); });
+    this.setState({ loadedCanvas: null, }, () => { this.resizeCanvas(); });
   }
 
   render() {
-    var loadedCanvasImage;
+    var loadedCanvasImage, drawButton;
     if (this.state.loadedCanvas) {
       loadedCanvasImage = <img className={this.state.newGraffiti ? 'loaded-graffiti hide' : 'loaded-graffiti'} src={this.state.loadedCanvas} />;
+      drawButton = 'draw something';
+    }
+    else {
+      drawButton = 'clear drawing';
     }
     return (
       <>
@@ -190,7 +197,7 @@ export default class Graffiti extends PureComponent {
       <canvas id={this.props.id} className={this.props.className} onClick={(e) => {e.stopPropagation(); e.nativeEvent.stopImmediatePropagation();}}>
       </canvas>
       <Button className="new-graffiti neon" onClick={this.newGraffiti}>
-        clear drawing
+        {drawButton}
       </Button>
       </>
     );

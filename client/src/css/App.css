@@ -156,12 +156,10 @@
   flex-flow: row wrap;
   align-items: center;
 }
-.mirrors-content > .row > div {
+.mirrors-content .row > div {
   padding: 0 15px;
-  font-family: "Helvetica", Arial sans-serif;
-  font-weight: 600;
-  /*text-shadow: 0 0 9px rgb(0 17 68 / 0.8);*/
   font-size: 0.8em;
+  text-align: center;
 }
 .credits-content {
   background: rgba(255,255,255,0.6);
@@ -177,13 +175,19 @@
 .credits-content img {
   max-width: 200px;
   padding: 15px;
+  width: 40%;
 }
 .credits-content dd, .credits-content strong {
   font-weight: 800;
+  margin: 0;
 }
 @media screen and (min-width: 800px) {
   .mirrors-content h1, #try-again {
     font-size: 2em;
+  }
+  .mirrors-content .row {
+    display: flex;
+    flex-flow: row !important;
   }
   .mirrors-content {
     top: 13vh !important;
@@ -195,23 +199,20 @@
   }
   .mirrors-content .row .col-1 {
     width: 50% !important;
-    text-align: center;
   }
   .mirrors-content .row .col-2 {
     width: 45% !important;
-    text-align: center;
   }
-  dd {
-    margin: 0;
+  .new-graffiti {
+    left: 84vw !important;
+    top: 93vh !important;
   }
 }
 .mirrors-content .col-1 {
-  /*flex-grow: 3;*/
-  min-width: 320px;
+  width: 100%;
 }
 .mirrors-content .col-2 {
-  min-width: 300px;
-  width: 80%;
+  width: 100%;
   max-width: 900px;
 }
 .mirrors-content h1, .mirrors-content h2 {
@@ -234,6 +235,7 @@
 }
 #free-our-pee-logo {
   max-width: 300px;
+  width: 90%;
 }
 #try-again {
   width: 100%;
@@ -341,8 +343,8 @@ canvas#note-canvas {
 }
 .new-graffiti {
   position: absolute;
-  left: 80vw;
-  top: 88vh;
+  left: 79vw;
+  top: 93vh;
   opacity: 0.9 !important;
 }
 #stall-left {
@@ -521,7 +523,6 @@ canvas#note-canvas {
   left: 17vw;
   font-size: 2.4em;
 }
-
 .neon {
   font-weight: 600;
   font-family: Verdana;
