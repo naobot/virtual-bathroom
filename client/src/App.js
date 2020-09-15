@@ -3,6 +3,7 @@ import Pusher from 'pusher-js';
 import dotenv from 'dotenv';
 
 import Alert from './Alert';
+import AudioDescription from './AudioDescription';
 import Button from './Button';
 import Loading from './Loading';
 import Hallway from './Hallway';
@@ -50,6 +51,7 @@ class App extends Component {
       connected: true,
       exitAlert: false,
       vacancyAlert: false,
+      audioDescription: false,
     };
 
     this.appChannel = null;
@@ -66,6 +68,8 @@ class App extends Component {
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.toggleExitAlert = this.toggleExitAlert.bind(this);
     this.toggleVacancyAlert = this.toggleVacancyAlert.bind(this);
+    this.openAudioDescription = this.openAudioDescription.bind(this);
+    this.closeAudioDescription = this.closeAudioDescription.bind(this);
     this.updateAppMembers = this.updateAppMembers.bind(this);
     this.updateMemberCount = this.updateMemberCount.bind(this);
     this.updateQueuePosition = this.updateQueuePosition.bind(this);
@@ -253,6 +257,22 @@ class App extends Component {
     });
   }
 
+  openAudioDescription(e) {
+    this.setState(currentState => {
+      return {
+        audioDescription: true,
+      }
+    });
+  }
+
+  closeAudioDescription(e) {
+    this.setState(currentState => {
+      return {
+        audioDescription: false,
+      }
+    });
+  }
+
   /* BEGIN: View transition functions 
     -----------------------------------
   */
@@ -375,10 +395,16 @@ class App extends Component {
         </Alert>;
     }
 
+    // audio experience view
+    var audioExperience;
+    if (this.state.audioDescription) {
+      audioExperience = <AudioDescription closeAudioDescription={this.closeAudioDescription} />;
+    }
+
     const vacancies = constants.MAX_OCCUPANCY * constants.NUM_ROOMS - this.state.rooms.map((room) => room.occupants ).reduce((a, b) => a + b, 0);
     let currentView = <Loading onLoad={this.handleEnterHallway} />;
     if (this.state.currentView.type === 'hallway') {
-      currentView = <Hallway onEnterBathroom={this.handleEnterWaiting} />;
+      currentView = <Hallway openAudioDescription={this.openAudioDescription} onEnterBathroom={this.handleEnterWaiting} />;
     } 
     else if (this.state.currentView.type === 'mirrors') {
       currentView = <Mirrors />;
@@ -401,6 +427,7 @@ class App extends Component {
       }
       currentView = <Room id={this.state.currentView.id} pusher={this.pusher} max={constants.MAX_OCCUPANCY} onOccupancyChange={this.updateMemberCount} onExit={this.toggleExitAlert} />;
     }
+
     return (
       <div id="app" onMouseMove={this.handleMouseMove}>
         <div id="debug-console" className={hide ? 'hide' : undefined}>
@@ -422,6 +449,7 @@ class App extends Component {
         {exitAlert}
         {disconnected}
         {currentView}
+        {audioExperience}
       </div>
     );
   }

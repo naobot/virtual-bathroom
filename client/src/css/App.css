@@ -654,3 +654,28 @@ canvas#note-canvas {
   background: #9f9f9f;
   transition: background 0.3s ease;
 }
+#audio-description-container {
+  top: 10vh;
+  width: 95vw;
+  max-width: 560px;
+}
+#audio-description-container h1 {
+  margin: 4px 0 0 0;
+}
+#audio-description-container h2 {
+  margin: 4px 0 6px 0;
+}
+#audio-description-container p, #audio-description-container dl {
+  text-align: left;
+}
+#audio-description-container dl {
+  display: flex;
+  align-items: center;
+}
+#audio-description-container dt, #audio-description-container dd {
+  display: inline-block;
+}
+#audio-description-container dt {
+  padding: 10px 5px;
+  font-weight: 800;
+}

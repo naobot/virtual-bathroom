@@ -19,12 +19,12 @@ class Button extends PureComponent {
     }
     if (this.props.imgSrc) {
       return (
-        <img className={className} src={this.props.imgSrc} onClick={this.props.onClick} text={this.props.altText} style={style} />
+        <img id={this.props.id} tabindex={this.props.tabindex} className={className} src={this.props.imgSrc} onClick={this.props.onClick} text={this.props.altText} style={style} />
       );
     }
     else {
       return (
-        <div className={className} onClick={this.props.onClick} style={style}>{this.props.children}</div>
+        <div id={this.props.id} className={className} onClick={this.props.onClick} style={style}>{this.props.children}</div>
       );
     }
   }
