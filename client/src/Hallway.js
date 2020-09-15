@@ -24,12 +24,12 @@ class Hallway extends PureComponent {
 
   handleEnterBathroomKeyDown(e) {
     if (e.which === 13 || e.which === 32) {
-      this.handleEnterBathroomClick(e);
+      this.props.openAudioDescription(e);
     }
   }
 
   handleEnterBathroomClick(e) {
-    this.props.openAudioDescription(e);
+    this.props.onEnterBathroom(e);
   }
 
   render() {

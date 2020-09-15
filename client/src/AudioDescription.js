@@ -6,9 +6,16 @@ import * as constants from './constants';
 class AudioDescription extends PureComponent {
   constructor(props) {
     super(props);
+    this.handleCloseDescriptionKeyDown = this.handleCloseDescriptionKeyDown.bind(this);
   }
   componentDidMount() {
-
+    const audioButton = document.getElementById('close-audio-description');
+    audioButton.addEventListener('keydown', this.handleCloseDescriptionKeyDown);
+  }
+  handleCloseDescriptionKeyDown(e) {
+    if (e.which === 13 || e.which === 32) {
+      this.props.closeAudioDescription(e);
+    }
   }
   render() {
     const audioSrcs = [
@@ -35,9 +42,12 @@ class AudioDescription extends PureComponent {
               <dt>Third visit:</dt>
               <dd><Audio id="audio-desc-3" audioSrc={audioSrcs[2]} controls={true} /></dd>
             </dl>
+            <p>
+              Audio descriptions produced by Aliya Pabani.
+            </p>
           </div>
           <div className="alert-buttons">
-            <div className="alert-button" onClick={this.props.closeAudioDescription}>Close</div>
+            <div tabindex="0" id="close-audio-description" className="alert-button" onClick={this.props.closeAudioDescription}>Close</div>
           </div>
         </div>
       </div>
