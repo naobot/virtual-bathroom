@@ -123,13 +123,19 @@ export default class Graffiti extends PureComponent {
       if (e.originalEvent) {
         e = e.originalEvent;
       }
-
-      this.position.x = e.clientX - rect.left;
-      this.position.y = e.clientY - rect.top;
+      if (e.touches) { // for TouchEvent
+        this.position.x = e.touches[0].clientX - rect.left;
+        this.position.y = e.touches[0].clientY - rect.top;
+      }
+      else {
+        this.position.x = e.clientX - rect.left;
+        this.position.y = e.clientY - rect.top;
+      }
     }
   }
 
   downHandler(e) {
+    console.log('detected stroke');
     this.painting = true;
     this.getPosition(e);
     e.preventDefault();
@@ -162,7 +168,6 @@ export default class Graffiti extends PureComponent {
       // A line is traced from start 
       // coordinate to this coordinate 
       this.ctx.lineTo(this.position.x , this.position.y); 
-        
       // Draws the line. 
       this.ctx.stroke(); 
     }

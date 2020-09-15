@@ -357,7 +357,7 @@ class App extends Component {
     var disconnected;
     if (!this.state.connected) {
       disconnected = 
-        <Alert id="disconnected" onOK={() => {window.location.reload();}}>
+        <Alert id="disconnected" onOK={this.handleExitStall}>
           You've been ushered out for taking too long!<br />Please line up again to re-enter the bathroom.
         </Alert>;
     }
