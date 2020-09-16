@@ -74,7 +74,7 @@ class Mirrors extends PureComponent {
                 </div>
               </div>
               <div className="row">
-                <div id="try-again"><a href="/" className="neon">Try the Make-Believe Bathroom Again?</a></div>
+                <div id="try-again"><a href="/" className="neon">Visit the Make-Believe Bathroom Again?</a></div>
               </div>
             </>
     return (
