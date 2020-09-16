@@ -45,7 +45,7 @@ export function createMarkup(msgString) {
 }
 
 export function processMsgLinks(msgString) {
-  msgString = msgString.replace(/((https?:\/\/)?(www)?\.?[A-Za-z0-9\-]+\.[A-Za-z]+)/gi, (match) => {
+  msgString = msgString.replace(/(https?:\/\/)?(www)?\.?[a-z0-9\-]+\.[a-z]+\/?[a-z\-\.\/]*/gi, (match) => {
     console.log(`matched ${match}`);
     console.log(!match.includes('http'));
     if (!match.includes('http')) {
