@@ -43,7 +43,7 @@ class AudioDescription extends PureComponent {
               <dd><Audio id="audio-desc-3" audioSrc={audioSrcs[2]} controls={true} /></dd>
             </dl>
             <p>
-              Audio descriptions produced by Aliya Pabani.
+              Audio descriptions produced by <a href="https://twitter.com/aliyapabani" target="_blank">Aliya Pabani</a>, with sound design by Vic Cheong.
             </p>
           </div>
           <div className="alert-buttons">
