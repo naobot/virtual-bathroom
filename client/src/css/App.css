@@ -231,7 +231,7 @@
   color: #c6e2ff;
 }
 .credits-content a:link, .credits-content a:visited, .credits-content a:hover {
-  color: #1e84f2;
+  color: #333e4a;
 }
 #free-our-pee-logo {
   max-width: 300px;
@@ -653,6 +653,9 @@ canvas#note-canvas {
   cursor: pointer;
   background: #9f9f9f;
   transition: background 0.3s ease;
+}
+#audio-guide {
+  opacity: 0.8;
 }
 #audio-description-container {
   top: 10vh;
