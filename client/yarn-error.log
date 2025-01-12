@@ -1,0 +1,64 @@
+Arguments: 
+  /opt/homebrew/Cellar/node@18/18.20.1/bin/node /opt/homebrew/bin/yarn install
+
+PATH: 
+  /Users/nao/.rvm/gems/ruby-3.0.0/bin:/Users/nao/.rvm/gems/ruby-3.0.0@global/bin:/Users/nao/.rvm/rubies/ruby-3.0.0/bin:/opt/homebrew/bin:/opt/homebrew/opt/node@18/bin:/Users/nao/.nvm/versions/node/v18.16.0/bin:/Users/nao/bin:/usr/local/bin:/Users/nao/.nvm/versions/node/v18.16.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/Users/nao/.rvm/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.20.1
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: connect ECONNREFUSED 2606:4700::6810:1822:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+
+npm manifest: 
+  {
+    "name": "react-bathroom",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+      "@testing-library/jest-dom": "^4.2.4",
+      "@testing-library/react": "^9.3.2",
+      "@testing-library/user-event": "^7.1.2",
+      "axios": "^0.19.2",
+      "pusher": "^3.0.1",
+      "pusher-js": "^6.0.3",
+      "react": "^16.13.1",
+      "react-dom": "^16.13.1",
+      "react-scripts": "3.4.1"
+    },
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject"
+    },
+    "proxy": "http://localhost:5000",
+    "eslintConfig": {
+      "extends": "react-app"
+    },
+    "browserslist": {
+      "production": [
+        ">0.2%",
+        "not dead",
+        "not op_mini all"
+      ],
+      "development": [
+        "last 1 chrome version",
+        "last 1 firefox version",
+        "last 1 safari version"
+      ]
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -1,10 +1,12 @@
-require('dotenv').config({ path: '.env' });
+import dotenv from 'dotenv'
+import express from 'express';
+import pkg from 'body-parser';
+const { urlencoded, json } = pkg;
+import cors from 'cors';
+import Pusher from 'pusher';
+import Datastore from 'nedb';
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const Pusher = require('pusher');
-const Datastore = require('nedb');
+dotenv.config({ path: '.env' });
 
 const app = express();
 
@@ -18,25 +20,26 @@ const pusher = new Pusher({
   useTLS: true,
 });
 
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
+app.use(urlencoded({ extended: false }));
+app.use(json());
 
 app.get('/', (req, res) => {
   db.find({}, (err, data) => {
     if (err) {
       return res.status(500).send(err);
-      res.json(data);
     }
   });
 });
 
-app.set('port', process.env.PORT || 5000);
-const server = app.listen(app.get('port'), () => {
-  console.log(`Express running → PORT ${server.address().port}`);
-});
-
 app.post('/pusher/auth', (req, res) => {
+  console.log('Auth endpoint hit');
+  // console.log('Body:', req.body);
+  // console.log('Socket ID:', req.body.socket_id);
+  // console.log('Channel:', req.body.channel_name);
   var socketId = req.body.socket_id;
   var channel = req.body.channel_name;
   var presenceData = {
@@ -46,18 +49,19 @@ app.post('/pusher/auth', (req, res) => {
       isSpy: req.body.isSpy == 'true',
     }
   };
-  var auth = pusher.authenticate(socketId, channel, presenceData);
-  res.send(auth);
+  var authRes = pusher.authorizeChannel(socketId, channel, presenceData);
+  res.send(authRes);
 });
 
 app.post('/message', (req, res) => {
+  console.log('Message endpoint hit');
   const payload = req.body;
   const channel = req.body.channel_name;
   pusher.trigger(channel, 'message', payload);
   res.send(payload);
 });
 
-// create a GET route
-// app.get('/express_backend', (req, res) => {
-//   res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
-// });
+app.set('port', process.env.PORT || 5000);
+const server = app.listen(app.get('port'), () => {
+  console.log(`Express running → PORT ${server.address().port}`);
+});

@@ -12,9 +12,11 @@ class App extends Component {
     this.pusher = new Pusher('93d5b6db6095187f5ef6', {
       cluster: 'us2',
       encrypted: true,
+      authEndpoint: `${process.env.REACT_APP_API_URL}/pusher/auth`,
     });
     this.spy = new Pusher('93d5b6db6095187f5ef6', {
       encrypted: true,
+      authEndpoint: `${process.env.REACT_APP_API_URL}/pusher/auth`,
       cluster: 'us2',
       auth: {
         params: {
@@ -47,15 +49,16 @@ class App extends Component {
     }
     // main app channel
     this.presenceChannel = this.pusher.subscribe('presence-app');
+    console.log('trying to subscribe');
     this.presenceChannel.bind('pusher:subscription_succeeded', () => {
       this.me = this.presenceChannel.members.me.id;
       this.updateAppMembers(this.presenceChannel.members);
-      // console.log(this.presenceChannel.members.me.id + ' subscribed to WaitingRoom');
+      console.log(this.presenceChannel.members.me.id + ' subscribed to WaitingRoom');
     });
     this.presenceChannel.bind('pusher:member_added', () => {
       this.updateAppMembers(this.presenceChannel.members);
       console.log(`currentViewType: ${this.state.currentViewType}`);
-      // console.log('someone joined Bathroom App');
+      console.log('someone joined Bathroom App');
     });
     // someone left App
     this.presenceChannel.bind('pusher:member_removed', (member) => {
@@ -71,9 +74,9 @@ class App extends Component {
   // returns a the number of members connected to channel
   // excluding spies
   countMembers(channel) {
-    // console.log("Current users in " + channel.name + ":");
+    console.log("Current users in " + channel.name + ":");
     var count = 0;
-    // var stallId = channel.name.split('-').pop();
+    var stallId = channel.name.split('-').pop();
     channel.members.each(function (member) {
       if (!member.info.isSpy) { console.log("user: " + member.id); count++; }
     });
@@ -112,8 +115,8 @@ class App extends Component {
     if (location === 'stall') {
       stallId = channelName.split('-').pop();
     }
-    // console.log('trying to spy');
-    // console.log(channel);
+    console.log('trying to spy');
+    console.log(channel);
     channel.bind("pusher:subscription_succeeded", () => {
       console.log(`spying on ${channelName}`);
       this.updateMemberCount(this.countMembers(channel), location, stallId);
@@ -127,7 +130,7 @@ class App extends Component {
     });
   };
 
-  /* BEGIN: View transition functions 
+  /* BEGIN: View transition functions
     -----------------------------------
   */
   // hallway -> bathroom
@@ -162,6 +165,7 @@ class App extends Component {
     }
 
     if (!stallEntered) {
+      console.log('no vacant stalls available!');
       alert('no vacant stalls available!');
     }
   }
@@ -171,16 +175,16 @@ class App extends Component {
       <li key={stall.id.toString()}>Stall {stall.id}: {stall.occupants}/{this.max_occupancy}</li>
     );
 
-    // let visitorsList = [];
-    // if (this.state.pusher_app_members.count > 0) {
-    //   this.state.pusher_app_members.each((visitor) => 
-    //     visitorsList.push(<li key={visitor.id.toString()}>{visitor.id}</li>)
-    //   );
-    // }
+    let visitorsList = [];
+    if (this.state.pusher_app_members.count > 0) {
+      this.state.pusher_app_members.each((visitor) =>
+        visitorsList.push(<li key={visitor.id.toString()}>{visitor.id}</li>)
+      );
+    }
     // default view is hallway
     let currentView = <Hallway onEnterBathroom={this.handleEnterBathroom} />
-    if (this.state.currentView.type === 'waiting') { 
-      currentView = <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} onOccupancyChange={this.updateMemberCount} />; 
+    if (this.state.currentView.type === 'waiting') {
+      currentView = <WaitingRoom onEnterStall={this.handleEnterStall} pusher={this.pusher} onOccupancyChange={this.updateMemberCount} />;
     }
     if (this.state.currentView.type === 'stall') {
       currentView = <Stall id={this.state.currentView.id} pusher={this.pusher} max={this.max_occupancy} onOccupancyChange={this.updateMemberCount} />;
