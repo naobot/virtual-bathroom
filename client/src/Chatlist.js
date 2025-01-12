@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 export default class Chatlist extends Component {
   constructor(props) {
     super(props);
+    this.stallMap = props.stallMap;
+    this.myHex = props.myHex;
     this.getColorStyle = this.getColorStyle.bind(this);
   }
 
@@ -12,23 +14,19 @@ export default class Chatlist extends Component {
 
   render() {
     const chats = this.props.chats.map(chat => 
-      <div>
-        <div className="row show-grid">
-          <div className="col-xs-12">
-            
-            <div className="chatMessage">
-              <div key={chat.id} className="box">
-                <p>
-                  <strong style={this.getColorStyle(chat.userhex)}>someone</strong>
-                </p>
-                <p>{chat.message}</p>
-              </div>
+      <div key={chat.id} className="row show-grid">
+        <div className="col-xs-12">
+          <div className={chat.userhex === this.myHex ? 'chatMessage self' : 'chatMessage' }>
+            <div className="box">
+              <p className="user">
+                <strong style={this.getColorStyle(chat.userhex)}>{ chat.userhex === this.myHex ? 'you' : chat.userName }</strong>
+              </p>
+              <p className="message">{chat.message}</p>
             </div>
-            </div>
+          </div>
           </div>
         </div>
       );
-
 
     return (
       <div id="chatlist">

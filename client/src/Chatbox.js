@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import Chatlist from './Chatlist';
+import Audio from './Audio';
+import notificationSound from './assets/sounds/clearly.mp3';
 import axios from 'axios';
+
+import * as constants from './constants';
 
 export default class Chatbox extends Component {
   constructor(props) {
     super(props);
     this.channel = props.channel;
+    this.myId = props.channel.members.me.id;
     this.userHex = props.userHex;
+    this.userName = props.userName;
     this.handleTextChange = this.handleTextChange.bind(this);
     this.state = {
       text: '',
@@ -20,15 +26,22 @@ export default class Chatbox extends Component {
     });
   }
 
+  componentDidUpdate() {
+    constants.scrollToBottom(this.messagesEnd);
+  }
+
   handleTextChange(e) {
     if (e.keyCode === 13) { // hit enter on keyboard
       const payload = {
         channel_name: this.channel.name,
+        userId: this.myId,
+        userName: this.userName,
         userhex: this.userHex,
         message: this.state.text,
       };
-      axios.post('http://localhost:5000/message', payload);
+      axios.post(process.env.REACT_APP_API_URL + '/message', payload);
       this.setState({ text: '' });
+      constants.scrollToBottom(this.messagesEnd);
     }
     else {
       this.setState({ text: e.target.value });
@@ -38,8 +51,13 @@ export default class Chatbox extends Component {
   render() {
     return (
       <div id="chatbox" className="component-box">
-        <h2>Chatbox</h2>
-        <Chatlist chats={this.state.chats} />
+        <Audio id="notification-sound" audioSrc={notificationSound} hidden="true" />
+        <div className="chatlist-container">
+          <Chatlist chats={this.state.chats} myHex={this.userHex} />
+          <div style={{ float:"left", clear: "both" }}
+             ref={(el) => { this.messagesEnd = el; }}>
+          </div>
+        </div>
         <input
           type="text"
           value={this.state.text}

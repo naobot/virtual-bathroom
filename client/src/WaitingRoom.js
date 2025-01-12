@@ -1,84 +1,54 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import Background from './Background';
 import Button from './Button';
+import enterStallButton from './assets/actions/perspective-round-arrow-up.png';
+// import enterStallButton from './assets/actions/3_enter-stall.png';
+import Audio from './Audio';
+import audioSrc from './assets/sounds/outside.mp3';
+import backgroundImgSrc from './assets/images/bg-waiting-closed.jpg';
+import vacancyAudioSrc from './assets/sounds/eventually.mp3';
+import animatedBackground from './assets/images/bg-waiting-opening.gif';
 
-class WaitingRoom extends Component {
-  constructor(props) {
-    super(props);
-    this.pusher = props.pusher;
-    this.state = {
-      me: 0,
-      occupants: { count: 0 },
-    }
-    this.countOccupants = this.countOccupants.bind(this);
-    this.handleEnterStallClick = this.handleEnterStallClick.bind(this);
-  }
-
-  componentDidMount() {
-    this.presenceChannel = this.pusher.subscribe(`presence-bathroom`);
-    this.presenceChannel.bind('pusher:subscription_succeeded', () => {
-      this.setState({ me: this.presenceChannel.members.me.id });
-      this.updateOccupants(this.presenceChannel.members);
-    });
-    this.presenceChannel.bind('pusher:member_added', () => {
-      this.updateOccupants(this.presenceChannel.members);
-    });
-    this.presenceChannel.bind('pusher:member_removed', () => {
-      this.updateOccupants(this.presenceChannel.members);
-      console.log(`WaitingRoom.js: someone left Stall ${this.id}`);
-    });
-  }
-
-  // returns true count of occupants (excluding spies)
-  countOccupants(members) {
-    var count = 0;
-    // console.log(`countOccupants() members in line:`);
-    if (members.count > 0) {
-      members.each(function (member) {
-        if (!member.info.isSpy) { count++ }
-      });
-    }
-    return count
-  }
-
-  updateOccupants(members) {
-    console.log(`WaitingRoom.js updateOccupants: numOccupants ${members.count}`);
-    this.setState({
-      occupants: members,
-    }, () => this.props.onOccupancyChange(this.countOccupants(members), 'waiting'));
-  }
-
-
-  handleEnterStallClick(e) {
-    this.props.onEnterStall(e);
-  }
-
+class WaitingRoom extends PureComponent {
   render() {
-    let trueOccupants = [];
-    let trueOccupantsList = [];
-    if (this.state.occupants.count > 0) {
-      this.state.occupants.each((visitor) => {
-        if (!visitor.info.isSpy) {
-          trueOccupants.push(visitor.id);
-          trueOccupantsList.push(<li key={visitor.id.toString()}>{visitor.id}</li>);
+    const positioningCss = {
+      top: "86vh",
+      left: "58vw",
+      position: "absolute",
+    };
+
+    let enterMessage;
+    let backgroundImg = backgroundImgSrc;
+    if (this.props.queuePosition > 0 || this.props.queuePosition === 0) {
+      console.log(`Currently ${this.props.queuePosition}/${this.props.inLineTotal}`);
+      if (this.props.queuePosition > 2) {
+        enterMessage = <div className="please-wait neon">&nbsp;&nbsp;Sorry, all stalls are occupied right now.<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;There are {this.props.queuePosition} ahead of you in line. Please wait.</div>;
+      }
+      else { // == 0
+        if (this.props.currentVacancies > 0) {
+          backgroundImg = animatedBackground;
+          enterMessage = <>
+              <Audio id="enter-sound" audioSrc={vacancyAudioSrc} hidden="true" autoplay="true" />
+              <Button className="arrow--enter-stall blue-glow" onClick={this.props.handleEnterRoomClick} altText="Enter Stall" imgSrc={enterStallButton} top={positioningCss.top} left={positioningCss.left}  />
+            </>;
         }
-      });
-    }
-    let ahead = trueOccupants.length - trueOccupants.indexOf(this.state.me.toString()) - 1;
-    let enterMessage = 'please wait...';
-    if (ahead > 0) {
-      enterMessage = `${ahead} ahead of you in line`;
+        else {
+          enterMessage = <div className="please-wait neon">&nbsp;&nbsp;Sorry, all stalls are occupied right now.<br/><br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;It looks like it will be your turn soon, though. Please wait.</div>;
+        }
+      }
     }
     else {
-      enterMessage = <Button onClick={this.handleEnterStallClick} buttonText="Enter Stall" />;
+      enterMessage = <div className="please-wait neon" style={positioningCss}>please wait...</div>;
     }
-
+    
+    const backgroundAudio = <Audio id="background-audio" audioSrc={audioSrc} hidden="true" autoplay="true" loop={true} />;
     return (
-      <div id="waiting" className="view">
-        <h2>Waiting Room</h2>
-        In line: {this.countOccupants(this.state.occupants)}<br/>
-        <ul>{trueOccupantsList}</ul>
-        {enterMessage}
-      </div>
+      <Background id="waiting" imgSrc={backgroundImg}>
+        {backgroundAudio}
+        <div className="hotspots">
+          {enterMessage}
+        </div>
+      </Background>
     );
   }
 
