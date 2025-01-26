@@ -293,7 +293,7 @@ class App extends Component {
   }
 
   render() {
-    var hide = false;
+    var hide = true;
     if (process.env.NODE_ENV === 'production') {
       hide = 'hide';
     }

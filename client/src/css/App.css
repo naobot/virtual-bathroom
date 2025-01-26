@@ -34,6 +34,21 @@
     drop-shadow(2px 2px 60px rgba(14,132,242,1));
   }
 }
+@keyframes divglow {
+  from {
+    box-shadow:
+    0 0 5px rgba(30,132,242,0.52), inset 0 0 5px rgba(0,255,0,.1), 0 2px 5px rgba(140,228,225,0.62);
+  }
+  to {
+    box-shadow:
+    0 0 5px rgba(30,132,242,0.22), inset 0 0 5px rgba(0,255,0,.1), 0 2px 5px rgba(140,228,225,0.22),
+    0 0 5px rgba(30,132,242,0), inset 0 0 5px rgba(0,255,0,0), 0 2px 5px rgba(140,228,225,0),
+    0 0 5px rgba(30,132,242,0.08), inset 0 0 5px rgba(0,255,0,.01), 0 2px 5px rgba(140,228,225,0.0.6),
+    0 0 5px rgba(30,132,242,0.15), inset 0 0 5px rgba(0,255,0,.01), 0 2px 5px rgba(140,228,225,0.08),
+    0 0 5px rgba(30,132,242,0.19), inset 0 0 5px rgba(0,255,0,.1), 0 2px 5px rgba(140,228,225,0.16),
+    0 0 5px rgba(30,132,242,0.3), inset 0 0 5px rgba(0,255,0,.12), 0 2px 5px rgba(140,228,225,0.3);
+  }
+}
 
 @-webkit-keyframes rotating /* Safari and Chrome */ {
   from {
@@ -85,7 +100,7 @@
   width: 100vw;
   opacity: 0.4;
   transition: opacity 1s ease;
-  z-index: 5;
+  z-index: 50;
 }
 #debug-console:hover {
   opacity: 1;
@@ -122,55 +137,109 @@
   flex-direction: column;
   justify-content: center;
 }
+#mirrors .bg-layer {
+  background-color: rgba(0,0,0,0.3);
+}
 .mirrors-content {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column;
   margin: 0 auto;
   position: relative;
-  top: 10vh;
-  left: 11vw;
+  top: 0;
+  left: 0;
   width: 85vw;
   min-width: 280px;
 }
-.mirrors-content > div {
-  padding: 0 15px;
-  font-family: "Helvetica", Arial sans-serif;
-  font-weight: 600;
-  color: #e2feff;
-  text-shadow: 0 0 9px rgb(0 17 68 / 0.8);
-  font-size: 0.8em;
+.mirrors-content .row {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
 }
-@media screen and (min-width: 600px) {
-  .mirrors-content {
-    top: 15vh !important;
+.mirrors-content .row > div {
+  padding: 0 15px;
+  font-size: 0.8em;
+  text-align: center;
+}
+.credits-content {
+  background: rgba(255,255,255,0.6);
+  max-height: 70vh;
+  overflow-y: scroll;
+  border-radius: 5px;
+  backdrop-filter: blur(15px);
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  color: #333e4a;
+}
+.credits-content img {
+  max-width: 200px;
+  padding: 15px;
+  width: 40%;
+}
+.credits-content dd, .credits-content strong {
+  font-weight: 800;
+  margin: 0;
+}
+@media screen and (min-width: 800px) {
+  .mirrors-content h1, #try-again {
+    font-size: 2em;
   }
-  .mirrors-content > div {
+  .mirrors-content .row {
+    display: flex;
+    flex-flow: row !important;
+  }
+  .mirrors-content {
+    top: 13vh !important;
+    left: 11vw !important;
+    position: absolute;
+  }
+  .mirrors-content .row > div {
     font-size: 1em;
+  }
+  .mirrors-content .row .col-1 {
+    width: 50% !important;
+  }
+  .mirrors-content .row .col-2 {
+    width: 45% !important;
+  }
+  .new-graffiti {
+    left: 84vw !important;
+    top: 93vh !important;
   }
 }
 .mirrors-content .col-1 {
-  /*flex-grow: 3;*/
-  min-width: 320px;
+  width: 100%;
 }
 .mirrors-content .col-2 {
-  min-width: 300px;
-  width: 35%;
+  width: 100%;
+  max-width: 900px;
 }
 .mirrors-content h1, .mirrors-content h2 {
   line-height: 0.8;
   font-weight: 600;
   font-family: "Verdana", sans-serif;
   font-style: italic;
-  color: #c6e2ff;
+}
+.mirrors-content h2 {
+  font-size: 1.2em;
+}
+.mirrors-content h1, #try-again {
+  font-size: 1.4em;
   animation: neon .08s ease-in-out infinite alternate;
   transform: translateZ(0);
+  color: #c6e2ff;
 }
-.mirrors-content a:link, .mirrors-content a:visited, .mirrors-content a:hover {
-  color: #e2feff;
+.credits-content a:link, .credits-content a:visited, .credits-content a:hover {
+  color: #333e4a;
 }
-.cca-logo {
-  padding: 15px 0;
+#free-our-pee-logo {
   max-width: 300px;
+  width: 90%;
+}
+#try-again {
+  width: 100%;
+  text-align: center;
 }
 
 .bg-div {
@@ -200,50 +269,50 @@
     background-repeat: no-repeat;
   }
   #stall-up {
-    background-image: url('../assets/images/bg-stall-up.jpg');
+    background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-up.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
   }
   #stall-left {
-    background-image: url('../assets/images/bg-stall-left.jpg');
+    background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-left.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
   }
   #phone-layer {
-    background-image: url('../assets/images/fixed-phone.png');
+    background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/fixed-phone.png');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
   }
   #hanging-spider {
-    background-image: url('../assets/images/spider-isolated.gif');
+    background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/spider-isolated.gif');
     background-size: cover;
     background-position: center center !important;
     background-repeat: no-repeat;
   }
 }
 #stall-up {
-  background-image: url('../assets/images/bg-stall-up.jpg');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-up.jpg');
   background-size: cover;
   background-position: 45% 50% !important;
   background-repeat: no-repeat;
 }
 #hanging-spider {
-  background-image: url('../assets/images/spider-isolated.gif');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/spider-isolated.gif');
   background-size: cover;
   background-position: 45% center !important;
   background-repeat: no-repeat;
 }
 #stall-front {
-  background-image: url('../assets/images/bg-stall-front.jpg');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-front.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #note-layer {
-  background-image: url('../assets/images/fixed-paper.png');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/fixed-paper.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -264,8 +333,8 @@ img.note-img {
   min-width: 400px;
   max-width: 550px;
 }
-.note-img:hover {
-  cursor: crosshair;
+canvas#note-canvas:hover {
+  cursor: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/pen-cursor.png') 4 15, auto;
 }
 canvas#note-canvas {
   z-index: 30;
@@ -274,17 +343,18 @@ canvas#note-canvas {
 }
 .new-graffiti {
   position: absolute;
-  left: 43vw;
-  top: 22vh;
+  left: 79vw;
+  top: 93vh;
+  opacity: 0.9 !important;
 }
 #stall-left {
-  background-image: url('../assets/images/bg-stall-left.jpg');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-left.jpg');
   background-size: cover;
   background-position: 30% center;
   background-repeat: no-repeat;
 }
 #phone-layer {
-  background-image: url('../assets/images/fixed-phone.png');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/fixed-phone.png');
   background-size: cover;
   background-position: 30% center !important;
   background-repeat: no-repeat;
@@ -362,6 +432,7 @@ canvas#note-canvas {
   border-radius: 6px;
   border: 1px solid #999;
   display: flex;
+  animation: divglow 2s ease-in-out infinite alternate;
 }
 .enter-message > input {
   border: none;
@@ -374,30 +445,35 @@ canvas#note-canvas {
   width: 32px;
   background: rgba(30,132,242,0.88);
   border-radius: 10px;
-  background-image: url('../assets/send-msg.png');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/send-msg.png');
   background-size: 45%;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #stall-right {
-  background-image: url('../assets/images/bg-stall-right.jpg');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-right.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #stall-down {
-  background-image: url('../assets/images/bg-stall-down.gif');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-down.gif');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
 #stall-back {
-  background-image: url('../assets/images/bg-stall-back.jpg');
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-back.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
 }
-
+#flushed {
+  background-image: url('https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com/images/bg-stall-back-clean.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 .check-phone {
   position: absolute;
   z-index: 9;
@@ -436,17 +512,17 @@ canvas#note-canvas {
 
 @media screen and (min-width: 600px) {
   .flush-button {
-    top: 43vh;
+    top: 43vh !important;
     left: 40vw !important;
+    font-size: 2em !important;
   }
 }
-.flush-button {
+.flush-button.neon {
   opacity: 0.9 !important;
-  top: 43vh;
+  top: 40vh;
   left: 17vw;
-  font-size: 3em !important;
+  font-size: 2.4em;
 }
-
 .neon {
   font-weight: 600;
   font-family: Verdana;
@@ -529,4 +605,80 @@ canvas#note-canvas {
 .blue-glow {
   opacity: 1;
   animation: blueglow .65s ease-in-out infinite alternate;
+}
+.alert-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 45;
+  background: rgb(0 0 0 / 25%);
+  backdrop-filter: blur(3px);
+}
+.alert {
+  position: relative;
+  top: 40%;
+  margin: 0 auto;
+  z-index: 500;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 200px;
+  max-width: 450px;
+  padding: 20px;
+  background: rgba(249,244,255,0.9);
+  border-radius: 4px;
+}
+.alert-msg {
+  padding: 3px;
+  margin: 5px 0 10px 0;
+}
+.alert-button {
+  background: #8e8e8e;
+  color: #fff;
+}
+.alert-buttons {
+  display: flex;
+}
+.alert-buttons > div {
+  margin: 0 4px;
+  width: auto;
+  padding: 8px;
+  border-radius: 3px;
+  border: 1px solid #8e8e8e;
+}
+.alert-buttons > div:hover {
+  cursor: pointer;
+  background: #9f9f9f;
+  transition: background 0.3s ease;
+}
+#audio-guide {
+  opacity: 0.8;
+}
+#audio-description-container {
+  top: 10vh;
+  width: 95vw;
+  max-width: 560px;
+}
+#audio-description-container h1 {
+  margin: 4px 0 0 0;
+}
+#audio-description-container h2 {
+  margin: 4px 0 6px 0;
+}
+#audio-description-container p, #audio-description-container dl {
+  text-align: left;
+}
+#audio-description-container dl {
+  display: flex;
+  align-items: center;
+}
+#audio-description-container dt, #audio-description-container dd {
+  display: inline-block;
+}
+#audio-description-container dt {
+  padding: 10px 5px;
+  font-weight: 800;
 }

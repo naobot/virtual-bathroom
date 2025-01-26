@@ -3,7 +3,6 @@ import Button from './Button';
 
 import * as constants from './constants';
 
-// import FormData from 'form-data';
 import axios from 'axios';
 
 var ENDPOINT;
@@ -13,19 +12,6 @@ if (process.env.NODE_ENV === 'development' ) {
 else {
   ENDPOINT = 'https://virtual-bathroom.herokuapp.com/'
 }
-
-const getSignedURL = () => {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(ENDPOINT + "get-signed-url")
-      .then(data => {
-        resolve(data);
-      })
-      .catch(err => {
-        reject(err);
-      });
-  });
-};
 
 export default class Graffiti extends PureComponent {
   constructor(props) {
@@ -57,11 +43,38 @@ export default class Graffiti extends PureComponent {
       this.ctx = this.canvas.getContext('2d');
 
       this.canvas.addEventListener('mousedown', this.downHandler);
+      this.canvas.addEventListener('touchstart', this.downHandler);
       this.canvas.addEventListener('mousemove', this.moveHandler);
+      this.canvas.addEventListener('touchmove', this.moveHandler);
       this.canvas.addEventListener('mouseup', this.upHandler);
+      this.canvas.addEventListener('touchend', this.upHandler);
     }
 
     window.addEventListener('resize', this.resizeCanvas);
+
+    var loadedCanvas;
+    axios.get(`${ENDPOINT}graffiti`)
+      .then((res) => {
+        console.log(res);
+        if (res.data.length > 0) {
+          // load drawing from database
+          loadedCanvas = res.data[Math.floor(Math.random() * res.data.length)].canvasImage;
+        }
+        else {
+          // load from backup drawings
+          console.log(constants.GRAFFITI);
+          loadedCanvas = constants.GRAFFITI[Math.floor(Math.random() * constants.GRAFFITI.length)];
+          console.log(loadedCanvas);
+        }
+        this.setState({
+          noteImg: document.querySelector('img.note-img'),
+          loaded: true,
+          loadedCanvas: loadedCanvas,
+        }, () => {this.resizeCanvas();});
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   componentDidUpdate() {
@@ -70,37 +83,27 @@ export default class Graffiti extends PureComponent {
 
   componentWillUnmount() {
     console.log('unmounting canvas');
-    if (!this.isCanvasBlank(this.canvas)) {
-      const config = {
-        onUploadProgress: function(progressEvent) {
-          var percentCompleted = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          );
-          console.log(percentCompleted);
-        }
-      };
+    if (this.canvas) {
+      if (!this.isCanvasBlank(this.canvas)) {
+        var canvasImage = this.canvas.toDataURL();
+        console.log(canvasImage.length);
 
-      var form = new FormData();
-      var blob = this.canvas.toBlob(() => {
-        form.append('file', blob);
-        getSignedURL().then(data => {
-          console.log(data);
-          axios
-          .put(data.data.urls[0], form, config)
-          .then((res) => {
-            console.log(`Upload Completed:`);
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        axios.post(`${ENDPOINT}draw`, {
+          canvasImage: canvasImage,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      });
+      }
     }
   }
 
   resizeCanvas() {
     if (this.canvas && this.state.noteImg) {
+      console.log('reloading canvas');
       var size = { width: this.state.noteImg.width * 0.8 , height: this.state.noteImg.height * 0.9 }
       this.canvas.setAttribute('width', size.width );
       this.canvas.setAttribute('height', size.height );
@@ -118,13 +121,19 @@ export default class Graffiti extends PureComponent {
       if (e.originalEvent) {
         e = e.originalEvent;
       }
-
-      this.position.x = e.clientX - rect.left;
-      this.position.y = e.clientY - rect.top;
+      if (e.touches) { // for TouchEvent
+        this.position.x = e.touches[0].clientX - rect.left;
+        this.position.y = e.touches[0].clientY - rect.top;
+      }
+      else {
+        this.position.x = e.clientX - rect.left;
+        this.position.y = e.clientY - rect.top;
+      }
     }
   }
 
   downHandler(e) {
+    console.log('detected stroke');
     this.painting = true;
     this.getPosition(e);
     e.preventDefault();
@@ -138,7 +147,7 @@ export default class Graffiti extends PureComponent {
   moveHandler(e) {
     if (this.painting && this.ctx) {
       this.ctx.beginPath();
-      this.ctx.lineWidth = 2;
+      this.ctx.lineWidth = 3;
       // Sets the end of the lines drawn
       // to a round shape.
       this.ctx.lineCap = 'round';
@@ -157,7 +166,6 @@ export default class Graffiti extends PureComponent {
       // A line is traced from start
       // coordinate to this coordinate
       this.ctx.lineTo(this.position.x , this.position.y);
-
       // Draws the line.
       this.ctx.stroke();
     }
@@ -174,21 +182,25 @@ export default class Graffiti extends PureComponent {
 
   newGraffiti(e) {
     e.stopPropagation(); e.nativeEvent.stopImmediatePropagation();
-    this.setState({ newGraffiti: true, }, () => { this.resizeCanvas(); });
+    this.setState({ loadedCanvas: null, }, () => { this.resizeCanvas(); });
   }
 
   render() {
-    var loadedCanvasImage;
+    var loadedCanvasImage, drawButton;
     if (this.state.loadedCanvas) {
       loadedCanvasImage = <img className={this.state.newGraffiti ? 'loaded-graffiti hide' : 'loaded-graffiti'} src={this.state.loadedCanvas} />;
+      drawButton = 'draw something';
+    }
+    else {
+      drawButton = 'clear drawing';
     }
     return (
       <>
       {loadedCanvasImage}
       <canvas id={this.props.id} className={this.props.className} onClick={(e) => {e.stopPropagation(); e.nativeEvent.stopImmediatePropagation();}}>
       </canvas>
-      <Button className="new-graffiti" onClick={this.newGraffiti}>
-        leave new graffiti
+      <Button className="new-graffiti neon" onClick={this.newGraffiti}>
+        {drawButton}
       </Button>
       </>
     );

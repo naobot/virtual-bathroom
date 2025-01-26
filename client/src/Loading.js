@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
-import loadingImg from './assets/loading.png';
-
 import * as constants from './constants';
+
+const loadingImg = `${constants.STATICURL}/loading.png`;
 
 class Loading extends PureComponent {
   constructor(props) {
@@ -29,11 +29,6 @@ class Loading extends PureComponent {
     if (!this.state.loaded) {
       console.log('Loading...');
       // preload most images
-      for (var i = 0; i < constants.IMAGES.length; i++) {
-        let imageSrc = constants.IMAGES[i];
-        const img = <img src={imageSrc} className='hide' key={i} />;
-        images.push(img);
-      }
     }
     return (
       <div className="loading">

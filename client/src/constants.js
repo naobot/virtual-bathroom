@@ -1,9 +1,5 @@
 import Parallax from 'parallax-js';
 
-export function importAll(r) {
-  return r.keys().map(r);
-}
-
 export function restartParallax(selector) {
   var container = document.getElementById('app');
   var parallaxInstance = new Parallax(container, {
@@ -16,36 +12,6 @@ export function scrollToBottom(element) {
     element.scrollIntoView({ behavior: "smooth" });
   }
 
-export function dataURIToBlob(dataURI) {
-  // convert base64 to raw binary data held in a string
-  var byteString = atob(dataURI.split(',')[1]);
-
-  // separate out the mime component
-  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-  // write the bytes of the string to an ArrayBuffer
-  var arrayBuffer = new ArrayBuffer(byteString.length);
-  var _ia = new Uint8Array(arrayBuffer);
-  for (var i = 0; i < byteString.length; i++) {
-      _ia[i] = byteString.charCodeAt(i);
-  }
-
-  var dataView = new DataView(arrayBuffer);
-  var blob = new Blob([dataView], { type: mimeString });
-  console.log(blob);
-  return blob;
-}
-
-export function loadBlobAsDataURI(blob) {
-  const reader = new FileReader();
-  reader.addEventListener('loadend', (e) => {
-    const dataText = e.srcElement.result;
-    console.log(dataText);
-    return dataText;
-  });
-  reader.readAsText(blob);
-}
-
 export function sortByEntryTime(occupants) {
   let sorted = []
   occupants.forEach((member) => {
@@ -56,6 +22,39 @@ export function sortByEntryTime(occupants) {
     if (parseInt(a.info.entry_time) > parseInt(b.info.entry_time)) { return 1 }
     return 0
   });
+}
+
+export function animate(element, animationName) {
+  new Promise((resolve, reject) => {
+    const node = document.querySelector(element);
+    node.classList.add('animate__animated', `animate__${animationName}`);
+
+    function handleAnimationEnd() {
+      node.classList.remove('animate__animated', `animate__${animationName}`);
+      node.removeEventListener('animationend', handleAnimationEnd);
+
+      resolve('Animation ended');
+    }
+
+    node.addEventListener('animationend', handleAnimationEnd);
+  })
+}
+
+export function createMarkup(msgString) {
+  return {__html: processMsgLinks(msgString)}
+}
+
+export function processMsgLinks(msgString) {
+  msgString = msgString.replace(/(https?:\/\/)?(www)?\.?[a-z0-9\-]+\.[a-z]+\/?[a-z\-\.\/]*/gi, (match) => {
+    console.log(`matched ${match}`);
+    console.log(!match.includes('http'));
+    if (!match.includes('http')) {
+      match = 'http://' + match;
+    }
+    return `<a href="${match}" target="_blank">${match}</a>`
+  });
+  console.log(msgString);
+  return msgString
 }
 
 export const PSEUDONYMS = [
@@ -88,7 +87,7 @@ export const CONVOS = [
     {
       time: '11:35 AM',
       from: 'Mom',
-      message: 'Love, Mom',
+      message: 'Love, Mom 🐶',
     },
   ],
   [
@@ -105,14 +104,14 @@ export const CONVOS = [
     {
       time: '1:58 PM',
       from: 'Landlord',
-      message: 'The fridge is new so there shouldn’t be any problem with it. Have you tried changing it to the coldest setting?',
+      message: 'THE FRIDGE IS NEW SO THERE SHOULDN’T BE ANY ISSUE WITH IT. HAVE YOU TRIED CHANGING IT TO THE COLDEST SETTING?',
     },
   ],
   [
     {
       time: '10:24 AM',
       from: 'Me',
-      message: "I had a really nice time with u !"
+      message: "I had a really nice time with you!"
     },
     {
       time: '10:45 AM',
@@ -129,7 +128,7 @@ export const CONVOS = [
     {
       time: '11:30 PM',
       from: 'Lily',
-      message: "hey is 6pm still good to work on the thing tonight?",
+      message: "Hello! Is 6pm still good to meet tonight?",
     },
     {
       time: '12:01 PM',
@@ -139,12 +138,21 @@ export const CONVOS = [
     {
       time: '12:40 PM',
       from: 'Lily',
-      message: "oh no im sorry to hear! I’m busy tomorrow and the rest of this week tho, tonight is the only time I have free :(",
+      message: "Oh no, I’m sorry to hear! I’m busy tomorrow and the rest of this week though, tonight is the only time I have free 😥",
     },
   ],
 ];
 
 export const MAX_OCCUPANCY = 3;
 export const NUM_ROOMS = 5;
-export const IMAGES = importAll(require.context('./assets/images/', false, /\.(png|jpe?g|svg|gif)$/));
-export const TIMEOUT = 4 * 60 * 1000;
+export const TIMEOUT = 3 * 60 * 1000;
+export const STATICURL='https://virtual-bathroom-assets.s3.us-east-2.amazonaws.com';
+
+export const GRAFFITI = [
+  `${STATICURL}/canvas-uploads/brain.png`,
+  `${STATICURL}/canvas-uploads/tomatoes.png`,
+  `${STATICURL}/canvas-uploads/listening.png`,
+  `${STATICURL}/canvas-uploads/looking.png`,
+  `${STATICURL}/canvas-uploads/nowme.png`,
+  `${STATICURL}/canvas-uploads/toiletpaper.png`,
+];
