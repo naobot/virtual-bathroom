@@ -29,7 +29,7 @@ class Comments extends Component {
     };
 
     axios
-      .post('http://localhost:5000/comment', data)
+      .post(`${process.env.REACT_APP_API_URL}/comment`, data)
       .then(() => {
         this.setState({
           username: '',
@@ -52,7 +52,7 @@ class Comments extends Component {
       encrypted: true,
     });
 
-    axios.get('http://localhost:5000').then(({ data }) => {
+    axios.get(process.env.REACT_APP_API_URL).then(({ data }) => {
       this.setState({
         comments: [...data],
       });
@@ -63,7 +63,7 @@ class Comments extends Component {
       console.log('bind called');
       this.setState(prevState => {
         const { comments } = prevState;
-        
+
         console.log("comments: ");
         console.log(comments)
         console.log("data.comment: ");
@@ -71,10 +71,10 @@ class Comments extends Component {
 
         /* a-t solution */
         const commentsCopy = Array.from(comments);
-      
+
         console.log("commentsCopy before: ");
         console.log(commentsCopy)
-        
+
         commentsCopy.push(data.comment);
 
         console.log("commentsCopy after: ");
