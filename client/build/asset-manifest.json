@@ -1,23 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.bff34e2d.chunk.css",
-    "main.js": "/static/js/main.19ec3cea.chunk.js",
-    "main.js.map": "/static/js/main.19ec3cea.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.7c9d7d74.js",
-    "runtime-main.js.map": "/static/js/runtime-main.7c9d7d74.js.map",
-    "static/js/2.008de4cd.chunk.js": "/static/js/2.008de4cd.chunk.js",
-    "static/js/2.008de4cd.chunk.js.map": "/static/js/2.008de4cd.chunk.js.map",
+    "main.css": "/static/css/main.101c42dc.css",
+    "main.js": "/static/js/main.3b0d83a7.js",
+    "static/media/bg-waiting-opening.gif": "/static/media/bg-waiting-opening.f460b775d9c55ac0ed2a.gif",
+    "static/media/inside.mp3": "/static/media/inside.33f3325d3b81cebe90ac.mp3",
+    "static/media/outside.mp3": "/static/media/outside.9d18e7c9e570ef126d8d.mp3",
+    "static/media/bg-mirrors.jpg": "/static/media/bg-mirrors.72166d95c12624577845.jpg",
+    "static/media/bg-hallway.jpg": "/static/media/bg-hallway.5addc8a7d5e3c58dc001.jpg",
+    "static/media/closeup-phone.png": "/static/media/closeup-phone.518e5edafc9aa6a9964a.png",
+    "static/media/bg-waiting-closed.jpg": "/static/media/bg-waiting-closed.4362dff58a1e07000206.jpg",
+    "static/media/short-flush.mp3": "/static/media/short-flush.33f299d38a18bfa021b7.mp3",
+    "static/media/2_audio-guide.png": "/static/media/2_audio-guide.10fc0b999dd3ff736afa.png",
+    "static/media/clearly.mp3": "/static/media/clearly.835b5da125058d6b6b69.mp3",
+    "static/media/eventually.mp3": "/static/media/eventually.7d9365570cfe68dd8ba9.mp3",
+    "static/media/CCA_RGB_colour_e.svg": "/static/media/CCA_RGB_colour_e.28a9111395b621dade35bf432de68fae.svg",
     "index.html": "/index.html",
-    "precache-manifest.64a6fe937d75b45704faeb9429d14a70.js": "/precache-manifest.64a6fe937d75b45704faeb9429d14a70.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.bff34e2d.chunk.css.map": "/static/css/main.bff34e2d.chunk.css.map",
-    "static/js/2.008de4cd.chunk.js.LICENSE.txt": "/static/js/2.008de4cd.chunk.js.LICENSE.txt",
-    "static/media/App.css": "/static/media/bg-hallway.3df18076.jpg"
+    "static/media/chat-notification.svg": "/static/media/chat-notification.dec50fd278e629bc57f40baf98198ada.svg",
+    "main.101c42dc.css.map": "/static/css/main.101c42dc.css.map",
+    "main.3b0d83a7.js.map": "/static/js/main.3b0d83a7.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.7c9d7d74.js",
-    "static/js/2.008de4cd.chunk.js",
-    "static/css/main.bff34e2d.chunk.css",
-    "static/js/main.19ec3cea.chunk.js"
+    "static/css/main.101c42dc.css",
+    "static/js/main.3b0d83a7.js"
   ]
 }
