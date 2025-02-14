@@ -56,11 +56,11 @@ app.use(json());
 //   });
 // });
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 app.get('/', (req, res) => {
   try {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'), (err) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'), (err) => {
       if (err) {
         console.error('Error sending file:', err);
         res.status(500).send('Error loading page');
