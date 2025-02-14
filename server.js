@@ -41,8 +41,19 @@ const pusher = new Pusher({
   useTLS: true,
 });
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://virtual-bathroom.herokuapp.com'
+];
+
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 app.use(urlencoded({ extended: false }));
