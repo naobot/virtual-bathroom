@@ -8,6 +8,7 @@ import Phone from './Phone';
 import Note from './Note';
 import Parallax from 'parallax-js';
 import Audio from './Audio';
+import Flush from './Flush';
 
 import * as constants from './constants';
 
@@ -40,7 +41,6 @@ class Room extends Component {
     this.updateOccupants = this.updateOccupants.bind(this);
     this.countOccupants = this.countOccupants.bind(this);
     this.handleNavigationClick = this.handleNavigationClick.bind(this);
-    this.handleFlush = this.handleFlush.bind(this);
     this.restartParallax = this.restartParallax.bind(this);
   }
 
@@ -78,6 +78,11 @@ class Room extends Component {
     // console.log(`occupants in stall`);
     // console.log(this.state.occupants);
     constants.restartParallax('.layer');
+    console.log('restarting parallax');
+  }
+
+  componentWillUnmount() {
+    this.pusher.unsubscribe(`presence-room-${this.id}`);
   }
 
   // returns true count of occupants (excluding spies)
@@ -98,7 +103,6 @@ class Room extends Component {
       selector: '.layer',
       pointerEvents: true,
     });
-    console.log('restarting parallax');
   }
 
   updateOccupants(members) {
@@ -106,11 +110,6 @@ class Room extends Component {
     this.setState({
       occupants: members,
     }, () => this.props.onOccupancyChange(this.countOccupants(members), 'room', this.id));
-  }
-
-  handleFlush() {
-    const audioElement = document.getElementById("flush-audio");
-    audioElement.play();
   }
 
   handleNavigationClick(target) {
@@ -123,40 +122,40 @@ class Room extends Component {
   }
 
   render() {
-    const stallFront = 
+    const stallFront =
           <Stall direction="front" handleNavigationClick={this.handleNavigationClick} className={this.state.currentView === 'stall-front' ? 'bg-div' : 'hide'}>
             <Note />
             <Hotspots>
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-up')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-up')}
                 altText="Stare At Ceiling"
                 imgSrc={navUpButton}
                 top="7vh"
                 left="50vw"
                  />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-left')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-left')}
                 altText="Check Phone"
                 imgSrc={navLeftButton}
                 top="53vh"
                 left="10vw"
                  />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-down')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-down')}
                 altText="Cry"
                 imgSrc={navDownButton}
                 top="88vh"
                 left="50vw"
                  />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-right')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-right')}
                 altText="Talk to Stranger"
                 imgSrc={navRightButton}
                 top="53vh"
                 left="90vw"
                  />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-back')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-back')}
                 altText="Flush/Exit"
                 imgSrc={navBackButton}
                 top="98vh"
@@ -165,31 +164,31 @@ class Room extends Component {
             </Hotspots>
           </Stall>;
     var currentView = null;
-    const exit = <Button 
+    const exit = <Button
       className="nav-image"
       onClick={this.props.onExit}
       top="12vh"
       left="84vw"
       width="80px"
-      imgSrc={navExitButton} 
+      imgSrc={navExitButton}
       />;
-    const newMsg = <Button 
+    const newMsg = <Button
       className={this.state.newAlert ? "blue-glow msg-alert" : "hide"}
       onClick={() => this.handleNavigationClick('stall-right')}
       top="90vh"
       left="90vw"
       width="80px"
-      imgSrc={chatNotification} 
+      imgSrc={chatNotification}
       />;
     switch (this.state.currentView) {
       case 'stall-up':
         let seeSpider = this.me % 2 === 0 ? 'bg-layer' : 'hide';
-        currentView = 
+        currentView =
           <Stall direction="up" handleNavigationClick={this.handleNavigationClick} className="bg-div--responsive">
             <div id="hanging-spider" className={seeSpider}></div>
             <Hotspots>
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-front')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-front')}
                 altText="Flush/Exit"
                 imgSrc={navDownButton}
                 top="87vh"
@@ -197,20 +196,17 @@ class Room extends Component {
                  />
             </Hotspots>
           </Stall>;
-        this.restartParallax();
         break;
       case 'stall-left':
-        this.restartParallax();
         break;
-      case 'stall-right': // contains chatbox
-        this.restartParallax();
+      case 'stall-right': // contains chatbo
         break;
       case 'stall-down':
-        currentView = 
+        currentView =
           <Stall direction="down" handleNavigationClick={this.handleNavigationClick} className="bg-div">
             <Hotspots>
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-front')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-front')}
                 altText="Gaze at Stall Door"
                 imgSrc={navUpButton}
                 top="7vh"
@@ -218,80 +214,70 @@ class Room extends Component {
                  />
             </Hotspots>
           </Stall>;
-        this.restartParallax();
         break;
       case 'stall-back':
-        currentView = 
+        currentView =
           <Stall direction="back" handleNavigationClick={this.handleNavigationClick} className="bg-div">
             <Hotspots>
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-front')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-front')}
                 altText="Gaze at Stall Door"
                 imgSrc={navBackButton}
                 top="94vh"
                 left="76vw"
                  />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-right')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-right')}
                 altText="Talk to Stranger"
                 imgSrc={navLeftButton}
                 top="53vh"
                 left="10vw"
                  />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-left')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-left')}
                 altText="Check Phone"
                 imgSrc={navRightButton}
                 top="53vh"
                 left="90vw"
                  />
-              <Button 
-                onClick={() => this.handleFlush()} 
-                altText="Flush"
-                className="flush-button neon"
-                >
-                Flush
-              </Button>
+              <Flush />
             </Hotspots>
           </Stall>;
-        this.restartParallax();
         break;
       case 'mirrors':
         currentView =
           <Mirrors />;
-          this.restartParallax();
       case 'stall-front':
       default:
-        this.restartParallax();
         break;
     }
     var chatroomStall, phoneView;
     if (this.presenceChannel && this.me) {
       chatroomStall = <Stall className={this.state.currentView === 'stall-right' ? 'bg-div' : 'hide' } direction="right" handleNavigationClick={this.handleNavigationClick}>
             <Hotspots>
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-up')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-up')}
                 altText="Stare At Ceiling"
                 imgSrc={navUpButton}
                 top="7vh"
                 left="50vw"
                  />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-down')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-down')}
                 altText="Cry"
                 imgSrc={navDownButton}
                 top="88vh"
                 left="50vw"
                  />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-front')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-front')}
                 altText="Gaze at Stall"
                 imgSrc={navLeftButton}
                 top="53vh"
                 left="10vw"
                  />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-back')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-back')}
                 altText="Flush"
                 imgSrc={navRightButton}
                 top="53vh"
@@ -300,33 +286,33 @@ class Room extends Component {
               <Chatbox userName={this.state.userName} occupants={this.state.occupants} userHex={this.state.userHex} channel={this.presenceChannel} />
             </Hotspots>
         </Stall>;
-      phoneView = 
+      phoneView =
           <Stall direction="left" handleNavigationClick={this.handleNavigationClick} className={this.state.currentView === 'stall-left' ? 'bg-div--responsive' : 'hide' }>
             <Phone />
             <Hotspots>
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-up')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-up')}
                 altText="Stare At Ceiling"
                 imgSrc={navUpButton}
                 top="7vh"
                 left="50vw"
                  />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-down')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-down')}
                 altText="Cry"
                 imgSrc={navDownButton}
                 top="88vh"
                 left="50vw"
                  />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-front')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-front')}
                 altText="Gaze at Stall"
                 imgSrc={navRightButton}
                 top="53vh"
                 left="90vw"
                  />
-              <Button 
-                onClick={() => this.handleNavigationClick('stall-back')} 
+              <Button
+                onClick={() => this.handleNavigationClick('stall-back')}
                 altText="Flush"
                 imgSrc={navLeftButton}
                 top="53vh"
