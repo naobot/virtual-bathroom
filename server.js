@@ -1,4 +1,6 @@
 import dotenv from 'dotenv';
+dotenv.config({ path: '.env' });
+
 import express from 'express';
 import pkg from 'body-parser';
 const { urlencoded, json } = pkg;
@@ -7,8 +9,6 @@ import Pusher from 'pusher';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createClient } from '@supabase/supabase-js';
-
-dotenv.config({ path: '.env' });
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
