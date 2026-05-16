@@ -133,7 +133,6 @@ export default class Graffiti extends PureComponent {
   }
 
   downHandler(e) {
-    // console.log('detected stroke');
     this.painting = true;
     this.getPosition(e);
     e.preventDefault();

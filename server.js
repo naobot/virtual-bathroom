@@ -75,8 +75,6 @@ app.get('/graffiti', async (req, res) => {
 
 app.post('/draw', async (req, res) => {
   const base64 = req.body.canvasImage;
-
-  // Strip the data URL header (e.g. "data:image/png;base64,") to get raw base64
   const base64Data = base64.replace(/^data:image\/\w+;base64,/, '');
   const buffer = Buffer.from(base64Data, 'base64');
   const filename = `doodle-${Date.now()}.png`;
@@ -85,7 +83,10 @@ app.post('/draw', async (req, res) => {
     .from('graffiti')
     .upload(filename, buffer, { contentType: 'image/png' });
 
-  if (uploadError) return res.status(500).send(uploadError);
+  if (uploadError) {
+    console.error('Upload error:', JSON.stringify(uploadError));
+    return res.status(500).send(uploadError.message);
+  }
 
   const { data: { publicUrl } } = supabase.storage
     .from('graffiti')
@@ -95,7 +96,10 @@ app.post('/draw', async (req, res) => {
     .from('doodles')
     .insert({ image_url: publicUrl });
 
-  if (insertError) return res.status(500).send(insertError);
+  if (insertError) {
+    console.error('Insert error:', JSON.stringify(insertError));
+    return res.status(500).send(insertError.message);
+  }
 
   res.status(200).send('OK');
 });
