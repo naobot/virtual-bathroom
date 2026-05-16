@@ -4,9 +4,14 @@ import pkg from 'body-parser';
 const { urlencoded, json } = pkg;
 import cors from 'cors';
 import Pusher from 'pusher';
-import Datastore from 'nedb';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_PUBLISHABLE_KEY
+);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,24 +19,6 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: '.env' });
 
 const app = express();
-
-const db = new Datastore();
-
-var dbHost, dbUser, dbPass, dbPort, dbName;
-
-if (process.env.NODE_ENV === 'development') {
-  dbHost = 'localhost';
-  dbUser = 'root';
-  dbPass = process.env.LOCALDB_PASSWORD;
-  dbName = 'bathroom';
-}
-else {
-  dbHost = process.env.DB_HOST;
-  dbUser = process.env.DB_USER;
-  dbPass = process.env.DB_PASS;
-  dbPort = process.env.DB_PORT;
-  dbName = process.env.DB_NAME;
-}
 
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID,
@@ -59,14 +46,6 @@ app.use(cors({
 app.use(urlencoded({ extended: false }));
 app.use(json());
 
-// app.get('/', (req, res) => {
-//   db.find({}, (err, data) => {
-//     if (err) {
-//       return res.status(500).send(err);
-//     }
-//   });
-// });
-
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 app.get('/', (req, res) => {
@@ -83,19 +62,43 @@ app.get('/', (req, res) => {
   }
 });
 
-app.get('/graffiti', (req, res) => {
-  db.find({}, (err, data) => {
-    if (err) return res.status(500).send(err);
-    res.json(data);
-  });
+app.get('/graffiti', async (req, res) => {
+  const { data, error } = await supabase
+    .from('doodles')
+    .select('image_url');
+
+  if (error) return res.status(500).send(error);
+
+  const shaped = data.map(row => ({ canvasImage: row.image_url }));
+  res.json(shaped);
 });
 
-app.post('/draw', (req, res) => {
-  db.insert(Object.assign({}, req.body), (err, newCanvas) => {
-    if (err) { return res.status(500).send(err); }
-    res.status(200).send('OK');
-  });
-})
+app.post('/draw', async (req, res) => {
+  const base64 = req.body.canvasImage;
+
+  // Strip the data URL header (e.g. "data:image/png;base64,") to get raw base64
+  const base64Data = base64.replace(/^data:image\/\w+;base64,/, '');
+  const buffer = Buffer.from(base64Data, 'base64');
+  const filename = `doodle-${Date.now()}.png`;
+
+  const { error: uploadError } = await supabase.storage
+    .from('graffiti')
+    .upload(filename, buffer, { contentType: 'image/png' });
+
+  if (uploadError) return res.status(500).send(uploadError);
+
+  const { data: { publicUrl } } = supabase.storage
+    .from('graffiti')
+    .getPublicUrl(filename);
+
+  const { error: insertError } = await supabase
+    .from('doodles')
+    .insert({ image_url: publicUrl });
+
+  if (insertError) return res.status(500).send(insertError);
+
+  res.status(200).send('OK');
+});
 
 app.get('/freeourpee', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'freeourpee.html'));

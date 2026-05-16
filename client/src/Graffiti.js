@@ -7,10 +7,10 @@ import axios from 'axios';
 
 var ENDPOINT;
 if (process.env.NODE_ENV === 'development' ) {
-  ENDPOINT = 'http://localhost:5000/'
+  ENDPOINT = 'http://localhost:5000'
 }
 else {
-  ENDPOINT = 'https://virtual-bathroom.herokuapp.com/'
+  ENDPOINT = 'https://virtual-bathroom.herokuapp.com'
 }
 
 export default class Graffiti extends PureComponent {
@@ -53,7 +53,7 @@ export default class Graffiti extends PureComponent {
     window.addEventListener('resize', this.resizeCanvas);
 
     var loadedCanvas;
-    axios.get(`${ENDPOINT}graffiti`)
+    axios.get(`${ENDPOINT}/graffiti`)
       .then((res) => {
         console.log(res);
         if (res.data.length > 0) {
@@ -88,7 +88,7 @@ export default class Graffiti extends PureComponent {
         var canvasImage = this.canvas.toDataURL();
         console.log(canvasImage.length);
 
-        axios.post(`${ENDPOINT}draw`, {
+        axios.post(`${ENDPOINT}/draw`, {
           canvasImage: canvasImage,
         })
         .then((res) => {
@@ -133,7 +133,7 @@ export default class Graffiti extends PureComponent {
   }
 
   downHandler(e) {
-    console.log('detected stroke');
+    // console.log('detected stroke');
     this.painting = true;
     this.getPosition(e);
     e.preventDefault();
