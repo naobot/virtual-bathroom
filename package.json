@@ -4,7 +4,7 @@
   "description": "a virtual bathroom experience",
   "main": "index.js",
   "scripts": {
-    "start": "node --max-http-header-size=80000 --env-file=.env server.js"
+    "start": "node --max-http-header-size=80000 --env-file=.env server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
