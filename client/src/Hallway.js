@@ -1,15 +1,22 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 import Background from './Background';
 import Button from './Button';
 import enterButton from './assets/actions/perspective-round-arrow-up.png';
 import audioGuideButton from './assets/actions/2_audio-guide.png';
 import backgroundImgSrc from './assets/images/bg-hallway.jpg';
+import visit1 from './assets/sounds/visit-1.mp3';
+import visit2 from './assets/sounds/visit-2.mp3';
+import visit3 from './assets/sounds/visit-3.mp3';
+
+const AUDIO_FILES = [visit1, visit2, visit3];
+const STORAGE_KEY = 'vb-audio-visit-count';
 
 class Hallway extends PureComponent {
   constructor(props) {
     super(props);
     this.handleEnterBathroomClick = this.handleEnterBathroomClick.bind(this);
     this.handleAudioDescriptionClick = this.handleAudioDescriptionClick.bind(this);
+    this.currentAudio = null;
   }
 
   handleEnterBathroomClick(e) {
@@ -17,7 +24,18 @@ class Hallway extends PureComponent {
   }
 
   handleAudioDescriptionClick(e) {
-    alert('sorry! not yet implemented T__T');
+    const count = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
+    const index = count % AUDIO_FILES.length;
+
+    if (this.currentAudio) {
+      this.currentAudio.pause();
+      this.currentAudio.currentTime = 0;
+    }
+
+    this.currentAudio = new Audio(AUDIO_FILES[index]);
+    this.currentAudio.play();
+
+    localStorage.setItem(STORAGE_KEY, count + 1);
   }
 
   render() {
@@ -30,7 +48,6 @@ class Hallway extends PureComponent {
       </Background>
     );
   }
-
 }
 
 export default Hallway;
