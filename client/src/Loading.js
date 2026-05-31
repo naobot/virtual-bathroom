@@ -1,7 +1,6 @@
-import React, { PureComponent } from 'react';
-import * as constants from './constants';
+import { PureComponent } from 'react';
 
-const loadingImg = `${constants.STATICURL}/loading.png`;
+const loadingImg = `./assets/loading.png`;
 
 class Loading extends PureComponent {
   constructor(props) {
