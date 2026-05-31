@@ -2,10 +2,11 @@ import { PureComponent } from 'react';
 import Background from './Background';
 import Button from './Button';
 import enterStallButton from './assets/actions/perspective-round-arrow-up.png';
-// import enterStallButton from './assets/actions/3_enter-stall.png';
+
 import Audio from './Audio';
 import audioSrc from './assets/sounds/outside.mp3';
 import backgroundImgSrc from './assets/images/bg-waiting-closed.webp';
+import backgroundPlaceholderSrc from './assets/images/bg-waiting-closed-placeholder.webp';
 import vacancyAudioSrc from './assets/sounds/eventually.mp3';
 import animatedBackground from './assets/images/bg-waiting-opening.gif';
 
@@ -43,7 +44,7 @@ class WaitingRoom extends PureComponent {
 
     const backgroundAudio = <Audio id="background-audio" audioSrc={audioSrc} hidden="true" autoplay="true" loop={true} />;
     return (
-      <Background id="waiting" imgSrc={backgroundImg}>
+      <Background id="waiting" imgSrc={backgroundImg} placeholderSrc={backgroundPlaceholderSrc}>
         {backgroundAudio}
         <div className="hotspots">
           {enterMessage}

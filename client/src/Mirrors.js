@@ -2,7 +2,8 @@ import { PureComponent } from 'react';
 import Background from './Background';
 import CCALogo from './assets/CCA_RGB_colour_e.svg';
 
-import backgroundImgSrc from './assets/images/bg-mirrors.jpg';
+import backgroundImgSrc from './assets/images/bg-mirrors.webp';
+import backgroundPlaceholderSrc from './assets/images/bg-mirrors-placeholder.webp';
 
 class Mirrors extends PureComponent {
   // constructor(props) {
@@ -51,7 +52,7 @@ class Mirrors extends PureComponent {
               </div>
             </>
     return (
-      <Background id="mirrors" imgSrc={backgroundImgSrc}>
+      <Background id="mirrors" imgSrc={backgroundImgSrc} placeholderSrc={backgroundPlaceholderSrc}>
         <div className="layer" data-depth="0.4">
           <div className="mirrors-content">
           {credits}

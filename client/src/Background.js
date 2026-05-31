@@ -12,6 +12,15 @@ class Background extends PureComponent {
     img.onload = () => this.setState({ fullImageLoaded: true });
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.imgSrc !== this.props.imgSrc) {
+      this.setState({ fullImageLoaded: false });
+      const img = new Image();
+      img.src = this.props.imgSrc;
+      img.onload = () => this.setState({ fullImageLoaded: true });
+    }
+  }
+
   render() {
     const { imgSrc, placeholderSrc, id, responsive, children } = this.props;
     const { fullImageLoaded } = this.state;
