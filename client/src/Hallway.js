@@ -17,9 +17,13 @@ class Hallway extends PureComponent {
     this.handleEnterBathroomClick = this.handleEnterBathroomClick.bind(this);
     this.handleAudioDescriptionClick = this.handleAudioDescriptionClick.bind(this);
     this.currentAudio = null;
+    this.state = {
+      isPlaying: false,
+    };
   }
 
   handleEnterBathroomClick(e) {
+    if (this.state.isPlaying) return;
     this.props.onEnterBathroom(e);
   }
 
@@ -34,16 +38,31 @@ class Hallway extends PureComponent {
 
     this.currentAudio = new Audio(AUDIO_FILES[index]);
     this.currentAudio.play();
+    this.setState({ isPlaying: true });
+
+    this.currentAudio.addEventListener('ended', () => {
+      this.setState({ isPlaying: false });
+    });
 
     localStorage.setItem(STORAGE_KEY, count + 1);
   }
 
   render() {
+    const { isPlaying } = this.state;
     return (
       <Background id="hallway" imgSrc={backgroundImgSrc}>
         <div className="hotspots layer" data-depth="0.1">
-          <Button onClick={this.handleEnterBathroomClick} altText="Enter Bathroom" imgSrc={enterButton} top="75vh" left="51vw" width="9vw" className="arrow--enter-bathroom blue-glow" />
-          <Button onClick={this.handleAudioDescriptionClick} noAnimate={true} altText="Audio Guide" imgSrc={audioGuideButton} width="200px" top="93vh" left="12vw" />
+          <Button
+            onClick={this.handleEnterBathroomClick}
+            altText="Enter Bathroom"
+            imgSrc={enterButton}
+            top="75vh"
+            left="51vw"
+            width="9vw"
+            className={`arrow--enter-bathroom${isPlaying ? '' : ' blue-glow'}`}
+            disabled={isPlaying}
+          />
+          {/*<Button onClick={this.handleAudioDescriptionClick} noAnimate={true} altText="Audio Guide" imgSrc={audioGuideButton} width="200px" top="93vh" left="12vw" />*/}
         </div>
       </Background>
     );

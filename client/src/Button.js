@@ -1,13 +1,14 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 
 class Button extends PureComponent {
   render() {
-    const { top, left, width } = this.props;
+    const { top, left, width, disabled } = this.props;
     const style = {
       position: 'absolute',
       top: top,
       left: left,
       width: width,
+      ...(disabled && { opacity: 0.4, cursor: 'not-allowed', pointerEvents: 'none' }),
     }
     var className = this.props.className || "";
     className += " nav-image";
@@ -19,16 +20,15 @@ class Button extends PureComponent {
     }
     if (this.props.imgSrc) {
       return (
-        <img className={className} src={this.props.imgSrc} onClick={this.props.onClick} text={this.props.altText} style={style} />
+        <img className={className} src={this.props.imgSrc} onClick={!disabled ? this.props.onClick : undefined} text={this.props.altText} style={style} />
       );
     }
     else {
       return (
-        <div className={className} onClick={this.props.onClick} style={style}>{this.props.children}</div>
+        <div className={className} onClick={!disabled ? this.props.onClick : undefined} style={style}>{this.props.children}</div>
       );
     }
   }
-
 }
 
 export default Button;
