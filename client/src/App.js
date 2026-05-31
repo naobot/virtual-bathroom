@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
+import { Component, Suspense, lazy } from 'react';
 import Pusher from 'pusher-js';
-import Loading from './Loading';
-import Hallway from './Hallway';
-import WaitingRoom from './WaitingRoom';
-import Room from './Room';
-import Mirrors from './Mirrors';
 
 import './css/animate.min.css';
 import './css/normalize.css';
 import './css/App.css';
 
 import * as constants from './constants';
+
+const Loading   = lazy(() => import('./Loading'));
+const Hallway   = lazy(() => import('./Hallway'));
+const WaitingRoom = lazy(() => import('./WaitingRoom'));
+const Room      = lazy(() => import('./Room'));
+const Mirrors   = lazy(() => import('./Mirrors'));
 
 const LOGGING = process.env.NODE_ENV === 'development';
 
@@ -341,7 +342,9 @@ class App extends Component {
             {rooms}
           </div>
         </div>
-        {currentView}
+        <Suspense fallback={null}>
+          {currentView}
+        </Suspense>
       </div>
     );
   }
