@@ -233,6 +233,9 @@
 .credits-content a:link, .credits-content a:visited, .credits-content a:hover {
   color: #333e4a;
 }
+.cca-logo {
+  width: 300px;
+}
 #free-our-pee-logo {
   max-width: 300px;
   width: 90%;
