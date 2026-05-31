@@ -4,6 +4,7 @@ import Button from './Button';
 import enterButton from './assets/actions/perspective-round-arrow-up.png';
 // import audioGuideButton from './assets/actions/2_audio-guide.png';
 import backgroundImgSrc from './assets/images/bg-hallway.webp';
+import backgroundPlaceholderSrc from './assets/images/bg-hallway-placeholder.webp';
 import visit1 from './assets/sounds/visit-1.mp3';
 import visit2 from './assets/sounds/visit-2.mp3';
 import visit3 from './assets/sounds/visit-3.mp3';
@@ -50,7 +51,7 @@ class Hallway extends PureComponent {
   render() {
     const { isPlaying } = this.state;
     return (
-      <Background id="hallway" imgSrc={backgroundImgSrc}>
+      <Background imgSrc={backgroundImgSrc} placeholderSrc={backgroundPlaceholderSrc} id="hallway">
         <div className="hotspots layer" data-depth="0.1">
           <Button
             onClick={this.handleEnterBathroomClick}
