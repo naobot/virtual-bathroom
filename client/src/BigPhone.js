@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 // import Button from './Button';
 // import Parallax from 'parallax-js';
 import bigPhoneImg from './assets/images/closeup-phone.png';

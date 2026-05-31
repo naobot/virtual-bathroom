@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import Stall from './Stall';
 import Button from './Button';
 import Mirrors from './Mirrors';

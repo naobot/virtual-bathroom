@@ -3,7 +3,7 @@ import Background from './Background';
 import Button from './Button';
 import enterButton from './assets/actions/perspective-round-arrow-up.png';
 // import audioGuideButton from './assets/actions/2_audio-guide.png';
-import backgroundImgSrc from './assets/images/bg-hallway.jpg';
+import backgroundImgSrc from './assets/images/bg-hallway.webp';
 import visit1 from './assets/sounds/visit-1.mp3';
 import visit2 from './assets/sounds/visit-2.mp3';
 import visit3 from './assets/sounds/visit-3.mp3';

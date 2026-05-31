@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 import Button from './Button';
 
 export default class StallFront extends PureComponent {

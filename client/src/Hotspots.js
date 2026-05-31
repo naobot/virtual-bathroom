@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 
 export default class Hotspots extends PureComponent {
-  // constructor(props) { 
+  // constructor(props) {
   //   super(props);
   // }
 
