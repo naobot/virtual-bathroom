@@ -45,7 +45,7 @@ class Mirrors extends PureComponent {
               <div className="col-2">
                 <h2>TOILETS FOR ALL</h2>
                 <p>Download and share window stickers created by the Toronto Bathroom Codes project. These stickers advocate for businesses and other organizations to allow their bathrooms to be used by anyone.</p>
-                {/*<p><a href="https://docs.google.com/document/d/1Qt0CzQqmZi7idiX5h6a49OO-LwxkCp88q3QumgFMoO4/edit?usp=sharing" target="_blank">Pee for free, free to pee.</a></p>*/}
+                <p><a className="neon" href="https://docs.google.com/document/d/1Qt0CzQqmZi7idiX5h6a49OO-LwxkCp88q3QumgFMoO4/edit?usp=sharing" target="_blank">Pee for free, free to pee.</a></p>
               </div>
               <div>
                 <a href="/" className="neon">Try the Make-Believe Bathroom Experience Again?</a>

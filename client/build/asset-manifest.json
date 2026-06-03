@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.6a31c1da.css",
-    "main.js": "/static/js/main.b841a17c.js",
+    "main.js": "/static/js/main.ea219a77.js",
     "static/js/256.305c0ae4.chunk.js": "/static/js/256.305c0ae4.chunk.js",
     "static/js/844.98a47fd1.chunk.js": "/static/js/844.98a47fd1.chunk.js",
     "static/js/795.06163dab.chunk.js": "/static/js/795.06163dab.chunk.js",
     "static/js/514.a57d2177.chunk.js": "/static/js/514.a57d2177.chunk.js",
-    "static/js/520.ac4a0c49.chunk.js": "/static/js/520.ac4a0c49.chunk.js",
+    "static/js/520.54994e07.chunk.js": "/static/js/520.54994e07.chunk.js",
     "static/js/722.4a77c5f0.chunk.js": "/static/js/722.4a77c5f0.chunk.js",
     "static/media/visit-1.mp3": "/static/media/visit-1.5bdcf6349e1dbcd357e9.mp3",
     "static/media/bg-waiting-opening.gif": "/static/media/bg-waiting-opening.f460b775d9c55ac0ed2a.gif",
@@ -38,16 +38,16 @@
     "static/media/bg-waiting-closed-placeholder.webp": "/static/media/bg-waiting-closed-placeholder.4e90267c4b2e50ca6372.webp",
     "static/media/bg-stall-left-placeholder.webp": "/static/media/bg-stall-left-placeholder.293efdd9c8926a46bce2.webp",
     "main.6a31c1da.css.map": "/static/css/main.6a31c1da.css.map",
-    "main.b841a17c.js.map": "/static/js/main.b841a17c.js.map",
+    "main.ea219a77.js.map": "/static/js/main.ea219a77.js.map",
     "256.305c0ae4.chunk.js.map": "/static/js/256.305c0ae4.chunk.js.map",
     "844.98a47fd1.chunk.js.map": "/static/js/844.98a47fd1.chunk.js.map",
     "795.06163dab.chunk.js.map": "/static/js/795.06163dab.chunk.js.map",
     "514.a57d2177.chunk.js.map": "/static/js/514.a57d2177.chunk.js.map",
-    "520.ac4a0c49.chunk.js.map": "/static/js/520.ac4a0c49.chunk.js.map",
+    "520.54994e07.chunk.js.map": "/static/js/520.54994e07.chunk.js.map",
     "722.4a77c5f0.chunk.js.map": "/static/js/722.4a77c5f0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6a31c1da.css",
-    "static/js/main.b841a17c.js"
+    "static/js/main.ea219a77.js"
   ]
 }
