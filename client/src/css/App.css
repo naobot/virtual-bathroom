@@ -241,6 +241,7 @@
   width: 90%;
 }
 #try-again {
+  margin-top: 20px;
   width: 100%;
   text-align: center;
 }
@@ -537,10 +538,6 @@ canvas#note-canvas {
 }
 .neon-small {
   font-size: 14pt;
-}
-
-#try-again {
-  margin-top: 20px;
 }
 
 @media screen and (min-width: 600px) {
