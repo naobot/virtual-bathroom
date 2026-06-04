@@ -535,6 +535,13 @@ canvas#note-canvas {
   line-height: 0.7;
   animation: neon .08s ease-in-out infinite alternate;
 }
+.neon-small {
+  font-size: 14pt;
+}
+
+#try-again {
+  margin-top: 20px;
+}
 
 @media screen and (min-width: 600px) {
   #chatbox {
